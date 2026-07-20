@@ -1,36 +1,48 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Portfolio
 
-## Getting Started
+Single-page portfolio boilerplate built to the Figma design.
+**Next.js 16 (App Router) · Motion (Framer Motion v12) · Lenis smooth scroll · Tailwind v4.**
 
-First, run the development server:
+## Run
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm run dev     # http://localhost:3000
+npm run build   # production build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Structure
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+src/
+  app/
+    layout.tsx        # fonts (Geist + Instrument Serif) + <SmoothScroll> root
+    page.tsx          # composes the sections
+    globals.css       # design tokens + Lenis base styles
+  components/
+    smooth-scroll.tsx # Lenis wrapper (disabled under reduced-motion)
+    navbar.tsx  hero.tsx  about.tsx  polaroids.tsx
+    selected-works.tsx  testimonials.tsx  motion-brand.tsx
+    design-thinking.tsx  footer-cta.tsx
+    ui/
+      reveal.tsx        # <Reveal> / <Reveal.Item> scroll-in wrapper
+      accent-text.tsx   # *serif* and [[highlight]] inline markers
+      avatar.tsx  section-label.tsx
+  lib/
+    content.ts        # ALL copy/data — edit here
+    motion.ts         # shared variants + easing
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Swapping in real content
 
-## Learn More
+- **Copy & data** → `src/lib/content.ts`. Wrap words in `*asterisks*` for the
+  serif-italic accent, `[[double brackets]]` for the yellow/green highlighter.
+- **Images** → drop files in `public/` and point `content.ts` at them
+  (avatar, polaroids, project thumbnails). Placeholders render until then:
+  green blocks for project/photo cards, a gradient circle for the avatar.
+- **Colors / fonts** → design tokens live at the top of `src/app/globals.css`.
 
-To learn more about Next.js, take a look at the following resources:
+## Motion notes
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Section reveals: `<Reveal>` (fade + rise + de-blur, fires once in view).
+- All motion respects `prefers-reduced-motion` — reveals render instantly and
+  Lenis falls back to native scroll.

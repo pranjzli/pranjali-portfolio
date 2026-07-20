@@ -1,26 +1,86 @@
 @import "tailwindcss";
 
+/* ---------------------------------------------------------------- *
+ * Design tokens — sampled from Figma (soft-sage light portfolio)
+ * ---------------------------------------------------------------- */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #fbfbf8;
+  --foreground: #191917;
+  --muted: #8a8a83;
+  --line: #e7e7e1;
+  --card: #d7e8cd; /* green project placeholder */
+  --card-foreground: #2b3a26;
+  --accent: #2f6bff; /* blue "lets chat" pill */
+  --accent-foreground: #ffffff;
+  --highlight-yellow: #f3ec9e;
+  --highlight-green: #c7e6b0;
+  --badge: #eaf3e4;
+  --badge-foreground: #4d7a45;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-badge: var(--badge);
+  --color-badge-foreground: var(--badge-foreground);
+
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --font-serif: var(--font-instrument-serif);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Serif italic display accent (headline emphasis words) */
+.serif {
+  font-family: var(--font-serif), Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+}
+
+/* Inline text highlighters used in the About copy */
+.mark-yellow {
+  background: var(--highlight-yellow);
+  padding: 0 0.2em;
+  border-radius: 0.2em;
+}
+.mark-green {
+  background: var(--highlight-green);
+  padding: 0 0.2em;
+  border-radius: 0.2em;
+}
+
+/* ---------------------------------------------------------------- *
+ * Lenis smooth scroll — required base styles
+ * ---------------------------------------------------------------- */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }
