@@ -15,33 +15,60 @@ export const nav = {
 
 export const hero = {
   badge: "Available for product design roles",
-  avatar: "/avatar.jpg",
+  avatar: "/images/pranjali.png",
   // Words wrapped in *asterisks* render as serif-italic accents.
   headline: "I make complex tools feel *effortless*",
   intro:
-    "Currently building creator tools at Turnip, previously at Whatfix. I think in motion, design inside real engineering constraints, and own features end to end.",
+    "Currently building creator tools at {{turnip}} Turnip, previously at {{whatfix}} Whatfix. I think in motion, design inside real engineering constraints, and own features end to end.",
 };
+
+/** A run of story copy. `key` segments stay lit when the TL;DR tab is on. */
+export type StorySegment = { t: string; key?: boolean };
 
 export const about = {
   label: "About",
   tabs: ["Story", "TL;DR"] as const,
+  // Split into segments rather than two bodies of copy, so switching tabs dims
+  // the non-essential runs in place instead of swapping text (no layout shift).
   story: [
-    "It all started during the lockdown when I grew a meme page on Instagram to a reach of 250K+. I kept asking myself one question — what made people stop, tap, and engage? Chasing it led to a social-media internship in my final year of college, where managing content turned into creating it, and I picked up my first design tools.",
-    "Then I made a deliberate trade: a full-time offer for an internship at [[Whatfix]] core brand team, just to learn from senior designers. I absorbed everything about motion, interaction, and brand — how things move, respond, and feel.",
-    "At [[Turnip]] I'm building [[Zaps]] — an all-in-one creator suite. I've worn every hat: crafting visuals, scaling a 5000+ template library, and shipping features end to end. In no time, I've committed to product design — and now I solve real user problems every day.",
-  ],
-  tldr: [
-    "Product designer, 3+ years. Motion-first, systems-minded, engineering-fluent.",
-    "Turnip (Zaps) → Whatfix. I ship features end to end.",
-  ],
+    [
+      { t: "It all started during the lockdown when I grew a meme page on Instagram to a reach of " },
+      { t: "250K+", key: true },
+      { t: ". I kept asking myself one question — what made people stop, tap, and engage? Chasing it led to a social-media internship in my final year of college, where managing content turned into creating it, and I picked up my " },
+      { t: "first design tools", key: true },
+      { t: "." },
+    ],
+    [
+      { t: "Then I made a deliberate trade: a full-time offer for an internship at " },
+      { t: "{{whatfix}} [[Whatfix's]] core brand team", key: true },
+      { t: ", just to learn from senior designers. I absorbed everything about " },
+      { t: "motion, interaction, and brand", key: true },
+      { t: " — how things move, respond, and feel." },
+    ],
+    [
+      { t: "At " },
+      { t: "{{turnip}} Turnip, I'm building {{zaps}} [[Zaps]] — an all-in-one creator suite", key: true },
+      { t: ". I've worn every hat: crafting visuals, scaling a " },
+      { t: "5000+ template library", key: true },
+      { t: ", and " },
+      { t: "shipping features end to end", key: true },
+      { t: ". In no time, I've " },
+      { t: "committed to product design", key: true },
+      { t: " — and now I solve real user problems every day." },
+    ],
+  ] as StorySegment[][],
 };
 
+// Polaroid frames + handwritten captions are baked into the images.
 export const polaroids = [
-  { src: "/polaroids/workspace.jpg", caption: "workspace" },
-  { src: "/polaroids/music.jpg", caption: "Music" },
-  { src: "/polaroids/kiki.jpg", caption: "kiki" },
-  { src: "/polaroids/art.jpg", caption: "Art" },
-  { src: "/polaroids/amsterdam.jpg", caption: "studies in Amsterdam?" },
+  { src: "/images/polaroids/books.png", alt: "Reading Hooked at my desk" },
+  { src: "/images/polaroids/workspace.png", alt: "My workspace at night" },
+  { src: "/images/polaroids/music.png", alt: "Playing guitar" },
+  { src: "/images/polaroids/kiki.png", alt: "Mirror selfie with my cat Kiki" },
+  { src: "/images/polaroids/art.png", alt: "Face illustrations on iPad" },
+  { src: "/images/polaroids/beach.png", alt: "At the beach" },
+  { src: "/images/polaroids/coffee.png", alt: "A latte" },
+  { src: "/images/polaroids/photography.png", alt: "Out shooting with my camera" },
 ];
 
 export type Project = {
@@ -52,17 +79,17 @@ export type Project = {
 
 export const projects: Project[] = [
   {
-    title: "I designed the *editor* at Zaps that helps *creators* make and edit content quickly",
+    title: "I designed the *editor* at {{zaps}} Zaps that helps *creators* make and edit content quickly",
     meta: "2025–2026 · Product design, Project management, User research",
     span: "wide",
   },
   {
-    title: "I built the *design system* and token pipeline at Zaps for designers + developers",
+    title: "I built the *design system* and token pipeline at {{zaps}} Zaps for designers + developers",
     meta: "2026 · Design Systems, Design Tokens, iOS Handoff",
     span: "half",
   },
   {
-    title: "I designed the *coaches tab* at FitAstra that helps users find a suitable trainer",
+    title: "I designed the *coaches tab* at {{fitastra}} FitAstra that helps users find a suitable trainer",
     meta: "2024 · Product design, UX, User research",
     span: "half",
   },
@@ -73,20 +100,30 @@ export const testimonial = {
   heading: "Straight from the *people* I worked with..",
   quote:
     "Pranjali brought great energy, curiosity, and fresh perspectives that helped us think differently about the user experience. Her ideas sparked valuable conversations, and I'd be thrilled to work with her again.",
-  author: { name: "iOS Developer, Turnip", avatar: "/avatar.jpg" },
+  author: { name: "iOS Developer, Turnip", logo: "/images/logos/turnip.png" },
   people: [
-    { name: "Vishal", avatar: "/polaroids/workspace.jpg" },
-    { name: "Kush", avatar: "/polaroids/music.jpg" },
-    { name: "Beth", avatar: "/polaroids/kiki.jpg" },
-    { name: "Vivek", avatar: "/polaroids/art.jpg" },
-    { name: "Gaurav", avatar: "/polaroids/amsterdam.jpg" },
+    { name: "Vishal" },
+    { name: "Kush" },
+    { name: "Beth" },
+    { name: "Vivek" },
+    { name: "Gaurav" },
   ],
 };
 
 export const motionBrand = {
   label: "Motion & Brand",
   heading: "Explore my *work* as a motion, brand & visual designer",
-  apps: ["Whatfix", "Turnip", "Pini", "27M"],
+  // Two featured tiles + a 2x2 grid of smaller ones, matching the Figma layout.
+  featured: [
+    { name: "Whatfix", src: "/images/logos/whatfix.png" },
+    { name: "Quraxia", src: "/images/logos/quraxia.png" },
+  ],
+  small: [
+    { name: "Turnip", src: "/images/logos/turnip.png" },
+    { name: "FitAstra", src: "/images/logos/fitastra-icon.png" },
+    { name: "Pini", src: "/images/logos/pini.png" },
+    { name: "Street27", src: "/images/logos/street27.png" },
+  ],
 };
 
 export const designThinking = {
@@ -98,7 +135,7 @@ export const designThinking = {
 export const footer = {
   cta: "If this made sense, lets chat!",
   name: "Pranjali, Product Designer",
-  avatar: "/avatar.jpg",
+  avatar: "/images/pranjali.png",
   links: [
     { label: "Mail", href: "mailto:sainipranjali.2205@gmail.com" },
     { label: "LinkedIn", href: "https://linkedin.com" },

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { AnimatePresence, motion } from "motion/react";
+import { motion } from "motion/react";
 import { about } from "@/lib/content";
 import { ease } from "@/lib/motion";
 import { AccentText } from "@/components/ui/accent-text";
@@ -10,7 +10,7 @@ import { Reveal } from "@/components/ui/reveal";
 
 export function About() {
   const [tab, setTab] = useState<(typeof about.tabs)[number]>("Story");
-  const paras = tab === "Story" ? about.story : about.tldr;
+  const condensed = tab === "TL;DR";
 
   return (
     <section id="about" className="py-20">
@@ -42,22 +42,22 @@ export function About() {
           </div>
         </Reveal>
 
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={tab}
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.35, ease }}
-            className="mt-6 space-y-4 text-[15px] leading-relaxed text-foreground/80"
-          >
-            {paras.map((p, i) => (
-              <p key={i}>
-                <AccentText>{p}</AccentText>
-              </p>
-            ))}
-          </motion.div>
-        </AnimatePresence>
+        {/* Same copy either way — TL;DR just dims what it leaves out */}
+        <div className="mt-6 space-y-4 text-[15px] leading-relaxed text-foreground/80">
+          {about.story.map((para, i) => (
+            <p key={i}>
+              {para.map((seg, j) => (
+                <motion.span
+                  key={j}
+                  animate={{ opacity: condensed && !seg.key ? 0.22 : 1 }}
+                  transition={{ duration: 0.4, ease }}
+                >
+                  <AccentText>{seg.t}</AccentText>
+                </motion.span>
+              ))}
+            </p>
+          ))}
+        </div>
       </Container>
     </section>
   );

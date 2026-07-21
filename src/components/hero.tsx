@@ -5,6 +5,7 @@ import { hero } from "@/lib/content";
 import { ease } from "@/lib/motion";
 import { AccentText } from "@/components/ui/accent-text";
 import { Avatar } from "@/components/ui/avatar";
+import { WaterLayer } from "@/components/ui/water-layer";
 
 const item = {
   hidden: { opacity: 0, y: 18, filter: "blur(6px)" },
@@ -14,11 +15,16 @@ const item = {
 export function Hero() {
   return (
     <section id="top" className="relative overflow-hidden pt-40 pb-24">
-      {/* Soft sage gradient wash */}
-      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute left-1/2 top-[-10%] h-[420px] w-[720px] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,#cfe8c2,transparent)] opacity-70 blur-2xl" />
-        <div className="absolute left-[15%] top-[10%] h-[280px] w-[280px] rounded-full bg-[radial-gradient(closest-side,#bfe3d0,transparent)] opacity-60 blur-2xl" />
-        <div className="absolute right-[12%] top-[6%] h-[300px] w-[300px] rounded-full bg-[radial-gradient(closest-side,#d9e9b8,transparent)] opacity-60 blur-2xl" />
+      {/* Soft foliage wash — image fades to white at its bottom edge */}
+      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 mix-blend-multiply">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/images/hero-bg.png"
+          alt=""
+          className="h-full w-full object-cover object-top"
+        />
+        {/* Water surface drawn over the same image; falls back to the <img> */}
+        <WaterLayer src="/images/hero-bg.png" className="absolute inset-0 h-full w-full" />
       </div>
 
       <motion.div
@@ -37,7 +43,12 @@ export function Hero() {
         </motion.span>
 
         <motion.div variants={item} transition={{ duration: 0.6, ease }} className="mt-7">
-          <Avatar className="size-14 ring-4 ring-background" />
+          {/* The photo carries its own rounded frame — don't add a border or radius */}
+          <Avatar
+            src={hero.avatar}
+            alt="Pranjali"
+            className="size-[92px] drop-shadow-[0_6px_18px_rgba(0,0,0,0.22)]"
+          />
         </motion.div>
 
         <motion.h1
@@ -53,7 +64,7 @@ export function Hero() {
           transition={{ duration: 0.7, ease }}
           className="mt-5 max-w-md text-pretty text-base leading-relaxed text-muted"
         >
-          {hero.intro}
+          <AccentText>{hero.intro}</AccentText>
         </motion.p>
 
         <motion.a
