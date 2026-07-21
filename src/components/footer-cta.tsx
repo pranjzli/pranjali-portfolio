@@ -4,43 +4,70 @@ import { motion } from "motion/react";
 import { footer } from "@/lib/content";
 import { viewportOnce, ease } from "@/lib/motion";
 import { Avatar } from "@/components/ui/avatar";
+import { BubbleTail } from "@/components/ui/bubble-tail";
 import { Reveal } from "@/components/ui/reveal";
 
 export function FooterCta() {
   return (
     <footer id="contact" className="relative overflow-hidden py-28">
-      <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-64">
-        <div className="absolute bottom-[-40%] left-1/2 h-72 w-[640px] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,#cfe8c2,transparent)] opacity-70 blur-2xl" />
+      {/* Same foliage wash as the hero, flipped so it fades in from the bottom */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-[420px] mix-blend-multiply"
+      >
+        {/* Flipped vertically and cropped to the image's pale bottom edge, so the
+            wash reads white at the top and greens up toward the page bottom */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/images/hero-bg.png"
+          alt=""
+          className="h-full w-full -scale-y-100 object-cover object-bottom"
+        />
       </div>
 
-      <Reveal className="flex flex-col items-center px-6 text-center">
-        <motion.a
-          href={footer.links[0].href}
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={viewportOnce}
-          transition={{ duration: 0.6, ease }}
-          whileHover={{ scale: 1.04 }}
-          whileTap={{ scale: 0.98 }}
-          className="rounded-full bg-accent px-6 py-3 text-sm font-medium text-accent-foreground shadow-[0_8px_24px_-8px_rgba(47,107,255,0.5)]"
-        >
-          {footer.cta}
-        </motion.a>
+      <Reveal className="mx-auto flex w-full max-w-[860px] flex-col gap-12 px-6 md:flex-row md:items-start md:justify-between">
+        <div className="w-full max-w-[430px]">
+          {/* Chat bubble — its tail hooks down toward the photo */}
+          <motion.a
+            href={footer.links[0].href}
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={viewportOnce}
+            transition={{ duration: 0.6, ease }}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            className="relative inline-block rounded-[36px] bg-accent px-6 py-4 text-xl font-medium text-accent-foreground shadow-[0_10px_30px_-12px_rgba(0,161,255,0.6)] sm:text-2xl"
+          >
+            {footer.cta}
+            <BubbleTail className="absolute right-[38px] top-full -mt-px text-accent" />
+          </motion.a>
 
-        <div className="mt-8 flex items-center gap-3">
-          <Avatar className="size-9" />
-          <span className="text-sm text-muted">{footer.name}</span>
+          <div className="mt-3 flex items-start justify-between gap-6">
+            <span className="text-[15px] text-foreground/80">{footer.name}</span>
+            <Avatar
+              src={footer.avatar}
+              alt="Pranjali"
+              className="size-[72px] shrink-0 drop-shadow-[0_8px_20px_rgba(0,0,0,0.25)]"
+            />
+          </div>
         </div>
 
-        <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+        <div className="flex flex-col items-start gap-4">
           {footer.links.map((l) => (
             <a
               key={l.label}
               href={l.href}
-              className="inline-flex items-center gap-1.5 rounded-full border border-line bg-background px-4 py-2 text-sm text-foreground/80 transition-colors hover:border-foreground/30 hover:text-foreground"
+              className="group inline-flex items-center gap-4 rounded-full border border-foreground/80 px-6 py-3 text-lg text-foreground transition-[transform,background-color,color] duration-300 hover:-translate-y-0.5 hover:bg-foreground hover:text-background"
             >
-              {l.label}
-              <span aria-hidden className="text-muted">↗</span>
+              <span className="transition-transform duration-300 group-hover:translate-x-0.5">
+                {l.label}
+              </span>
+              <span
+                aria-hidden
+                className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
+              >
+                ↗
+              </span>
             </a>
           ))}
         </div>

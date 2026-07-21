@@ -7,7 +7,13 @@ import { AccentText } from "@/components/ui/accent-text";
 import { SectionLabel, Container } from "@/components/ui/section-label";
 import { Reveal } from "@/components/ui/reveal";
 
-function CardSurface({ className = "" }: { className?: string }) {
+function CardSurface({
+  className = "",
+  arrow = true,
+}: {
+  className?: string;
+  arrow?: boolean;
+}) {
   return (
     <motion.a
       href="#"
@@ -21,13 +27,15 @@ function CardSurface({ className = "" }: { className?: string }) {
         transition={{ duration: 0.3 }}
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(120%_120%_at_100%_0%,rgba(255,255,255,0.35),transparent)]"
       />
-      <motion.span
-        variants={{ hover: { rotate: 0, scale: 1.08 } }}
-        initial={{ rotate: -45 }}
-        className="absolute bottom-4 right-4 grid size-9 place-items-center rounded-full border border-card-foreground/25 text-card-foreground"
-      >
-        ↗
-      </motion.span>
+      {arrow && (
+        <motion.span
+          variants={{ hover: { scale: [1, 0.82, 1] } }}
+          transition={{ duration: 0.4, ease, times: [0, 0.4, 1] }}
+          className="absolute bottom-4 right-4 grid size-9 place-items-center rounded-full border border-card-foreground/25 text-card-foreground"
+        >
+          ↗
+        </motion.span>
+      )}
     </motion.a>
   );
 }
@@ -42,16 +50,22 @@ export function SelectedWorks() {
           <SectionLabel>Selected Works</SectionLabel>
         </Reveal>
 
-        {/* Featured row: card + heading */}
-        <Reveal group className="mt-6 grid gap-6 md:grid-cols-2 md:items-stretch">
+        {/* Featured row: tall card on the left, heading + a row of three
+            shorter cards on the right, all bottom-aligned (per Figma) */}
+        <Reveal group className="mt-6 grid gap-8 md:grid-cols-[428fr_732fr] md:items-stretch">
           <Reveal.Item>
-            <CardSurface className="aspect-[4/3] h-full min-h-[280px] w-full" />
+            <CardSurface className="aspect-[428/437] w-full" />
           </Reveal.Item>
-          <Reveal.Item className="flex flex-col justify-end">
+          <Reveal.Item className="flex flex-col">
             <h3 className="text-2xl leading-snug tracking-tight sm:text-[26px]">
               <AccentText>{featured.title}</AccentText>
             </h3>
             <p className="mt-3 text-sm text-muted">{featured.meta}</p>
+            <div className="mt-auto grid grid-cols-3 gap-4 pt-6">
+              {[0, 1, 2].map((i) => (
+                <CardSurface key={i} arrow={false} className="aspect-[236/273] w-full" />
+              ))}
+            </div>
           </Reveal.Item>
         </Reveal>
 

@@ -36,7 +36,7 @@ export function Navbar() {
 
         <a
           href={nav.cta.href}
-          className="rounded-full bg-foreground px-4 py-1.5 text-sm font-medium text-background transition-transform hover:scale-[1.03] active:scale-[0.98]"
+          className="rounded-full bg-white px-4 py-1.5 text-sm font-semibold text-foreground shadow-[0_1px_2px_rgba(0,0,0,0.06)] transition-transform hover:scale-[1.03] active:scale-[0.98]"
         >
           {nav.cta.label}
         </a>

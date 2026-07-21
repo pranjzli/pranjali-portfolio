@@ -6,11 +6,11 @@
 :root {
   --background: #fbfbf8;
   --foreground: #191917;
-  --muted: #8a8a83;
+  --muted: #6b6b64; /* AA contrast on --background */
   --line: #e7e7e1;
   --card: #d7e8cd; /* green project placeholder */
   --card-foreground: #2b3a26;
-  --accent: #2f6bff; /* blue "lets chat" pill */
+  --accent: #00a1ff; /* blue "lets chat" chat bubble */
   --accent-foreground: #ffffff;
   --highlight-yellow: #f3ec9e;
   --highlight-green: #c7e6b0;
@@ -50,16 +50,42 @@ body {
   font-weight: 400;
 }
 
-/* Inline text highlighters used in the About copy */
-.mark-yellow {
-  background: var(--highlight-yellow);
+/* Inline text highlighters used in the About copy — hand-drawn slight tilt */
+.mark-yellow,
+.mark-green {
+  display: inline-block;
   padding: 0 0.2em;
   border-radius: 0.2em;
 }
+.mark-yellow {
+  background: var(--highlight-yellow);
+  transform: rotate(-1.2deg);
+}
 .mark-green {
   background: var(--highlight-green);
-  padding: 0 0.2em;
-  border-radius: 0.2em;
+  transform: rotate(1deg);
+}
+
+/* Polaroid ticker tape */
+@keyframes marquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+.marquee-track {
+  animation: marquee 70s linear infinite;
+}
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
 }
 
 /* ---------------------------------------------------------------- *

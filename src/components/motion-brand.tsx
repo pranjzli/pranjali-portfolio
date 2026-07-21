@@ -18,21 +18,40 @@ export function MotionBrand() {
               <AccentText>{motionBrand.heading}</AccentText>
             </h2>
 
-            <div className="mt-6 flex items-center gap-3">
-              {motionBrand.apps.map((app, i) => (
+            <div className="mt-6 flex items-center gap-4">
+              {motionBrand.featured.map((app, i) => (
                 <motion.div
-                  key={app}
+                  key={app.name}
                   initial={{ opacity: 0, scale: 0.8 }}
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={viewportOnce}
                   transition={{ duration: 0.4, ease, delay: i * 0.06 }}
                   whileHover={{ y: -4 }}
-                  className="grid size-12 place-items-center rounded-xl bg-card text-xs font-medium text-card-foreground shadow-sm"
-                  title={app}
+                  title={app.name}
+                  className="size-[104px] overflow-hidden rounded-[24px] shadow-sm"
                 >
-                  {app.slice(0, 2)}
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={app.src} alt={app.name} className="size-full object-cover" />
                 </motion.div>
               ))}
+
+              <div className="grid grid-cols-2 gap-3">
+                {motionBrand.small.map((app, i) => (
+                  <motion.div
+                    key={app.name}
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={viewportOnce}
+                    transition={{ duration: 0.4, ease, delay: 0.12 + i * 0.06 }}
+                    whileHover={{ y: -4 }}
+                    title={app.name}
+                    className="size-[46px] overflow-hidden rounded-[12px] bg-white shadow-sm"
+                  >
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={app.src} alt={app.name} className="size-full object-cover" />
+                  </motion.div>
+                ))}
+              </div>
             </div>
           </Reveal>
 
@@ -45,12 +64,17 @@ export function MotionBrand() {
             whileHover="open"
             className="relative h-32 w-44 shrink-0"
           >
-            <div className="absolute bottom-0 h-24 w-full rounded-xl rounded-tl-none bg-[linear-gradient(160deg,#bfe3a8,#9ed17f)]" />
-            <div className="absolute top-2 left-0 h-6 w-20 rounded-t-lg bg-[linear-gradient(160deg,#bfe3a8,#9ed17f)]" />
+            {/* Back panel + tab */}
+            <div className="absolute bottom-0 h-28 w-full rounded-xl bg-[linear-gradient(160deg,#a9dc8f,#8cc76d)]" />
+            <div className="absolute left-0 top-0 h-7 w-24 rounded-t-lg bg-[linear-gradient(160deg,#a9dc8f,#8cc76d)]" />
+            {/* Page sits between the panels so it reads as filed inside */}
             <motion.div
-              variants={{ open: { y: -8, rotate: -3 } }}
-              className="absolute -top-1 left-3 h-16 w-36 rounded-lg bg-white/90 shadow-sm"
+              variants={{ open: { y: -10, rotate: -2 } }}
+              transition={{ type: "spring", stiffness: 220, damping: 20 }}
+              className="absolute left-4 top-3 h-16 w-36 rounded-md bg-white shadow-[0_4px_10px_-4px_rgba(0,0,0,0.3)]"
             />
+            {/* Front panel, drawn last so it overlaps the page */}
+            <div className="absolute bottom-0 h-20 w-full rounded-xl bg-[linear-gradient(160deg,#c6ecab,#9ed17f)] shadow-[0_-2px_8px_-4px_rgba(0,0,0,0.15)]" />
           </motion.div>
         </div>
       </Container>
