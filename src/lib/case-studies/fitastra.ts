@@ -42,7 +42,6 @@ export const context = {
     "It matches you with people working out near you — at your gym, a nearby park, or on a running route. The founder built it for working professionals in Bangalore who move cities for a job and end up training alone, which is where motivation usually breaks down.",
     "I joined as a freelance product designer when the partner-matching version was live and the founder wanted to add coaching.",
   ],
-  media: [{ ratio: "16/9" as const }],
 };
 
 export const problem = {
@@ -51,6 +50,29 @@ export const problem = {
   body: [
     "A partner keeps you accountable, but they can't give you a plan, fix your form, or tell you what to do next. That's a coach's job — and getting one usually means committing to a one, three, or ten-month package before you've met the person even once. Too expensive and too risky if the coach turns out to be the wrong fit. And what if you only want advice on one specific problem?",
     "There was a business side to this too: partner matching didn't earn anything. The Coaches tab had to work for users and become the way FitAstra makes money.",
+  ],
+  // Shot at their own heights, so `ratio` (w/h) is all the row needs to size them.
+  photos: [
+    {
+      src: "/images/case-studies/fitastra/process-1.jpg",
+      ratio: 1333 / 1000,
+      alt: "Working on the connection flow and handoff table in Figma, with a notebook of flow diagrams open on the desk",
+    },
+    {
+      src: "/images/case-studies/fitastra/process-2.jpg",
+      ratio: 750 / 1000,
+      alt: "Whiteboard sketches of the app's screens — discover, chat, and the sent, received and accepted request states",
+    },
+    {
+      src: "/images/case-studies/fitastra/process-3.jpg",
+      ratio: 1312 / 1000,
+      alt: "Reviewing the app over a call with the FitAstra team",
+    },
+    {
+      src: "/images/case-studies/fitastra/process-4.jpg",
+      ratio: 1031 / 1000,
+      alt: "Sticky notes mapping the information architecture — home screen, discover, chat, profile and notifications",
+    },
   ],
 };
 

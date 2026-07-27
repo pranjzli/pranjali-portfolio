@@ -117,6 +117,52 @@ export function PlaceholderRow({
   );
 }
 
+/**
+ * A row of photos at one shared height. Each item flexes in proportion to its
+ * own aspect ratio, so the heights match exactly and the widths differ — the
+ * way a contact sheet reads.
+ */
+export function PhotoRow({
+  photos,
+  breakout = false,
+}: {
+  photos: { src: string; ratio: number; alt: string }[];
+  breakout?: boolean;
+}) {
+  return (
+    <motion.div
+      initial="hidden"
+      whileInView="visible"
+      viewport={viewportOnce}
+      variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.08 } } }}
+      className={`mt-10 flex flex-wrap gap-3 sm:flex-nowrap ${
+        breakout ? "relative left-1/2 w-[min(1180px,92vw)] -translate-x-1/2" : ""
+      }`}
+    >
+      {photos.map((p) => (
+        <motion.div
+          key={p.src}
+          variants={{
+            hidden: { opacity: 0, y: 20, filter: "blur(6px)" },
+            visible: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.6, ease } },
+          }}
+          style={{ flexGrow: p.ratio, flexBasis: 0 }}
+          className="min-w-[45%] sm:min-w-0"
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={p.src}
+            alt={p.alt}
+            loading="lazy"
+            decoding="async"
+            className="h-full w-full rounded-2xl object-cover drop-shadow-[0_10px_24px_rgba(25,25,23,0.07)]"
+          />
+        </motion.div>
+      ))}
+    </motion.div>
+  );
+}
+
 /** Big number + label, used by the hero stat row and the impact row. */
 export function Stat({
   value,

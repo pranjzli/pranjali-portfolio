@@ -24,6 +24,7 @@ import {
   Section,
   Placeholder,
   PlaceholderRow,
+  PhotoRow,
   Stat,
   Bullets,
   Body,
@@ -126,12 +127,12 @@ export function FitAstraCaseStudy() {
       </section>
 
       {/* -------------------------------------------------------- Context */}
-      <Section label={context.label} heading={context.heading} body={context.body}>
-        <PlaceholderRow media={context.media} />
-      </Section>
+      <Section label={context.label} heading={context.heading} body={context.body} />
 
       {/* -------------------------------------------------------- Problem */}
-      <Section label={problem.label} heading={problem.heading} body={problem.body} />
+      <Section label={problem.label} heading={problem.heading} body={problem.body}>
+        <PhotoRow photos={problem.photos} breakout />
+      </Section>
 
       {/* ---------------------------------------------------- Exploration */}
       <Section
