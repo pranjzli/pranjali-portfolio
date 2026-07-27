@@ -151,11 +151,16 @@ export function FitAstraCaseStudy() {
 
       {/* ------------------------------------------------------- Solution */}
       <Section label={solution.label} heading={solution.heading} body={solution.body}>
-        <Reveal group className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        {/* Breaks out past the text measure — four cards at reading width left
+            the copy setting two or three words to a line. */}
+        <Reveal
+          group
+          className="relative left-1/2 mt-10 grid w-[min(1180px,92vw)] -translate-x-1/2 gap-5 sm:grid-cols-2 lg:grid-cols-4"
+        >
           {solution.decisions.map((d) => (
             <Reveal.Item
               key={d.no}
-              className="rounded-2xl border border-line bg-white p-5 transition-transform duration-300 hover:-translate-y-1"
+              className="rounded-2xl border border-line bg-white p-6 transition-transform duration-300 hover:-translate-y-1"
             >
               <span className="text-xs font-bold tracking-[0.12em] text-[var(--cs-accent)]">
                 {d.no}

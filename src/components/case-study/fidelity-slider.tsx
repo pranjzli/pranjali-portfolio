@@ -1,15 +1,27 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { motion } from "motion/react";
+import {
+  animate,
+  motion,
+  useInView,
+  useMotionTemplate,
+  useMotionValue,
+  useReducedMotion,
+  useTransform,
+  type AnimationPlaybackControls,
+} from "motion/react";
 import { viewportOnce, ease } from "@/lib/motion";
 
 type Side = { src: string; alt: string; label: string; ratio: number };
 
 /**
- * Two states of the same flow, stacked and revealed by a draggable divider.
- * The lo-fi is drawn on paper, so it is pushed to pure white and multiplied
- * onto the page — the pencil reads as if it were drawn on the site itself.
+ * Two states of the same flow, stacked and revealed by a divider.
+ *
+ * The divider is a motion value rather than React state, so scrubbing it
+ * doesn't re-render the images every frame. On first scroll into view it
+ * sweeps left → right → centre once, to show that it can be moved; any
+ * interaction cancels that and hands control over.
  *
  * Both images share a width; the box takes the taller one's ratio and the
  * shorter sits top-aligned inside it.
@@ -19,21 +31,67 @@ export function FidelitySlider({
   after,
   className = "",
 }: {
-  before: Side; // shown on the left of the divider
-  after: Side; // revealed on the right
+  before: Side; // revealed to the left of the divider
+  after: Side; // sits underneath
   className?: string;
 }) {
-  const [pos, setPos] = useState(50);
-  const [dragging, setDragging] = useState(false);
   const frame = useRef<HTMLDivElement>(null);
+  const reduce = useReducedMotion();
+  const inView = useInView(frame, { once: true, amount: 0.45 });
 
-  const setFromClientX = useCallback((clientX: number) => {
-    const rect = frame.current?.getBoundingClientRect();
-    if (!rect) return;
-    const next = ((clientX - rect.left) / rect.width) * 100;
-    setPos(Math.min(100, Math.max(0, next)));
+  // Starts closed so the intro sweep has somewhere to travel from.
+  const pos = useMotionValue(0);
+  const remainder = useTransform(pos, (v) => 100 - v);
+  const clipPath = useMotionTemplate`inset(0 ${remainder}% 0 0)`;
+  const left = useMotionTemplate`${pos}%`;
+
+  const intro = useRef<AnimationPlaybackControls | null>(null);
+  const introDone = useRef(false);
+  const [dragging, setDragging] = useState(false);
+  // Mirrored only for assistive tech, at a coarse step so it stays cheap.
+  const [ariaPos, setAriaPos] = useState(0);
+
+  useEffect(() => {
+    const stop = pos.on("change", (v) =>
+      setAriaPos((prev) => (Math.abs(v - prev) >= 2 ? Math.round(v) : prev)),
+    );
+    return stop;
+  }, [pos]);
+
+  /** Hand control to the reader; the demo sweep gets out of the way. */
+  const takeOver = useCallback(() => {
+    intro.current?.stop();
+    intro.current = null;
+    introDone.current = true;
   }, []);
 
+  useEffect(() => {
+    if (!inView || introDone.current) return;
+    introDone.current = true;
+
+    if (reduce) {
+      pos.set(50);
+      return;
+    }
+
+    intro.current = animate(pos, [0, 100, 50], {
+      duration: 2.6,
+      times: [0, 0.55, 1],
+      ease: "easeInOut",
+      delay: 0.3,
+    });
+  }, [inView, reduce, pos]);
+
+  const setFromClientX = useCallback(
+    (clientX: number) => {
+      const rect = frame.current?.getBoundingClientRect();
+      if (!rect) return;
+      pos.set(Math.min(100, Math.max(0, ((clientX - rect.left) / rect.width) * 100)));
+    },
+    [pos],
+  );
+
+  // Drag continues outside the frame, so these live on the window.
   useEffect(() => {
     if (!dragging) return;
     const move = (e: PointerEvent) => setFromClientX(e.clientX);
@@ -46,13 +104,22 @@ export function FidelitySlider({
     };
   }, [dragging, setFromClientX]);
 
+  /** A mouse over the frame scrubs directly — no need to grab the handle. */
+  function onPointerMove(e: React.PointerEvent) {
+    if (e.pointerType !== "mouse" || dragging) return;
+    takeOver();
+    setFromClientX(e.clientX);
+  }
+
   function onKeyDown(e: React.KeyboardEvent) {
     const step = e.shiftKey ? 10 : 4;
-    if (e.key === "ArrowLeft") setPos((p) => Math.max(0, p - step));
-    else if (e.key === "ArrowRight") setPos((p) => Math.min(100, p + step));
-    else if (e.key === "Home") setPos(0);
-    else if (e.key === "End") setPos(100);
+    const current = pos.get();
+    if (e.key === "ArrowLeft") pos.set(Math.max(0, current - step));
+    else if (e.key === "ArrowRight") pos.set(Math.min(100, current + step));
+    else if (e.key === "Home") pos.set(0);
+    else if (e.key === "End") pos.set(100);
     else return;
+    takeOver();
     e.preventDefault();
   }
 
@@ -69,14 +136,16 @@ export function FidelitySlider({
     >
       <div
         ref={frame}
+        onPointerMove={onPointerMove}
         onPointerDown={(e) => {
+          takeOver();
           setDragging(true);
           setFromClientX(e.clientX);
         }}
         style={{ aspectRatio: String(boxRatio) }}
-        className="relative w-full touch-none select-none overflow-hidden rounded-2xl"
+        className="relative w-full cursor-ew-resize touch-none select-none overflow-hidden rounded-2xl"
       >
-        {/* After — the full-fidelity state, sitting underneath */}
+        {/* After — the shipped screens, sitting underneath */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={after.src}
@@ -87,10 +156,7 @@ export function FidelitySlider({
 
         {/* Before — clipped to the divider. The sketch is already ink on white,
             so it only needs multiplying to sit on the page ground. */}
-        <div
-          className="absolute inset-0 bg-background"
-          style={{ clipPath: `inset(0 ${100 - pos}% 0 0)` }}
-        >
+        <motion.div className="absolute inset-0 bg-background" style={{ clipPath }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={before.src}
@@ -98,35 +164,36 @@ export function FidelitySlider({
             draggable={false}
             className="absolute inset-x-0 top-0 w-full mix-blend-multiply"
           />
-        </div>
+        </motion.div>
 
         {/* Divider */}
-        <div
+        <motion.div
           className="pointer-events-none absolute inset-y-0 w-px bg-foreground/20"
-          style={{ left: `${pos}%` }}
+          style={{ left }}
         />
 
         {/* Handle */}
-        <button
+        <motion.button
           type="button"
           role="slider"
-          aria-label="Reveal the lo-fi or the final screens"
+          aria-label="Reveal the lo-fi or the shipped screens"
           aria-valuemin={0}
           aria-valuemax={100}
-          aria-valuenow={Math.round(pos)}
-          aria-valuetext={`${Math.round(pos)}% ${before.label}`}
+          aria-valuenow={ariaPos}
+          aria-valuetext={`${ariaPos}% ${before.label}`}
           onKeyDown={onKeyDown}
           onPointerDown={(e) => {
             e.stopPropagation();
+            takeOver();
             setDragging(true);
           }}
-          style={{ left: `${pos}%` }}
+          style={{ left }}
           className="absolute top-1/2 grid size-10 -translate-x-1/2 -translate-y-1/2 cursor-ew-resize place-items-center rounded-full border border-line bg-background text-muted shadow-[0_4px_14px_rgba(25,25,23,0.12)] transition-transform hover:scale-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--cs-accent)] active:scale-95"
         >
           <span aria-hidden className="text-sm tracking-[-0.1em]">
             ←→
           </span>
-        </button>
+        </motion.button>
 
         {/* Side labels */}
         <span className="pointer-events-none absolute bottom-3 left-3 rounded-full bg-background/85 px-2.5 py-1 text-[11px] font-medium uppercase tracking-[0.12em] text-muted backdrop-blur-sm">
