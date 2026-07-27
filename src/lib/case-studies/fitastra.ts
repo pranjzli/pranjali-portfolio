@@ -68,24 +68,20 @@ export const exploration = {
   ],
   outro:
     "We dropped the direction. Designing it fully made that an easy conversation — the founder and I were looking at the same flows and the same user feedback, not arguing opinions.",
-  // Ordered the way the work happened: paper sketch, then the user-side flow,
-  // then the coach's side of the same model. All full-width — these are wide
-  // flow diagrams that go unreadable in a two-up grid.
+  // The user-side flow, then the coach's side of the same model.
+  // Captions are the frame's own; wide diagrams go unreadable at reading width.
   media: [
-    {
-      src: "/images/case-studies/fitastra/lofi-sketch.jpg",
-      ratio: "1596/1184",
-      alt: "Paper sketch of the first lo-fi structure — home with wallet, discover, chat with trainer, book 1:1, and discover partners",
-    },
     {
       src: "/images/case-studies/fitastra/lofi-user-flow.png",
       ratio: "2800/1059",
       alt: "User-side lo-fi flow — browsing coaches, wallet recharge, payment, prefilled fitness form, and the chat session",
+      caption: "The chat model, designed in full — wallet, recharge, timer, ratings",
     },
     {
       src: "/images/case-studies/fitastra/lofi-coach-flow.png",
       ratio: "2800/1826",
       alt: "Coach-side lo-fi flow — going online, chat requests and queue, the session timer, and earnings",
+      caption: "The coach side of the same model — availability, requests, earnings",
     },
   ],
 };

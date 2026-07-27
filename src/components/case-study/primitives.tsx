@@ -41,35 +41,50 @@ export function Body({ children }: { children: string }) {
   );
 }
 
-export type Media = { ratio: string; src?: string; alt?: string };
+export type Media = { ratio: string; src?: string; alt?: string; caption?: string };
 
 /**
- * An image slot. With `src` it renders the artwork on the same green card,
- * so filled and empty slots read as one family; without, it stays a bare
- * green placeholder — no caption or helper text either way.
+ * An image slot. Artwork sits on the page itself — no card behind it, just a
+ * faint shadow to lift it off the ground — with a caption underneath. Empty
+ * slots stay bare green placeholders.
+ *
+ * The padding is kept on the wrapper even without the card so the artwork
+ * renders at exactly the width it did on the card; the screens inside these
+ * flow diagrams must not change size.
  */
-export function Placeholder({ ratio = "16/9", src, alt = "" }: Media) {
+export function Placeholder({ ratio = "16/9", src, alt = "", caption }: Media) {
   return (
-    <motion.div
+    <motion.figure
       initial={{ opacity: 0, y: 24, filter: "blur(6px)" }}
       whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
       viewport={viewportOnce}
       transition={{ duration: 0.7, ease }}
       style={src ? undefined : { aspectRatio: ratio }}
-      className="w-full overflow-hidden rounded-2xl bg-card"
+      className={
+        src
+          ? "w-full p-3 sm:p-4"
+          : "w-full overflow-hidden rounded-2xl bg-card"
+      }
     >
       {src && (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          src={src}
-          alt={alt}
-          loading="lazy"
-          decoding="async"
-          style={{ aspectRatio: ratio }}
-          className="w-full object-contain p-3 sm:p-4"
-        />
+        <>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={src}
+            alt={alt}
+            loading="lazy"
+            decoding="async"
+            style={{ aspectRatio: ratio }}
+            className="w-full rounded-lg object-contain drop-shadow-[0_10px_24px_rgba(25,25,23,0.07)]"
+          />
+          {caption && (
+            <figcaption className="mt-4 text-sm leading-relaxed text-muted">
+              {caption}
+            </figcaption>
+          )}
+        </>
       )}
-    </motion.div>
+    </motion.figure>
   );
 }
 
@@ -96,7 +111,7 @@ export function PlaceholderRow({
       }
     >
       {media.map((m, i) => (
-        <Placeholder key={i} ratio={m.ratio} src={m.src} alt={m.alt} />
+        <Placeholder key={i} ratio={m.ratio} src={m.src} alt={m.alt} caption={m.caption} />
       ))}
     </div>
   );
