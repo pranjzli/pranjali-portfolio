@@ -13,6 +13,7 @@ import {
   coachApp,
   role,
   impact,
+  tryIt,
   learned,
   outro,
 } from "@/lib/case-studies/fitastra";
@@ -178,9 +179,7 @@ export function FitAstraCaseStudy() {
       </Section>
 
       {/* ---------------------------------------------------------- Role */}
-      <Section id="role" label={role.label} heading={role.heading} body={role.body}>
-        <PlaceholderRow media={role.media} />
-      </Section>
+      <Section id="role" label={role.label} heading={role.heading} body={role.body} />
 
       {/* -------------------------------------------------------- Impact */}
       <Section id="impact" label={impact.label} heading={impact.heading} body={impact.body}>
@@ -194,6 +193,37 @@ export function FitAstraCaseStudy() {
           <p className="border-l-2 border-[var(--cs-accent)] pl-5 text-[15px] leading-relaxed text-muted">
             {impact.note}
           </p>
+        </Reveal>
+
+        {/* Go use the thing you just read about */}
+        <Reveal className="mt-12">
+          <p className="text-lg tracking-tight">{tryIt.line}</p>
+          <div className="mt-5 flex flex-wrap items-center gap-3">
+            {tryIt.links.map((l) => (
+              <a
+                key={l.label}
+                href={l.href || undefined}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-disabled={l.href ? undefined : true}
+                className={`group inline-flex items-center gap-3 rounded-full border border-foreground/80 px-5 py-2.5 text-[15px] text-foreground transition-[transform,background-color,color] duration-300 ${
+                  l.href
+                    ? "hover:-translate-y-0.5 hover:bg-foreground hover:text-background"
+                    : "pointer-events-none opacity-40"
+                }`}
+              >
+                <span className="transition-transform duration-300 group-hover:translate-x-0.5">
+                  {l.label}
+                </span>
+                <span
+                  aria-hidden
+                  className="text-muted transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:text-background"
+                >
+                  ↗
+                </span>
+              </a>
+            ))}
+          </div>
         </Reveal>
       </Section>
 

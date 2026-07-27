@@ -163,7 +163,6 @@ export const role = {
   label: "My role",
   heading: "Freelance product designer, working with the founder who was also the developer",
   body: "I owned the experience end to end: user interviews, the chat-model exploration, information architecture, flows, UX for both apps, and the documentation the developer built from.",
-  media: [{ ratio: "21/9" as const }],
 };
 
 export const impact = {
@@ -176,6 +175,17 @@ export const impact = {
     { value: "4.8/5", label: "avg. session rating" },
   ],
   note: "I worked on FitAstra in 2025 and handed the project off after launch. The app has evolved since — this case study covers the version I designed and shipped.",
+};
+
+/** Both apps are live, so the reader can go use the thing they just read about. */
+export const tryIt = {
+  line: "The app is live — try it yourself",
+  // TODO: paste the real store URLs. Left empty on purpose: a wrong link here
+  // sends visitors to somebody else's app.
+  links: [
+    { label: "App Store", href: "" },
+    { label: "Google Play", href: "" },
+  ],
 };
 
 export const learned = {
