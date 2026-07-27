@@ -218,13 +218,7 @@ export function FitAstraCaseStudy() {
                     : "pointer-events-none opacity-40"
                 }`}
               >
-                {l.icon === "apple" ? (
-                  // Nudged up a hair — the apple's leaf makes it read low when
-                  // optically centred against the cap height.
-                  <AppleIcon className="size-[18px] -translate-y-[1px]" />
-                ) : (
-                  <GooglePlayIcon />
-                )}
+                {l.icon === "apple" ? <AppleIcon /> : <GooglePlayIcon />}
                 <span className="transition-transform duration-300 group-hover:translate-x-0.5">
                   {l.label}
                 </span>
