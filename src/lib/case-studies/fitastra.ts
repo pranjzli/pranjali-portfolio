@@ -134,7 +134,22 @@ export const solution = {
       body: "Users hesitate to pay on a new platform. So every coach is personally verified with valid certifications, and if a session doesn't go as expected, the user gets a full refund. Both are shown before payment.",
     },
   ],
-  media: [{ ratio: "21/9" as const }, { ratio: "21/9" as const }, { ratio: "21/9" as const }],
+  // Paper and product, stacked behind a draggable divider. The frames don't
+  // correspond one-to-one — this reads as the arc from sketch to shipped.
+  fidelity: {
+    before: {
+      src: "/images/case-studies/fitastra/coach-lofi.jpg",
+      alt: "Pencil sketches of the booking flow — coach tab, coach profile, date and time, session info, payment, booking confirmed",
+      label: "Lo-fi",
+      ratio: 2792 / 588,
+    },
+    after: {
+      src: "/images/case-studies/fitastra/coach-hifi.png",
+      alt: "The shipped booking screens — find a trainer, coach profile, date and time, session details, payment, and session history",
+      label: "Shipped",
+      ratio: 2800 / 520,
+    },
+  },
 };
 
 export const coachApp = {

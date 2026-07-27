@@ -29,6 +29,7 @@ import {
   Bullets,
   Body,
 } from "@/components/case-study/primitives";
+import { FidelitySlider } from "@/components/case-study/fidelity-slider";
 
 const item = {
   hidden: { opacity: 0, y: 18, filter: "blur(6px)" },
@@ -164,11 +165,11 @@ export function FitAstraCaseStudy() {
           ))}
         </Reveal>
 
-        <div className="mt-10 space-y-6">
-          {solution.media.map((m, i) => (
-            <Placeholder key={i} ratio={m.ratio} />
-          ))}
-        </div>
+        <FidelitySlider
+          before={solution.fidelity.before}
+          after={solution.fidelity.after}
+          className="relative left-1/2 mt-10 w-[min(1180px,92vw)] -translate-x-1/2"
+        />
       </Section>
 
       {/* ------------------------------------------------------ Coach app */}
