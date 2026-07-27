@@ -180,11 +180,12 @@ export const impact = {
 /** Both apps are live, so the reader can go use the thing they just read about. */
 export const tryIt = {
   line: "The app is live — try it yourself",
-  // TODO: paste the real store URLs. Left empty on purpose: a wrong link here
-  // sends visitors to somebody else's app.
   links: [
-    { label: "App Store", href: "" },
-    { label: "Google Play", href: "" },
+    { label: "App Store", href: "https://apps.apple.com/in/app/fitastra/id6746420777" },
+    {
+      label: "Google Play",
+      href: "https://play.google.com/store/apps/details?id=com.fitastra.fitastra",
+    },
   ],
 };
 
