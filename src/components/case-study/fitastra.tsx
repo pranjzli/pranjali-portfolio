@@ -143,7 +143,7 @@ export function FitAstraCaseStudy() {
         <Reveal className="mt-6">
           <Body>{exploration.outro}</Body>
         </Reveal>
-        <PlaceholderRow media={exploration.media} />
+        <PlaceholderRow media={exploration.media} breakout />
       </Section>
 
       {/* ------------------------------------------------------- Solution */}

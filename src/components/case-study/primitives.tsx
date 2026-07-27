@@ -41,31 +41,62 @@ export function Body({ children }: { children: string }) {
   );
 }
 
+export type Media = { ratio: string; src?: string; alt?: string };
+
 /**
- * Green image placeholder. Intentionally has no caption or helper text —
- * real screens drop in later.
+ * An image slot. With `src` it renders the artwork on the same green card,
+ * so filled and empty slots read as one family; without, it stays a bare
+ * green placeholder — no caption or helper text either way.
  */
-export function Placeholder({ ratio = "16/9" }: { ratio?: string }) {
+export function Placeholder({ ratio = "16/9", src, alt = "" }: Media) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 24, filter: "blur(6px)" }}
       whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
       viewport={viewportOnce}
       transition={{ duration: 0.7, ease }}
-      style={{ aspectRatio: ratio }}
-      className="w-full rounded-2xl bg-card"
-    />
+      style={src ? undefined : { aspectRatio: ratio }}
+      className="w-full overflow-hidden rounded-2xl bg-card"
+    >
+      {src && (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={src}
+          alt={alt}
+          loading="lazy"
+          decoding="async"
+          style={{ aspectRatio: ratio }}
+          className="w-full object-contain p-3 sm:p-4"
+        />
+      )}
+    </motion.div>
   );
 }
 
-/** A row of placeholders that share a row width. */
-export function PlaceholderRow({ media }: { media: { ratio: string }[] }) {
+/**
+ * A row of slots. Two-up only when nothing in the row carries artwork.
+ * `breakout` widens past the text measure — wide flow diagrams go unreadable
+ * at reading width.
+ */
+export function PlaceholderRow({
+  media,
+  breakout = false,
+}: {
+  media: Media[];
+  breakout?: boolean;
+}) {
+  const hasArt = media.some((m) => m.src);
+
   return (
     <div
-      className={`mt-10 grid gap-6 ${media.length > 1 ? "md:grid-cols-2" : ""}`}
+      className={
+        breakout
+          ? "relative left-1/2 mt-10 w-[min(1180px,92vw)] -translate-x-1/2 space-y-6"
+          : `mt-10 grid gap-6 ${media.length > 1 && !hasArt ? "md:grid-cols-2" : ""}`
+      }
     >
       {media.map((m, i) => (
-        <Placeholder key={i} ratio={m.ratio} />
+        <Placeholder key={i} ratio={m.ratio} src={m.src} alt={m.alt} />
       ))}
     </div>
   );
