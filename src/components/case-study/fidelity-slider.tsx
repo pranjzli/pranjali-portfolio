@@ -85,8 +85,8 @@ export function FidelitySlider({
           className="absolute inset-x-0 top-0 w-full"
         />
 
-        {/* Before — clipped to the divider. Paper blown out to white, then
-            multiplied so only the pencil survives onto the page ground. */}
+        {/* Before — clipped to the divider. The sketch is already ink on white,
+            so it only needs multiplying to sit on the page ground. */}
         <div
           className="absolute inset-0 bg-background"
           style={{ clipPath: `inset(0 ${100 - pos}% 0 0)` }}
@@ -96,10 +96,7 @@ export function FidelitySlider({
             src={before.src}
             alt={before.alt}
             draggable={false}
-            // Paper sits at ~60% luminance and pencil at ~35%, so it takes a
-            // hard brightness+contrast push to clip the paper to pure white
-            // while the strokes survive. Measured, not guessed.
-            className="absolute inset-x-0 top-0 w-full mix-blend-multiply [filter:grayscale(1)_brightness(1.32)_contrast(4.6)]"
+            className="absolute inset-x-0 top-0 w-full mix-blend-multiply"
           />
         </div>
 
