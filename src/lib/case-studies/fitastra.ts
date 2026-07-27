@@ -181,10 +181,15 @@ export const impact = {
 export const tryIt = {
   line: "The app is live — try it yourself",
   links: [
-    { label: "App Store", href: "https://apps.apple.com/in/app/fitastra/id6746420777" },
+    {
+      label: "App Store",
+      href: "https://apps.apple.com/in/app/fitastra/id6746420777",
+      icon: "apple" as const,
+    },
     {
       label: "Google Play",
       href: "https://play.google.com/store/apps/details?id=com.fitastra.fitastra",
+      icon: "play" as const,
     },
   ],
 };
