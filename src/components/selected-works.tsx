@@ -10,13 +10,15 @@ import { Reveal } from "@/components/ui/reveal";
 function CardSurface({
   className = "",
   arrow = true,
+  href = "#",
 }: {
   className?: string;
   arrow?: boolean;
+  href?: string;
 }) {
   return (
     <motion.a
-      href="#"
+      href={href}
       whileHover="hover"
       className={`group relative block overflow-hidden rounded-2xl bg-card ${className}`}
     >
@@ -79,7 +81,7 @@ export function SelectedWorks() {
               viewport={viewportOnce}
               transition={{ duration: 0.6, ease, delay: i * 0.08 }}
             >
-              <CardSurface className="aspect-[5/4] w-full" />
+              <CardSurface href={p.href ?? "#"} className="aspect-[5/4] w-full" />
               <h3 className="mt-4 text-xl leading-snug tracking-tight">
                 <AccentText>{p.title}</AccentText>
               </h3>

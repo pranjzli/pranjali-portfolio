@@ -75,6 +75,8 @@ export type Project = {
   title: string; // *asterisks* -> serif accent
   meta: string;
   span: "wide" | "tall" | "half";
+  /** Case study route, once one exists. */
+  href?: string;
 };
 
 export const projects: Project[] = [
@@ -92,6 +94,7 @@ export const projects: Project[] = [
     title: "I designed the *coaches tab* at {{fitastra}} FitAstra that helps users find a suitable trainer",
     meta: "2024 · Product design, UX, User research",
     span: "half",
+    href: "/work/fitastra",
   },
 ];
 
