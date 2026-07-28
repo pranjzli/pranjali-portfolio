@@ -189,7 +189,7 @@ export function FitAstraCaseStudy() {
 
       {/* -------------------------------------------------------- Impact */}
       <Section id="impact" label={impact.label} heading={impact.heading} body={impact.body}>
-        <Reveal group className="mt-10 grid grid-cols-1 gap-8 sm:grid-cols-3">
+        <Reveal group className="mt-10 grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-4 sm:gap-x-8">
           {impact.stats.map((s) => (
             <Stat key={s.label} value={s.value} label={s.label} size="sm" />
           ))}

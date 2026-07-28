@@ -30,8 +30,8 @@ export const tldr = {
 };
 
 export const topStats = [
-  { value: "X", label: "sessions booked" },
-  { value: "X", label: "coaches onboarded" },
+  { value: "80+", label: "sessions booked" },
+  { value: "15+", label: "coaches onboarded" },
   { value: "2", label: "apps designed — user side and coach side" },
 ];
 
@@ -170,8 +170,9 @@ export const impact = {
   heading: "Shipped on iOS and Android, and opened a new revenue stream",
   body: "Coach booking went live as one of FitAstra's core features and gave the app its first paid product.",
   stats: [
-    { value: "X", label: "sessions booked" },
-    { value: "X", label: "coaches onboarded" },
+    { value: "80+", label: "sessions booked" },
+    { value: "15+", label: "coaches onboarded" },
+    { value: "30+", label: "paying clients" },
     { value: "4.8/5", label: "avg. session rating" },
   ],
   note: "I worked on FitAstra in 2025 and handed the project off after launch. The app has evolved since — this case study covers the version I designed and shipped.",
