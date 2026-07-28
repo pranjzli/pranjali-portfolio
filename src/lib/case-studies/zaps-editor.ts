@@ -187,6 +187,23 @@ export const library = {
   ],
 };
 
+/**
+ * Store listing and campaign work. Sits after the library section — the
+ * templates get made, then they get sold.
+ */
+export const store = {
+  label: "Taking it to market",
+  heading: "I designed the *App Store* screens and the marketing ads",
+  body: "The same system carried outside the product: the store listing that sells the editor, and the ad creatives that run alongside it.",
+  media: {
+    ratio: "2000/1339",
+    // Save the listing screenshot to public/images/case-studies/zaps/app-store.png
+    // and uncomment to swap the placeholder for it.
+    // src: "/images/case-studies/zaps/app-store.png",
+    alt: "The Zaps App Store listing — icon, title and five screenshots covering carousels, reels, templates, frames and stickers",
+  },
+};
+
 export const role = {
   label: "My role",
   heading: "Product designer — the editing experience, *end to end*",

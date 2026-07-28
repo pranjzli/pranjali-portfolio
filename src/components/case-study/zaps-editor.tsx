@@ -13,6 +13,7 @@ import {
   canvas,
   testing,
   library,
+  store,
   role,
   impact,
   learned,
@@ -228,6 +229,11 @@ export function ZapsEditorCaseStudy() {
             </Reveal.Item>
           ))}
         </Reveal>
+      </Section>
+
+      {/* ---------------------------------------------------------- Store */}
+      <Section label={store.label} heading={store.heading} body={store.body}>
+        <PlaceholderRow media={[store.media]} breakout />
       </Section>
 
       {/* ----------------------------------------------------------- Role */}
