@@ -10,6 +10,7 @@ import {
   problem,
   research,
   editor,
+  canvas,
   testing,
   library,
   role,
@@ -29,6 +30,7 @@ import {
   Stat,
   Body,
 } from "@/components/case-study/primitives";
+import { FigmaEmbed } from "@/components/case-study/figma-embed";
 
 const item = {
   hidden: { opacity: 0, y: 18, filter: "blur(6px)" },
@@ -198,6 +200,16 @@ export function ZapsEditorCaseStudy() {
         </Reveal>
 
         <PlaceholderRow media={[editor.timeline]} breakout />
+      </Section>
+
+      {/* --------------------------------------------------------- Canvas */}
+      <Section label={canvas.label} heading={canvas.heading} body={canvas.body}>
+        <FigmaEmbed
+          url={canvas.url}
+          title={canvas.title}
+          caption={canvas.caption}
+          className="relative left-1/2 mt-10 w-[min(1180px,92vw)] -translate-x-1/2"
+        />
       </Section>
 
       {/* -------------------------------------------------------- Testing */}

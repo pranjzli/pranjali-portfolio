@@ -131,6 +131,21 @@ export const editor = {
   timeline: { ratio: "1000/440", caption: "The reel timeline — a different canvas, the same modules" },
 };
 
+/**
+ * The working canvas itself. Embedded rather than exported — it's a whole
+ * Figma page of modules and screens, so panning through it beats a flattened
+ * image of mostly empty canvas.
+ */
+export const canvas = {
+  label: "The canvas",
+  heading: "Every screen and module, *in one place*",
+  body: "The modules, their bottom sheets and controls, and the screens they build — the working file behind the editor. Pan and zoom to look around.",
+  // fileKey/name + node, as the embed URL expects it
+  url: "gnweT8KWtnkVgOPAm1SBqC/Untitled?node-id=2001-144",
+  title: "Zaps editor — the full design canvas",
+  caption: "Modules, bottom sheets, controls and the screens they compose.",
+};
+
 export const testing = {
   label: "Testing & feedback",
   heading: "What *real usage* told us",
