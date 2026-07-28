@@ -11,9 +11,9 @@
 
 export const meta = {
   eyebrow: "Zaps @ Turnip · 2024–2026",
-  title: "I designed the *editor* experience behind Zaps' 7.5x revenue growth",
+  title: "I designed the *editor* experience at Zaps for creators to create and edit content quickly",
   intro:
-    "Zaps went from social app to AI editor to creator tool. I designed the editing experience through all three — and the unified editor that worked at last.",
+    "Zaps went from social app to AI editor to creator tool. I designed through all three — and the unified editor was one of the major projects I owned along the way.",
   nav: { backLabel: "Back to work", backHref: "/#work" },
 };
 
@@ -51,7 +51,7 @@ export const journey = {
     {
       tag: "V2 · AI Editor",
       title: "The AI experiment",
-      body: "AI photo trends were surging, and our face-swap selfie feature was already popular. Product and growth picked a set of countries to test monetisation — we removed the social layer there and sold Zaps as an AI editor. I designed it end to end: outfit try-ons, face features, filters. The single editor screen went through roughly 200 iterations. It earned, but trends are short-lived — the product needed something more durable.",
+      body: "AI photo trends were surging, and our face-swap selfie feature was already popular. Product and growth picked a set of countries to test monetisation — we removed the social layer there and sold Zaps as an AI editor. I designed it end to end: outfit try-ons, face features, filters. It earned, but trends are short-lived — the product needed something more durable.",
     },
     {
       tag: "V3 · Creator Tool",
@@ -63,10 +63,10 @@ export const journey = {
 
 export const problem = {
   label: "The problem",
-  heading: "Three pivots left us with editor experiences that didn't match",
+  heading: "Three pivots left us with experiences that didn't match",
   body: [
-    "Each version had shipped its own editing experience. Editing a template worked one way, editing a photo another, and reels and carousels were different again — same app, no shared logic. Users had to relearn the basics on every surface, and every new format we wanted to launch meant designing and building an editing experience from scratch.",
-    "The product couldn't come together until the editor did. That became my main project.",
+    "Each version had shipped its own editing experience. Editing a template worked one way, editing a photo another, AI enhancing an image had its own separate experience, and reels and carousels were different again — same app, no shared logic. Users had to relearn the basics on every surface, and every new format we wanted to launch meant designing and building an editing experience from scratch.",
+    "The product couldn't come together until the experience did. That became my main project.",
   ],
 };
 
@@ -101,12 +101,12 @@ export const research = {
 export const editor = {
   label: "The editor",
   heading: "One editor experience that works for *every format*",
-  body: "Instead of an editor per format, I designed one system of modules — text, stickers, frames, filters, backgrounds, crop. What changes per format is the canvas: a single image, a multi-slide carousel, a reel timeline. The toolkit stays the same.",
+  body: "Instead of an editor per format, I designed one system of modules — text, stickers, frames, filters, backgrounds. What changes per format is the canvas: a single image, a multi-slide carousel, a reel timeline. The toolkit stays the same.",
   // Lead phrase and the rest, so the scan line reads on its own.
   principles: [
     {
       lead: "Learn once, use everywhere.",
-      rest: "Every module opens the same way, in the same bottom sheet, with the same controls — whether you're editing a template, a photo, a carousel or a reel.",
+      rest: "Every module opens the same way, in the same bottom sheet, with the same controls — whether you're editing a template, a photo, a carousel or a reel. Because the editor was unified, the modules had to scale with it: I designed each one to hold up across every use case rather than for a single surface.",
     },
     {
       lead: "New formats stopped being rebuilds.",
@@ -118,7 +118,7 @@ export const editor = {
     },
   ],
   constraint:
-    "All of it was designed inside the constraints of CESDK, img.ly's editor SDK. Every interaction had to be possible within what the engine supports, which forced the system to stay simple — nothing could afford to be designed twice.",
+    "All of it was designed inside the constraints of CESDK, img.ly's editor SDK. Every interaction had to be possible within what the engine supports, which forced the system to stay simple. We're now building our own SDK.",
   wide: [
     { ratio: "1000/440", caption: "The module system — the same toolkit on every canvas" },
     { ratio: "1000/440", caption: "One bottom-sheet pattern shared by every module" },
@@ -163,8 +163,8 @@ export const library = {
   label: "Behind the editor",
   heading: "The template library it *runs on*",
   body: [
-    "The editor is only half the product — it needed a library worth opening. I set the production guidelines (how templates are built, how layers are named so tech can convert them into editable templates), then hired and ran a team of 8–10 freelance designers, plus a junior designer I managed directly. Together we built a library of 5,000+ templates across stories, wallpapers, invites, carousels and reels — the content Zaps monetises on.",
-    "When production costs grew, I spent a week building our frames, stickers and fonts into CESDK as reusable assets. A template that took a designer 30 minutes now takes about 5 — roughly 6x faster, at a fraction of the cost.",
+    "The editor is only half the product — it needed a library worth opening. I set the production guidelines (how templates are built, how layers are named so tech can convert them into editable templates), then hired and ran a team of 8–10 freelance designers, plus a junior designer I managed directly. Together we built a library of 5,000+ templates across stories, wallpapers, invites, carousels and reels — the content Zaps monetises on, uploaded and managed through Retool.",
+    "When production costs grew, I proposed building our frames, stickers and fonts into CESDK as reusable assets — and it worked. A template that took a designer 30 minutes now takes about 5 — roughly 6x faster, at a fraction of the cost.",
   ],
   media: [
     { ratio: "300/440", caption: "The template library" },
@@ -175,7 +175,7 @@ export const library = {
 export const role = {
   label: "My role",
   heading: "Product designer — the editing experience, *end to end*",
-  body: "Direction and monetisation decisions sat with our design head and the product and growth teams. Within that, this was mine: the editor across all three versions of the app, the interaction design, testing the features before release, handoff to engineering, and the template guidelines and team.",
+  body: "I owned the editor and the modules and features inside it — across all three versions of the app: the interaction design, testing features before release, handoff to engineering, and the template guidelines and the team producing them. Direction and monetisation decisions sat with our design head and the product and growth teams.",
   media: [{ ratio: "1000/440", caption: "The handoff canvas for the editor" }],
 };
 
@@ -192,8 +192,8 @@ export const impact = {
 
 export const learned = {
   label: "What I learned",
-  heading: "In a fast-moving product, the *system* is the work",
-  body: "Zaps changed direction three times, and each change was a race. The editor survived because it was designed as a system — shared modules, one interaction language, formats as canvases. When the next experiment came, we added to the editor instead of starting over. That's what made the pivots affordable.",
+  heading: "Designing for the *next* change is the part that compounds",
+  body: "Every pivot arrived as a deadline. What made them survivable wasn't designing faster — it was that the modules, the interaction language and the canvas model were already shared, so a new format became something we added to rather than something we rebuilt. The work that held up was the work I did before anyone knew what was coming next.",
 };
 
 export const outro = {
