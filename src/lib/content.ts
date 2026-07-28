@@ -84,6 +84,7 @@ export const projects: Project[] = [
     title: "I designed the *editor* at {{zaps}} Zaps that helps *creators* make and edit content quickly",
     meta: "2025–2026 · Product design, Project management, User research",
     span: "wide",
+    href: "/work/zaps-editor",
   },
   {
     title: "I built the *design system* and token pipeline at {{zaps}} Zaps for designers + developers",
