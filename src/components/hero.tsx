@@ -15,8 +15,19 @@ const item = {
 export function Hero() {
   return (
     <section id="top" className="relative overflow-hidden pt-40 pb-24">
-      {/* Soft foliage wash — image fades to white at its bottom edge */}
-      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 mix-blend-multiply">
+      {/* Soft foliage wash. A wide elliptical mask fades the bottom edge along a
+          rounded curve so the wash melts into the next fold; percentage radii
+          keep the curve scaling with the viewport width. */}
+      <div
+        aria-hidden
+        style={{
+          maskImage:
+            "radial-gradient(130% 88% at 50% -4%, #000 60%, rgba(0,0,0,0.55) 78%, transparent 92%)",
+          WebkitMaskImage:
+            "radial-gradient(130% 88% at 50% -4%, #000 60%, rgba(0,0,0,0.55) 78%, transparent 92%)",
+        }}
+        className="pointer-events-none absolute inset-0 -z-10 mix-blend-multiply"
+      >
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src="/images/hero-bg.png"
