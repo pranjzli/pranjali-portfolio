@@ -119,16 +119,6 @@ export const editor = {
   ],
   constraint:
     "All of it was designed inside the constraints of CESDK, img.ly's editor SDK. Every interaction had to be possible within what the engine supports, which forced the system to stay simple. We're now building our own SDK.",
-  wide: [
-    { ratio: "1000/440", caption: "The module system — the same toolkit on every canvas" },
-    { ratio: "1000/440", caption: "One bottom-sheet pattern shared by every module" },
-  ],
-  formats: [
-    { ratio: "300/440", caption: "Template editing" },
-    { ratio: "300/440", caption: "Photo editing" },
-    { ratio: "300/440", caption: "Reels" },
-  ],
-  timeline: { ratio: "1000/440", caption: "The reel timeline — a different canvas, the same modules" },
 };
 
 /**
@@ -181,10 +171,6 @@ export const library = {
     "The editor is only half the product — it needed a library worth opening. I set the production guidelines (how templates are built, how layers are named so tech can convert them into editable templates), then hired and ran a team of 8–10 freelance designers, plus a junior designer I managed directly. Together we built a library of 5,000+ templates across stories, wallpapers, invites, carousels and reels — the content Zaps monetises on, uploaded and managed through Retool.",
     "When production costs grew, I proposed building our frames, stickers and fonts into CESDK as reusable assets — and it worked. A template that took a designer 30 minutes now takes about 5 — roughly 6x faster, at a fraction of the cost.",
   ],
-  media: [
-    { ratio: "300/440", caption: "The template library" },
-    { ratio: "300/440", caption: "The reusable frames that cut build time" },
-  ],
 };
 
 /**
@@ -197,9 +183,7 @@ export const store = {
   body: "The same system carried outside the product: the store listing that sells the editor, and the ad creatives that run alongside it.",
   media: {
     ratio: "2000/1339",
-    // Save the listing screenshot to public/images/case-studies/zaps/app-store.png
-    // and uncomment to swap the placeholder for it.
-    // src: "/images/case-studies/zaps/app-store.png",
+    src: "/images/case-studies/zaps/app-store.webp",
     alt: "The Zaps App Store listing — icon, title and five screenshots covering carousels, reels, templates, frames and stickers",
   },
 };
@@ -208,7 +192,6 @@ export const role = {
   label: "My role",
   heading: "Product designer — the editing experience, *end to end*",
   body: "I owned the editor and the modules and features inside it — across all three versions of the app: the interaction design, testing features before release, handoff to engineering, and the template guidelines and the team producing them. Direction and monetisation decisions sat with our design head and the product and growth teams.",
-  media: [{ ratio: "1000/440", caption: "The handoff canvas for the editor" }],
 };
 
 export const impact = {

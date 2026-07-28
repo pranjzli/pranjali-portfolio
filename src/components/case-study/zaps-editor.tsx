@@ -25,7 +25,6 @@ import { Reveal } from "@/components/ui/reveal";
 import {
   Measure,
   Section,
-  Placeholder,
   PlaceholderRow,
   CardGrid,
   Stat,
@@ -95,10 +94,6 @@ export function ZapsEditorCaseStudy() {
             </motion.p>
           </Measure>
         </motion.div>
-
-        <Measure className="mt-12">
-          <Placeholder ratio="16/9" />
-        </Measure>
       </section>
 
       {/* ---------------------------------------------------------- TL;DR */}
@@ -131,7 +126,6 @@ export function ZapsEditorCaseStudy() {
 
       {/* -------------------------------------------------------- Journey */}
       <Section label={journey.label} heading={journey.heading} body={journey.body}>
-        {/* Three versions, each with the screen it shipped */}
         <Reveal
           group
           className="relative left-1/2 mt-10 grid w-[min(1180px,92vw)] -translate-x-1/2 gap-5 md:grid-cols-3"
@@ -146,11 +140,6 @@ export function ZapsEditorCaseStudy() {
               </span>
               <h3 className="mt-3 text-[19px] font-semibold leading-snug">{v.title}</h3>
               <p className="mt-2 text-sm leading-relaxed text-muted">{v.body}</p>
-              {/* Pushed to the bottom so the three screens line up across cards
-                  even though the copy above them runs to different lengths */}
-              <div className="mt-auto pt-6">
-                <Placeholder ratio="4/3" />
-              </div>
             </Reveal.Item>
           ))}
         </Reveal>
@@ -184,23 +173,6 @@ export function ZapsEditorCaseStudy() {
         <Reveal className="mt-8">
           <Body>{editor.constraint}</Body>
         </Reveal>
-
-        <PlaceholderRow media={editor.wide} breakout />
-
-        {/* One canvas per format, sharing the same toolkit */}
-        <Reveal
-          group
-          className="relative left-1/2 mt-6 grid w-[min(1180px,92vw)] -translate-x-1/2 gap-6 sm:grid-cols-3"
-        >
-          {editor.formats.map((f) => (
-            <Reveal.Item key={f.caption}>
-              <Placeholder ratio={f.ratio} />
-              <p className="mt-4 text-sm leading-relaxed text-muted">{f.caption}</p>
-            </Reveal.Item>
-          ))}
-        </Reveal>
-
-        <PlaceholderRow media={[editor.timeline]} breakout />
       </Section>
 
       {/* --------------------------------------------------------- Canvas */}
@@ -219,17 +191,7 @@ export function ZapsEditorCaseStudy() {
       </Section>
 
       {/* -------------------------------------------------------- Library */}
-      <Section label={library.label} heading={library.heading} body={library.body}>
-        {/* Two portrait screens — side by side, not stacked full-bleed */}
-        <Reveal group className="mt-10 grid gap-6 sm:grid-cols-2">
-          {library.media.map((m) => (
-            <Reveal.Item key={m.caption}>
-              <Placeholder ratio={m.ratio} />
-              <p className="mt-4 text-sm leading-relaxed text-muted">{m.caption}</p>
-            </Reveal.Item>
-          ))}
-        </Reveal>
-      </Section>
+      <Section label={library.label} heading={library.heading} body={library.body} />
 
       {/* ---------------------------------------------------------- Store */}
       <Section label={store.label} heading={store.heading} body={store.body}>
@@ -237,9 +199,7 @@ export function ZapsEditorCaseStudy() {
       </Section>
 
       {/* ----------------------------------------------------------- Role */}
-      <Section id="role" label={role.label} heading={role.heading} body={role.body}>
-        <PlaceholderRow media={role.media} breakout />
-      </Section>
+      <Section id="role" label={role.label} heading={role.heading} body={role.body} />
 
       {/* --------------------------------------------------------- Impact */}
       <Section id="impact" label={impact.label} heading={impact.heading}>

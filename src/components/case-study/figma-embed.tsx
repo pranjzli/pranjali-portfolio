@@ -11,10 +11,11 @@ import { viewportOnce, ease } from "@/lib/motion";
  * The file's link sharing has to be set to "Anyone with the link can view",
  * or visitors get Figma's permission screen instead of the canvas.
  *
- * `page-selector=false` pins the embed to the linked page so a reader can't
- * browse the rest of the file, and `footer=false` drops Figma's file name and
- * last-edited line. Both are embed chrome, not permissions — anyone opening
- * the file URL directly still sees everything.
+ * The embed is stripped to just the canvas: `hide-ui` removes Figma's toolbar
+ * and the button that opens the file, `page-selector` stops a reader browsing
+ * the rest of the file, `footer` drops the file name and last-edited line.
+ * All of this is embed chrome, not permissions — anyone opening the file URL
+ * directly still sees everything.
  */
 export function FigmaEmbed({
   url,
@@ -29,7 +30,7 @@ export function FigmaEmbed({
 }) {
   const src =
     `https://embed.figma.com/design/${url}` +
-    `&embed-host=portfolio&page-selector=false&footer=false`;
+    `&embed-host=portfolio&hide-ui=1&page-selector=false&footer=false`;
 
   return (
     <motion.figure
