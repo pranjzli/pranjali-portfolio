@@ -203,6 +203,42 @@ export function Bullets({ items }: { items: string[] }) {
   );
 }
 
+export type Card = { no?: string; tag?: string; title: string; body: string };
+
+/**
+ * Scannable card grid. Breaks out past the text measure — at reading width
+ * four cards leave the copy setting two or three words to a line.
+ */
+export function CardGrid({
+  cards,
+  columns = 4,
+}: {
+  cards: Card[];
+  columns?: 3 | 4;
+}) {
+  return (
+    <Reveal
+      group
+      className={`relative left-1/2 mt-10 grid w-[min(1180px,92vw)] -translate-x-1/2 gap-5 sm:grid-cols-2 ${
+        columns === 4 ? "lg:grid-cols-4" : "lg:grid-cols-3"
+      }`}
+    >
+      {cards.map((c) => (
+        <Reveal.Item
+          key={c.title}
+          className="flex flex-col rounded-2xl border border-line bg-white p-6 transition-transform duration-300 hover:-translate-y-1"
+        >
+          <span className="text-xs font-bold uppercase tracking-[0.12em] text-[var(--cs-accent)]">
+            {c.no ?? c.tag}
+          </span>
+          <h3 className="mt-3 text-[17px] font-semibold leading-snug">{c.title}</h3>
+          <p className="mt-2 text-sm leading-relaxed text-muted">{c.body}</p>
+        </Reveal.Item>
+      ))}
+    </Reveal>
+  );
+}
+
 /** Standard section wrapper: eyebrow + heading + body paragraphs. */
 export function Section({
   label,

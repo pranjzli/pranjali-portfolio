@@ -56,7 +56,7 @@ export function SelectedWorks() {
             shorter cards on the right, all bottom-aligned (per Figma) */}
         <Reveal group className="mt-6 grid gap-8 md:grid-cols-[428fr_732fr] md:items-stretch">
           <Reveal.Item>
-            <CardSurface className="aspect-[428/437] w-full" />
+            <CardSurface href={featured.href ?? "#"} className="aspect-[428/437] w-full" />
           </Reveal.Item>
           <Reveal.Item className="flex flex-col">
             <h3 className="text-2xl leading-snug tracking-tight sm:text-[26px]">
