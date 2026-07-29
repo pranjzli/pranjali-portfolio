@@ -5,17 +5,14 @@ import { motion } from "motion/react";
 import {
   meta,
   tldr,
-  topStats,
-  journey,
-  problem,
   research,
-  editor,
-  canvas,
+  problem,
+  designed,
   testing,
-  library,
-  store,
+  built,
+  templates,
+  canvas,
   role,
-  impact,
   learned,
   outro,
 } from "@/lib/case-studies/zaps-editor";
@@ -25,10 +22,11 @@ import { Reveal } from "@/components/ui/reveal";
 import {
   Measure,
   Section,
-  PlaceholderRow,
   CardGrid,
+  Chips,
+  PullQuote,
+  SectionVisual,
   Stat,
-  Body,
 } from "@/components/case-study/primitives";
 import { FigmaEmbed } from "@/components/case-study/figma-embed";
 
@@ -94,6 +92,13 @@ export function ZapsEditorCaseStudy() {
             </motion.p>
           </Measure>
         </motion.div>
+
+        {/* Real asset: the App Store listing stands in for "the app in use" */}
+        <SectionVisual
+          src="/images/case-studies/zaps/app-store.webp"
+          alt="The Zaps App Store listing — carousels, reels, templates, frames and stickers"
+          ratio="2000/1339"
+        />
       </section>
 
       {/* ---------------------------------------------------------- TL;DR */}
@@ -103,117 +108,70 @@ export function ZapsEditorCaseStudy() {
             <span className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--cs-accent)]">
               {tldr.label}
             </span>
-            {/* Emphasis runs stay full-strength; the connective copy sits back */}
-            <p className="mt-5 text-2xl leading-[1.45] tracking-tight sm:text-[28px]">
-              {tldr.segments.map((seg, i) => (
-                <span
-                  key={i}
-                  className={seg.key ? "font-semibold text-foreground" : "text-foreground/45"}
-                >
-                  {seg.t}
-                </span>
-              ))}
+            <p className="mt-5 text-2xl font-semibold leading-[1.4] tracking-tight sm:text-[28px]">
+              {tldr.statement}
             </p>
           </Reveal>
 
-          <Reveal group className="mt-12 grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-4 sm:gap-x-8">
-            {topStats.map((s) => (
-              <Stat key={s.label} value={s.value} label={s.label} size="sm" />
+          <Reveal group className="mt-12 grid grid-cols-1 gap-8 sm:grid-cols-3">
+            {tldr.stats.map((s) => (
+              <Stat key={s.label} value={s.value} label={s.label} />
             ))}
+          </Reveal>
+
+          <Reveal className="mt-8">
+            <p className="text-sm leading-relaxed text-muted">{tldr.note}</p>
           </Reveal>
         </Measure>
       </section>
 
-      {/* -------------------------------------------------------- Journey */}
-      <Section label={journey.label} heading={journey.heading} body={journey.body}>
-        <Reveal
-          group
-          className="relative left-1/2 mt-10 grid w-[min(1180px,92vw)] -translate-x-1/2 gap-5 md:grid-cols-3"
-        >
-          {journey.versions.map((v) => (
-            <Reveal.Item
-              key={v.tag}
-              className="flex flex-col rounded-2xl border border-line bg-white p-6 transition-transform duration-300 hover:-translate-y-1"
-            >
-              <span className="text-xs font-bold uppercase tracking-[0.12em] text-[var(--cs-accent)]">
-                {v.tag}
-              </span>
-              <h3 className="mt-3 text-[19px] font-semibold leading-snug">{v.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-muted">{v.body}</p>
-            </Reveal.Item>
-          ))}
-        </Reveal>
+      {/* ------------------------------------------------------- Research */}
+      <Section label={research.label} heading={research.heading} body={research.body}>
+        <CardGrid cards={research.cards} columns={4} />
+        <SectionVisual caption={research.caption} />
       </Section>
 
       {/* -------------------------------------------------------- Problem */}
-      <Section label={problem.label} heading={problem.heading} body={problem.body} />
-
-      {/* ------------------------------------------------------- Research */}
-      <Section label={research.label} heading={research.heading} body={research.body}>
-        <CardGrid cards={research.findings} />
+      <Section label={problem.label} heading={problem.heading} body={problem.body}>
+        <CardGrid cards={problem.cards} columns={3} />
+        <SectionVisual caption={problem.caption} />
+        <PullQuote>{problem.quote}</PullQuote>
       </Section>
 
-      {/* --------------------------------------------------------- Editor */}
-      <Section label={editor.label} heading={editor.heading} body={editor.body}>
-        {/* Lead phrase carries the scan line; the rest explains it */}
-        <Reveal group className="mt-8 space-y-5">
-          {editor.principles.map((p) => (
-            <Reveal.Item
-              key={p.lead}
-              className="border-l-2 border-[var(--cs-accent)] pl-5"
-            >
-              <p className="text-[17px] leading-[1.6]">
-                <span className="font-semibold">{p.lead}</span>{" "}
-                <span className="text-foreground/70">{p.rest}</span>
-              </p>
-            </Reveal.Item>
-          ))}
-        </Reveal>
-
-        <Reveal className="mt-8">
-          <Body>{editor.constraint}</Body>
-        </Reveal>
-      </Section>
-
-      {/* --------------------------------------------------------- Canvas */}
-      <Section label={canvas.label} heading={canvas.heading} body={canvas.body}>
+      {/* -------------------------------------------------- What I designed */}
+      <Section label={designed.label} heading={designed.heading} body={designed.body}>
+        <CardGrid cards={designed.cards} columns={3} />
+        {/* Real asset: the working canvas, every screen in one place */}
         <FigmaEmbed
           url={canvas.url}
           title={canvas.title}
-          caption={canvas.caption}
+          caption={designed.caption}
           className="relative left-1/2 mt-10 w-[min(1180px,92vw)] -translate-x-1/2"
         />
       </Section>
 
       {/* -------------------------------------------------------- Testing */}
       <Section label={testing.label} heading={testing.heading} body={testing.body}>
-        <CardGrid cards={testing.findings} />
+        <CardGrid cards={testing.cards} columns={2} />
+        <SectionVisual caption={testing.caption} />
       </Section>
 
-      {/* -------------------------------------------------------- Library */}
-      <Section label={library.label} heading={library.heading} body={library.body} />
+      {/* ---------------------------------------------------------- Built */}
+      <Section label={built.label} heading={built.heading}>
+        <CardGrid cards={built.cards} columns={2} />
+        <SectionVisual caption={built.caption} />
+      </Section>
 
-      {/* ---------------------------------------------------------- Store */}
-      <Section label={store.label} heading={store.heading} body={store.body}>
-        <PlaceholderRow media={[store.media]} breakout />
+      {/* ------------------------------------------------------ Templates */}
+      <Section label={templates.label} heading={templates.heading} body={templates.body}>
+        <CardGrid cards={templates.cards} columns={3} />
+        <Chips items={templates.chips} className="mt-8" />
+        <SectionVisual caption={templates.caption} />
       </Section>
 
       {/* ----------------------------------------------------------- Role */}
-      <Section id="role" label={role.label} heading={role.heading} body={role.body} />
-
-      {/* --------------------------------------------------------- Impact */}
-      <Section id="impact" label={impact.label} heading={impact.heading}>
-        <Reveal group className="mt-10 grid grid-cols-1 gap-8 sm:grid-cols-3">
-          {impact.stats.map((s) => (
-            <Stat key={s.label} value={s.value} label={s.label} />
-          ))}
-        </Reveal>
-
-        <Reveal className="mt-10">
-          <p className="border-l-2 border-[var(--cs-accent)] pl-5 text-[15px] leading-relaxed text-muted">
-            {impact.note}
-          </p>
-        </Reveal>
+      <Section id="role" label={role.label} heading={role.heading} body={role.body}>
+        <Chips items={role.chips} className="mt-8" />
       </Section>
 
       {/* -------------------------------------------------------- Learned */}
