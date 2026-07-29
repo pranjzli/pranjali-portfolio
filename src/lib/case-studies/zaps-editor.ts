@@ -31,8 +31,8 @@ export const tldr = {
 
 export const research = {
   label: "Research",
-  heading: "I designed around real creators",
-  body: "My users post every day, but they are not designers. So before designing anything, I did my homework:",
+  heading: "I designed around real users",
+  body: "Our users post every day, but they are not designers. So before designing anything, I did my research:",
   cards: [
     {
       no: "01",
@@ -90,17 +90,17 @@ export const designed = {
   body: "I brought the whole thing together, so making anything on Zaps works the same way and feels like one app.",
   cards: [
     {
-      no: "①",
+      no: "01",
       title: "Find",
       body: "Browse or search 5,000+ ready-made templates, or start from your own photo. Built to work whether you're exploring for ideas or you already know what you want.",
     },
     {
-      no: "②",
+      no: "02",
       title: "Make",
       body: "The same tools, text, stickers, filters, frames, work the same way for posts, stories, reels and carousels. Complex tools opened with progressive disclosure.",
     },
     {
-      no: "③",
+      no: "03",
       title: "Share",
       body: "Post straight to Instagram or TikTok. For reels, I designed how licensed music gets added the right way, so posts don't end up muted.",
     },

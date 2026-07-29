@@ -257,29 +257,24 @@ export function Chips({ items, className = "mt-8" }: { items: string[]; classNam
 
 /**
  * The problem statement, framed like a selected object on the Figma canvas:
- * a blue bounding box with corner handles and a small label tab, matching the
- * treatment in the source frame. Optional centered eyebrow above.
+ * a blue bounding box with corner handles and a label tab, matching the
+ * treatment in the source frame. `label` names the selection tab.
  */
 export function PullQuote({
   children,
-  eyebrow,
+  label = "Problem statement",
 }: {
   children: string;
-  eyebrow?: string;
+  label?: string;
 }) {
   const handle =
     "absolute size-2.5 rounded-[2px] border border-[#0d99ff] bg-white";
   return (
     <Reveal className="relative left-1/2 mt-14 w-[min(920px,92vw)] -translate-x-1/2 text-center">
-      {eyebrow && (
-        <div className="mb-6 text-xs font-semibold uppercase tracking-[0.18em] text-[var(--cs-accent)]">
-          {eyebrow}
-        </div>
-      )}
       <div className="relative rounded-[3px] outline outline-[1.5px] outline-[#0d99ff]">
-        {/* Figma-style label tab */}
+        {/* Figma-style selection label tab */}
         <span className="absolute -top-6 left-0 rounded-[3px] bg-[#0d99ff] px-2 py-0.5 text-[11px] font-medium text-white">
-          Problem
+          {label}
         </span>
         {/* Corner handles */}
         <span className={`${handle} -left-[5px] -top-[5px]`} />

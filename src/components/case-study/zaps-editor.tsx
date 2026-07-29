@@ -131,7 +131,7 @@ export function ZapsEditorCaseStudy() {
       <Section label={problem.label} heading={problem.heading} body={problem.body}>
         <CardGrid cards={problem.cards} columns={3} />
         <SectionVisual caption={problem.caption} />
-        <PullQuote eyebrow="Problem statement">{problem.quote}</PullQuote>
+        <PullQuote>{problem.quote}</PullQuote>
       </Section>
 
       {/* -------------------------------------------------- What I designed */}
