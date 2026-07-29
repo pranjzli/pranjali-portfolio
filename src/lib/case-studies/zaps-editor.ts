@@ -1,217 +1,214 @@
 /**
- * Zaps @ Turnip — the editor. Copy is lifted from the Figma frame
- * ("Zaps — Editor · Case Study v3"); `*asterisks*` render as serif-italic
- * accents (see AccentText).
+ * Zaps · Turnip — the creation experience. Copy is lifted verbatim from the
+ * Figma frame "Zaps — Case Study v5 (FRESH)"; `*asterisks*` render as
+ * serif-italic accents.
  *
- * Two sections are not in the frame — `research` and `testing`. Their copy is
- * condensed into cards so the page stays scannable, keeping every specific:
- * Mixpanel, the 10–12% login drop-off, guest onboarding, the thousand-asset
- * sticker library.
+ * v5 is built for scanning: every section leads with a short intro and then
+ * breaks into cards, so the reader can take it in without reading prose. The
+ * component mirrors that — card grids, stat chips, one pull-quote.
  */
 
 export const meta = {
-  eyebrow: "Zaps @ Turnip · 2024–2026",
-  title: "I designed the *editor* experience at Zaps for creators to create and edit content quickly",
+  eyebrow: "Zaps · Turnip · 2024–2026",
+  title: "I designed the Zaps *creation experience* that grew revenue 7.5x",
   intro:
-    "Zaps went from social app to AI editor to creator tool. I designed through all three — and the unified editor was one of the major projects I owned along the way.",
+    "Zaps helps everyday creators make posts, stories, reels and carousels that look professionally designed. The app changed direction three times while I was there, and I designed how it is used through all of it.",
   nav: { backLabel: "Back to work", backHref: "/#work" },
+  heroCaption: "Hero visual, the app in use",
 };
 
 export const tldr = {
   label: "TL;DR",
+  // `key` runs stay full-strength; the connective copy dims back.
   segments: [
-    { t: "Zaps pivoted three times before finding its direction. Each version shipped " },
-    { t: "its own editing experience", key: true },
-    { t: " — templates, photos, carousels and reels all worked differently. I designed " },
-    { t: "one editor built on shared modules", key: true },
-    { t: " that works across every format, and managed a team to setup the " },
-    { t: "templates library", key: true },
-    { t: ". That editor is now " },
-    { t: "the core of how Zaps makes revenue.", key: true },
+    { t: "Users come to Zaps to " },
+    { t: "make stunning content, fast", key: true },
+    { t: ". " },
+    { t: "I designed the experience for it end-to-end", key: true },
+    { t: "; the tools to make and edit content, the " },
+    { t: "5,000+ ready-made templates", key: true },
+    { t: " they start from, and how they share it with the world. In the six months after the new experience launched, " },
+    { t: "revenue grew 7.5x", key: true },
+    { t: "." },
   ],
-};
-
-export const topStats = [
-  { value: "7.5x", label: "MRR growth in the six months after launch" },
-  { value: "12x", label: "growth in paying users" },
-  { value: "6x", label: "growth in total users" },
-  { value: "5,000+", label: "templates built by a team I led" },
-];
-
-export const journey = {
-  label: "The journey",
-  heading: "Designing through three *pivots*",
-  body: "My role grew with each version of the app.",
-  versions: [
-    {
-      tag: "V1 · Social",
-      title: "Photo-first social app",
-      body: "Users took a real-time photo, added stickers and text, and shared it in the app. I owned the interaction design — how reactions behaved, how loaders felt, the details that gave the app its character. The product worked, but monetising it needed a much larger user base than we had.",
-    },
-    {
-      tag: "V2 · AI Editor",
-      title: "The AI experiment",
-      body: "AI photo trends were surging, and our face-swap selfie feature was already popular. Product and growth picked a set of countries to test monetisation — we removed the social layer there and sold Zaps as an AI editor. I designed it end to end: outfit try-ons, face features, filters. It earned, but trends are short-lived — the product needed something more durable.",
-    },
-    {
-      tag: "V3 · Creator Tool",
-      title: "Following what users actually did",
-      body: "In our social markets, users spent more time with our few basic drop-your-photo templates than with the AI features. That was the signal. We began the shift to a template-based creator tool — and since both experiments were still live, everything I designed had to work in both worlds at once.",
-    },
+  stats: [
+    { value: "7.5x", label: "more revenue" },
+    { value: "12x", label: "more paying users" },
+    { value: "6x", label: "more users overall" },
   ],
-};
-
-export const problem = {
-  label: "The problem",
-  heading: "Three pivots left us with experiences that didn't match",
-  body: [
-    "Each version had shipped its own editing experience. Editing a template worked one way, editing a photo another, AI enhancing an image had its own separate experience, and reels and carousels were different again — same app, no shared logic. Users had to relearn the basics on every surface, and every new format we wanted to launch meant designing and building an editing experience from scratch.",
-    "The product couldn't come together until the experience did. That became my main project.",
-  ],
+  note: "Measured from our own paywall data, in the six months after launch and before we spent heavily on marketing.",
 };
 
 export const research = {
   label: "Research",
-  heading: "Studying how people already *create*",
-  body: "Before designing anything I studied how established creator and editing tools solve the same problems. The point wasn't to invent a new interaction language — it was to use patterns creators had already learned elsewhere, so nothing in our editor needed explaining.",
-  findings: [
+  heading: "I designed around real users",
+  body: "Our users post every day, but they are not designers. So before designing anything, I did my research:",
+  cards: [
     {
       no: "01",
-      title: "Browsing and searching are two different jobs",
-      body: "A first-time user opens the app to look around. A returning user needs a specific template, fast. The library had to serve exploratory browsing and targeted search without either one getting in the way of the other.",
+      title: "I studied 20+ apps to build on habits users already had",
+      body: "I looked at how more than 20 popular editing apps work. Building on things users already knew from other apps meant they could pick up Zaps right away, instead of learning it from scratch.",
     },
     {
       no: "02",
-      title: "One module should work in every editor",
-      body: "Building a separate feature for templates, stories, reels and carousels doubles the work every time. This research is what pushed the design toward a shared module system.",
+      title: "I listened to the creators who use Zaps every day",
+      body: "I talked to creators, watched how they made their posts, and asked what got in their way. When they told us something was hard, we fixed it and shipped the change.",
     },
     {
       no: "03",
-      title: "Where people drop off inside an editor",
-      body: "Two findings went straight into the design: let users switch templates from inside the editor instead of backing all the way out, and surface similar templates right after a save — a light nudge for anyone who wants to keep creating.",
+      title: "Some users browse, some search, so I designed for both",
+      body: "Some users open the app just to look around for ideas. Others come in knowing exactly what they want. I also studied what makes a user pick one template over another, so both kinds could find something fast.",
     },
     {
       no: "04",
-      title: "Export isn't one flow",
-      body: "What someone does after finishing depends on what they made. Studying how other tools handle this shaped a share flow that adapts to the use case instead of forcing everyone down one path.",
+      title: "A tool should only be as deep as it needs to be",
+      body: "A simple thing like adding a filter should stay one tap away, not buried under menus. A tool that does a lot, like adjusting light and color, can open up more. When how deep a tool goes matches how much it does, users never get lost.",
     },
   ],
+  caption: "Research board, the users we designed for and how they create",
 };
 
-export const editor = {
-  label: "The editor",
-  heading: "One editor experience that works for *every format*",
-  body: "Instead of an editor per format, I designed one system of modules — text, stickers, frames, filters, backgrounds. What changes per format is the canvas: a single image, a multi-slide carousel, a reel timeline. The toolkit stays the same.",
-  // Lead phrase and the rest, so the scan line reads on its own.
-  principles: [
+export const problem = {
+  label: "The problem",
+  heading: "Zaps had changed so much, it no longer felt like one app",
+  body: "Zaps did not start as a creator tool. It began as a social app for a young, Gen Z crowd, then kept changing as we tried new ideas, until it became a creation app for a more grown-up group of creators. Every change added features fast, but no one stepped back to make them fit together. The app worked, but it felt like a few different apps stuck under one icon.",
+  cards: [
     {
-      lead: "Learn once, use everywhere.",
-      rest: "Every module opens the same way, in the same bottom sheet, with the same controls — whether you're editing a template, a photo, a carousel or a reel. Because the editor was unified, the modules had to scale with it: I designed each one to hold up across every use case rather than for a single surface.",
+      no: "01",
+      title: "Every format worked differently",
+      body: "Making a post, a story, a reel, or a carousel each worked its own way. A user who figured out one still had to learn the next from scratch.",
     },
     {
-      lead: "New formats stopped being rebuilds.",
-      rest: "A new surface reuses the existing modules, so launching one costs days of design work instead of months.",
+      no: "02",
+      title: "No two tools behaved the same",
+      body: "Each tool opened, confirmed, and closed differently. Nothing was predictable, so a user could never settle into a habit and just create.",
     },
     {
-      lead: "New modules plug in everywhere.",
-      rest: "Anything we add — a new panel, a new tool — lands in every format at once, and the editor doesn't break.",
+      no: "03",
+      title: "Too many options at once",
+      body: "Tapping a tool put every setting on screen at the same time. It was a lot to take in, and it made simply getting started feel harder than it should.",
     },
   ],
-  constraint:
-    "All of it was designed inside the constraints of CESDK, img.ly's editor SDK. Every interaction had to be possible within what the engine supports, which forced the system to stay simple. We're now building our own SDK.",
+  caption: "The old app, four formats that each looked and worked differently",
+  quote:
+    "As Zaps grew from a social app into a creator tool, its editing experience became fragmented. The challenge was to bring every format and every tool into one experience that feels like a single app. The goal was to make creating content fast and familiar, so more users finish what they start and keep coming back.",
 };
 
-/**
- * The working canvas itself. Embedded rather than exported — it's a whole
- * Figma page of modules and screens, so panning through it beats a flattened
- * image of mostly empty canvas.
- */
-export const canvas = {
-  label: "The canvas",
-  heading: "Every screen and module, *in one place*",
-  body: "The modules, their bottom sheets and controls, and the screens they build — the working file behind the editor. Pan and zoom to look around.",
-  // fileKey/name + node, as the embed URL expects it
-  url: "gnweT8KWtnkVgOPAm1SBqC/Untitled?node-id=2001-144",
-  title: "Zaps editor — the full design canvas",
-  caption: "Modules, bottom sheets, controls and the screens they compose.",
+export const designed = {
+  label: "What I designed",
+  heading: "One smooth path from idea to posted",
+  body: "I brought the whole thing together, so making anything on Zaps works the same way and feels like one app.",
+  cards: [
+    {
+      no: "01",
+      title: "Find",
+      body: "Browse or search 5,000+ ready-made templates, or start from your own photo. Built to work whether you're exploring for ideas or you already know what you want.",
+    },
+    {
+      no: "02",
+      title: "Make",
+      body: "The same tools, text, stickers, filters, frames, work the same way for posts, stories, reels and carousels. Complex tools opened with progressive disclosure.",
+    },
+    {
+      no: "03",
+      title: "Share",
+      body: "Post straight to Instagram or TikTok. For reels, I designed how licensed music gets added the right way, so posts don't end up muted.",
+    },
+  ],
+  caption: "The unified experience, the same tools across every format",
 };
 
 export const testing = {
   label: "Testing & feedback",
-  heading: "What *real usage* told us",
-  body: "We shipped, watched and corrected. With the product team I set up Mixpanel to study how people actually moved through the app, and we had a direct line to the creators using it every day.",
-  findings: [
+  heading: "We listened, watched, and fixed",
+  body: "Feedback from creators and how users actually used the app decided what we changed. Two examples:",
+  cards: [
+    {
+      tag: "Stickers",
+      title: "Users couldn't find the right sticker",
+      body: "As we added hundreds of stickers, creators told us they couldn't find the one they wanted. So I rebuilt how stickers and frames work.",
+    },
+    {
+      tag: "Templates",
+      title: "Users wanted to try another template",
+      body: "Once they had started, users told us that switching to a different template meant going all the way back to the gallery and starting over.",
+    },
+  ],
+  caption: "The template-switch feature, and the rebuilt sticker library",
+};
+
+export const built = {
+  label: "What we built from that",
+  heading: "Two fixes, both built to scale",
+  cards: [
+    {
+      tag: "Stickers & Frames",
+      title: "Stickers that stay easy to find",
+      body: "Grouped into packs, with recently used and search up front, so the library stays quick to use even with thousands of stickers.",
+    },
+    {
+      tag: "Templates",
+      title: "Switch templates without starting over",
+      body: "A user can swap to a new template from inside the editor, keeping the photos and text they already added.",
+    },
+  ],
+  caption: "The rebuilt sticker library and the in-editor template switch",
+};
+
+export const templates = {
+  label: "The templates",
+  heading: "The ready to use templates users start from",
+  body: "Most users don't start from a blank screen, they pick a template and make it their own. I built the library of these, and led the team behind it.",
+  cards: [
     {
       no: "01",
-      title: "Analytics we acted on",
-      body: "Studying flows in Mixpanel with the product team, we found a 10–12% drop-off at login. Login existed because the social app needed it — a creator tool doesn't. We removed it. Users now onboard as guests and only sign in if they're using a subscription across more than one device.",
+      title: "I set up how templates are made",
+      body: "Wrote the rules for building them so the engineering team could turn a designer file into something users can actually edit in the app.",
     },
     {
       no: "02",
-      title: "A direct line to creators",
-      body: "We worked with influencers to promote the app, and they used these tools heavily. Their feedback reached us continuously, and a lot of what we built came from those requests.",
+      title: "I hired and led the team",
+      body: "Ran a team of 8-10 freelance designers and mentored a junior designer directly. Together we made 5,000+ templates, the ones the app earns from.",
     },
     {
       no: "03",
-      title: "Stickers stopped being findable",
-      body: "As the sticker library scaled past a thousand assets, creators told us they couldn't find what they needed. I reworked the sticker module so the library stays browsable as it grows instead of collapsing under its own size.",
-    },
-    {
-      no: "04",
-      title: "Testing before release",
-      body: "I tested features on builds ahead of launch and owned the handoff, so what shipped matched what was designed.",
+      title: "I made them 6x faster to build",
+      body: "I proposed to put together a shared kit of frames, stickers and fonts, cutting the time to make one template from 30 minutes to 5.",
     },
   ],
-};
-
-export const library = {
-  label: "Behind the editor",
-  heading: "The template library it *runs on*",
-  body: [
-    "The editor is only half the product — it needed a library worth opening. I set the production guidelines (how templates are built, how layers are named so tech can convert them into editable templates), then hired and ran a team of 8–10 freelance designers, plus a junior designer I managed directly. Together we built a library of 5,000+ templates across stories, wallpapers, invites, carousels and reels — the content Zaps monetises on, uploaded and managed through Retool.",
-    "When production costs grew, I proposed building our frames, stickers and fonts into CESDK as reusable assets — and it worked. A template that took a designer 30 minutes now takes about 5 — roughly 6x faster, at a fraction of the cost.",
-  ],
+  chips: ["Led a team of 10", "5,000+ templates", "6x faster to make"],
+  caption: "The template library and the shared kit behind it",
 };
 
 /**
- * Store listing and campaign work. Sits after the library section — the
- * templates get made, then they get sold.
+ * The working canvas — a whole Figma page of screens. Embedded rather than
+ * exported so the reader can pan and zoom through the real file.
  */
-export const store = {
-  label: "Taking it to market",
-  heading: "I designed the *App Store* screens and the marketing ads",
-  body: "The same system carried outside the product: the store listing that sells the editor, and the ad creatives that run alongside it.",
-  media: {
-    ratio: "2000/1339",
-    src: "/images/case-studies/zaps/app-store.webp",
-    alt: "The Zaps App Store listing — icon, title and five screenshots covering carousels, reels, templates, frames and stickers",
-  },
+export const canvas = {
+  url: "gnweT8KWtnkVgOPAm1SBqC/Untitled?node-id=2001-144",
+  title: "Zaps — the full design canvas",
 };
 
 export const role = {
   label: "My role",
-  heading: "Product designer — the editing experience, *end to end*",
-  body: "I owned the editor and the modules and features inside it — across all three versions of the app: the interaction design, testing features before release, handoff to engineering, and the template guidelines and the team producing them. Direction and monetisation decisions sat with our design head and the product and growth teams.",
-};
-
-export const impact = {
-  label: "Impact",
-  heading: "The numbers after the new editor and templates went live",
-  stats: [
-    { value: "7.5x", label: "MRR growth" },
-    { value: "12x", label: "paying users" },
-    { value: "6x", label: "total users" },
+  heading: "What I did",
+  body: "Across every version of the app, I designed how it is used, from talking to creators and researching, to designing the screens, testing them, and handing them to engineers to build. The direction and business calls sat with our design lead and the product and growth teams.",
+  chips: [
+    "Research",
+    "Designed the experience",
+    "Led the template team",
+    "Testing",
+    "Engineering handoff",
   ],
-  note: "Measured over the six months after launch. Conversion has consistently outperformed new installs — even as marketing spend and install volume have grown, the conversion rate keeps improving.",
 };
 
 export const learned = {
   label: "What I learned",
-  heading: "Designing for the *next* change is the part that compounds",
-  body: "Every pivot arrived as a deadline. What made them survivable wasn't designing faster — it was that the modules, the interaction language and the canvas model were already shared, so a new format became something we added to rather than something we rebuilt. The work that held up was the work I did before anyone knew what was coming next.",
+  heading: "Build it to *evolve*, because it will",
+  body: "Zaps changed direction three times. What made the difference was not moving fast; it was designing the app so each new change could build on the last one, instead of starting over every time.",
 };
 
 export const outro = {
   cta: "Next project →",
-  credit: "Zaps @ Turnip · Editor — Product design by Pranjali · 2024–2026",
+  credit: "Zaps · Turnip, Product design by Pranjali · 2024–2026",
 };

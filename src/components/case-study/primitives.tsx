@@ -214,14 +214,14 @@ export function CardGrid({
   columns = 4,
 }: {
   cards: Card[];
-  columns?: 3 | 4;
+  columns?: 2 | 3 | 4;
 }) {
+  const cols =
+    columns === 4 ? "lg:grid-cols-4" : columns === 3 ? "lg:grid-cols-3" : "sm:grid-cols-2";
   return (
     <Reveal
       group
-      className={`relative left-1/2 mt-10 grid w-[min(1180px,92vw)] -translate-x-1/2 gap-5 sm:grid-cols-2 ${
-        columns === 4 ? "lg:grid-cols-4" : "lg:grid-cols-3"
-      }`}
+      className={`relative left-1/2 mt-10 grid w-[min(1180px,92vw)] -translate-x-1/2 gap-5 sm:grid-cols-2 ${cols}`}
     >
       {cards.map((c) => (
         <Reveal.Item
@@ -236,6 +236,82 @@ export function CardGrid({
         </Reveal.Item>
       ))}
     </Reveal>
+  );
+}
+
+/** Pill row — quick facts or the role breakdown. */
+export function Chips({ items, className = "mt-8" }: { items: string[]; className?: string }) {
+  return (
+    <Reveal group className={`flex flex-wrap gap-2.5 ${className}`}>
+      {items.map((c) => (
+        <Reveal.Item
+          key={c}
+          className="rounded-full border border-line bg-white px-4 py-2 text-sm font-medium text-foreground/80"
+        >
+          {c}
+        </Reveal.Item>
+      ))}
+    </Reveal>
+  );
+}
+
+/**
+ * The problem statement, framed like a selected object on the Figma canvas:
+ * a blue bounding box with corner handles and a label tab, matching the
+ * treatment in the source frame. `label` names the selection tab.
+ */
+export function PullQuote({
+  children,
+  label = "Problem statement",
+}: {
+  children: string;
+  label?: string;
+}) {
+  const handle =
+    "absolute size-2.5 rounded-[2px] border border-[#0d99ff] bg-white";
+  return (
+    <Reveal className="relative left-1/2 mt-14 w-[min(920px,92vw)] -translate-x-1/2 text-center">
+      <div className="relative rounded-[3px] outline outline-[1.5px] outline-[#0d99ff]">
+        {/* Figma-style selection label tab */}
+        <span className="absolute -top-6 left-0 rounded-[3px] bg-[#0d99ff] px-2 py-0.5 text-[11px] font-medium text-white">
+          {label}
+        </span>
+        {/* Corner handles */}
+        <span className={`${handle} -left-[5px] -top-[5px]`} />
+        <span className={`${handle} -right-[5px] -top-[5px]`} />
+        <span className={`${handle} -bottom-[5px] -left-[5px]`} />
+        <span className={`${handle} -bottom-[5px] -right-[5px]`} />
+
+        <p className="serif px-6 py-10 text-2xl leading-[1.4] text-foreground/85 sm:px-12 sm:text-[30px]">
+          “{children}”
+        </p>
+      </div>
+    </Reveal>
+  );
+}
+
+/**
+ * A captioned section visual that breaks out past the text measure. Renders the
+ * artwork when `src` is set, a green placeholder otherwise.
+ */
+export function SectionVisual({
+  caption,
+  src,
+  alt = "",
+  ratio = "16/9",
+}: {
+  caption?: string;
+  src?: string;
+  alt?: string;
+  ratio?: string;
+}) {
+  return (
+    <div className="relative left-1/2 mt-10 w-[min(1180px,92vw)] -translate-x-1/2">
+      <Placeholder ratio={ratio} src={src} alt={alt} />
+      {caption && (
+        <p className="mt-4 text-sm leading-relaxed text-muted">{caption}</p>
+      )}
+    </div>
   );
 }
 
