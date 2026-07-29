@@ -30,6 +30,7 @@ import {
   Body,
 } from "@/components/case-study/primitives";
 import { FigmaEmbed } from "@/components/case-study/figma-embed";
+import { ZapsHero } from "@/components/case-study/zaps-hero";
 
 const item = {
   hidden: { opacity: 0, y: 18, filter: "blur(6px)" },
@@ -94,7 +95,7 @@ export function ZapsEditorCaseStudy() {
           </Measure>
         </motion.div>
 
-        <SectionVisual ratio="16/9" />
+        <ZapsHero />
       </section>
 
       {/* ---------------------------------------------------------- TL;DR */}
