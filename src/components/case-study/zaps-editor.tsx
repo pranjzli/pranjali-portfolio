@@ -49,7 +49,7 @@ export function ZapsEditorCaseStudy() {
           <img
             src="/images/hero-bg.png"
             alt=""
-            className="h-full w-full object-cover object-top"
+            className="h-full w-full -translate-y-[40%] object-cover object-top"
           />
         </div>
 
