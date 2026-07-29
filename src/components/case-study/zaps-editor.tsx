@@ -43,7 +43,9 @@ export function ZapsEditorCaseStudy() {
     // one system rather than two separately-branded pages.
     <main style={{ "--cs-accent": "#60A167" } as React.CSSProperties}>
       {/* ---------------------------------------------------------- Hero */}
-      <section className="relative overflow-hidden pt-36 pb-16">
+      {/* pb-[140px]: pb-16 (64px) + the 76px the scaled hand overflows the
+          section by, so the section ends exactly where the hand does. */}
+      <section className="relative overflow-hidden pt-36 pb-[140px]">
         <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 mix-blend-multiply">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img

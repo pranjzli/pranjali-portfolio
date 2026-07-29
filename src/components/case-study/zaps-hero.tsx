@@ -46,9 +46,10 @@ export function ZapsHero() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8, ease, delay: 0.25 }}
-      // mt-36: clearance so the enlarged screens (they overflow the stage's
-      // top edge) don't run into the intro paragraph above.
-      className="relative left-1/2 mt-36 w-[min(1320px,98vw)] -translate-x-1/2"
+      // mt-[173px]: clearance so the enlarged screens (they overflow the
+      // stage's top edge) don't run into the intro paragraph above — 144px
+      // (mt-36) + 20%.
+      className="relative left-1/2 mt-[173px] w-[min(1320px,98vw)] -translate-x-1/2"
     >
       {/* Reference frame is ~7378x1361 — same ratio here, so the row is never clipped */}
       <div className="relative w-full" style={{ aspectRatio: "7378 / 1361" }}>
