@@ -27,6 +27,7 @@ import {
   PullQuote,
   SectionVisual,
   Stat,
+  Body,
 } from "@/components/case-study/primitives";
 import { FigmaEmbed } from "@/components/case-study/figma-embed";
 
@@ -93,12 +94,7 @@ export function ZapsEditorCaseStudy() {
           </Measure>
         </motion.div>
 
-        {/* Real asset: the App Store listing stands in for "the app in use" */}
-        <SectionVisual
-          src="/images/case-studies/zaps/app-store.webp"
-          alt="The Zaps App Store listing — carousels, reels, templates, frames and stickers"
-          ratio="2000/1339"
-        />
+        <SectionVisual ratio="16/9" />
       </section>
 
       {/* ---------------------------------------------------------- TL;DR */}
@@ -135,7 +131,7 @@ export function ZapsEditorCaseStudy() {
       <Section label={problem.label} heading={problem.heading} body={problem.body}>
         <CardGrid cards={problem.cards} columns={3} />
         <SectionVisual caption={problem.caption} />
-        <PullQuote>{problem.quote}</PullQuote>
+        <PullQuote eyebrow="Problem statement">{problem.quote}</PullQuote>
       </Section>
 
       {/* -------------------------------------------------- What I designed */}
@@ -164,14 +160,19 @@ export function ZapsEditorCaseStudy() {
 
       {/* ------------------------------------------------------ Templates */}
       <Section label={templates.label} heading={templates.heading} body={templates.body}>
-        <CardGrid cards={templates.cards} columns={3} />
+        {/* Quick facts sit above the how-it-was-done cards */}
         <Chips items={templates.chips} className="mt-8" />
+        <CardGrid cards={templates.cards} columns={3} />
         <SectionVisual caption={templates.caption} />
       </Section>
 
       {/* ----------------------------------------------------------- Role */}
-      <Section id="role" label={role.label} heading={role.heading} body={role.body}>
-        <Chips items={role.chips} className="mt-8" />
+      <Section id="role" label={role.label} heading={role.heading}>
+        {/* Chips first, then the framing line beneath them */}
+        <Chips items={role.chips} className="mt-6" />
+        <Reveal className="mt-6 max-w-[840px]">
+          <Body>{role.body}</Body>
+        </Reveal>
       </Section>
 
       {/* -------------------------------------------------------- Learned */}

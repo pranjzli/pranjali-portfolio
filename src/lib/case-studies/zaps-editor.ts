@@ -114,14 +114,14 @@ export const testing = {
   body: "Feedback from creators and how users actually used the app decided what we changed. Two examples:",
   cards: [
     {
-      tag: "Templates",
-      title: "Users wanted to try another template",
-      body: "Once they had started, users told us that switching to a different template meant going all the way back to the gallery and starting over.",
-    },
-    {
       tag: "Stickers",
       title: "Users couldn't find the right sticker",
       body: "As we added hundreds of stickers, creators told us they couldn't find the one they wanted. So I rebuilt how stickers and frames work.",
+    },
+    {
+      tag: "Templates",
+      title: "Users wanted to try another template",
+      body: "Once they had started, users told us that switching to a different template meant going all the way back to the gallery and starting over.",
     },
   ],
   caption: "The template-switch feature, and the rebuilt sticker library",

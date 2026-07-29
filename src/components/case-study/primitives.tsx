@@ -255,13 +255,42 @@ export function Chips({ items, className = "mt-8" }: { items: string[]; classNam
   );
 }
 
-/** A full-width italic pull-quote — the one long line worth reading. */
-export function PullQuote({ children }: { children: string }) {
+/**
+ * The problem statement, framed like a selected object on the Figma canvas:
+ * a blue bounding box with corner handles and a small label tab, matching the
+ * treatment in the source frame. Optional centered eyebrow above.
+ */
+export function PullQuote({
+  children,
+  eyebrow,
+}: {
+  children: string;
+  eyebrow?: string;
+}) {
+  const handle =
+    "absolute size-2.5 rounded-[2px] border border-[#0d99ff] bg-white";
   return (
     <Reveal className="relative left-1/2 mt-14 w-[min(920px,92vw)] -translate-x-1/2 text-center">
-      <p className="serif text-2xl leading-[1.4] text-foreground/85 sm:text-[30px]">
-        “{children}”
-      </p>
+      {eyebrow && (
+        <div className="mb-6 text-xs font-semibold uppercase tracking-[0.18em] text-[var(--cs-accent)]">
+          {eyebrow}
+        </div>
+      )}
+      <div className="relative rounded-[3px] outline outline-[1.5px] outline-[#0d99ff]">
+        {/* Figma-style label tab */}
+        <span className="absolute -top-6 left-0 rounded-[3px] bg-[#0d99ff] px-2 py-0.5 text-[11px] font-medium text-white">
+          Problem
+        </span>
+        {/* Corner handles */}
+        <span className={`${handle} -left-[5px] -top-[5px]`} />
+        <span className={`${handle} -right-[5px] -top-[5px]`} />
+        <span className={`${handle} -bottom-[5px] -left-[5px]`} />
+        <span className={`${handle} -bottom-[5px] -right-[5px]`} />
+
+        <p className="serif px-6 py-10 text-2xl leading-[1.4] text-foreground/85 sm:px-12 sm:text-[30px]">
+          “{children}”
+        </p>
+      </div>
     </Reveal>
   );
 }
