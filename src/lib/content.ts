@@ -90,6 +90,7 @@ export const projects: Project[] = [
     title: "I built the *design system* and token pipeline at {{zaps}} Zaps for designers + developers",
     meta: "2026 · Design Systems, Design Tokens, iOS Handoff",
     span: "half",
+    href: "/work/zaps-design-system",
   },
   {
     title: "I designed the *coaches tab* at {{fitastra}} FitAstra that helps users find a suitable trainer",
