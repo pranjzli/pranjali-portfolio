@@ -104,8 +104,15 @@ export function ZapsEditorCaseStudy() {
             <span className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--cs-accent)]">
               {tldr.label}
             </span>
-            <p className="mt-5 text-2xl font-semibold leading-[1.4] tracking-tight sm:text-[28px]">
-              {tldr.statement}
+            <p className="mt-5 text-2xl leading-[1.4] tracking-tight sm:text-[28px]">
+              {tldr.segments.map((seg, i) => (
+                <span
+                  key={i}
+                  className={seg.key ? "font-semibold text-foreground" : "text-foreground/45"}
+                >
+                  {seg.t}
+                </span>
+              ))}
             </p>
           </Reveal>
 

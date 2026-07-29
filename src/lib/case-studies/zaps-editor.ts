@@ -19,8 +19,18 @@ export const meta = {
 
 export const tldr = {
   label: "TL;DR",
-  statement:
-    "Users come to Zaps to make stunning content, fast. I designed the experience for it end-to-end; the tools to make and edit content, the 5,000+ ready-made templates they start from, and how they share it with the world. In the six months after the new experience launched, revenue grew 7.5x.",
+  // `key` runs stay full-strength; the connective copy dims back.
+  segments: [
+    { t: "Users come to Zaps to " },
+    { t: "make stunning content, fast", key: true },
+    { t: ". " },
+    { t: "I designed the experience for it end-to-end", key: true },
+    { t: "; the tools to make and edit content, the " },
+    { t: "5,000+ ready-made templates", key: true },
+    { t: " they start from, and how they share it with the world. In the six months after the new experience launched, " },
+    { t: "revenue grew 7.5x", key: true },
+    { t: "." },
+  ],
   stats: [
     { value: "7.5x", label: "more revenue" },
     { value: "12x", label: "more paying users" },
