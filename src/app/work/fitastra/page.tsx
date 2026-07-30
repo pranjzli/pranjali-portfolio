@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Navbar } from "@/components/navbar";
 import { FitAstraCaseStudy } from "@/components/case-study/fitastra";
+import { FooterCta } from "@/components/footer-cta";
 
 export const metadata: Metadata = {
   title: "FitAstra — Coaches Tab · Pranjali",
@@ -13,6 +14,7 @@ export default function FitAstraPage() {
     <>
       <Navbar />
       <FitAstraCaseStudy />
+      <FooterCta />
     </>
   );
 }

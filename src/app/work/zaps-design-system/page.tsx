@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Navbar } from "@/components/navbar";
 import { ZapsDesignSystemCaseStudy } from "@/components/case-study/zaps-design-system";
+import { FooterCta } from "@/components/footer-cta";
 
 export const metadata: Metadata = {
   title: "Zaps — Design System & Token Pipeline · Pranjali",
@@ -13,6 +14,7 @@ export default function ZapsDesignSystemPage() {
     <>
       <Navbar />
       <ZapsDesignSystemCaseStudy />
+      <FooterCta />
     </>
   );
 }

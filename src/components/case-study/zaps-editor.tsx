@@ -29,6 +29,7 @@ import {
   SectionVisual,
   Stat,
   Body,
+  CaseStudyOutro,
 } from "@/components/case-study/primitives";
 import { FigmaEmbed } from "@/components/case-study/figma-embed";
 import { ZapsHero } from "@/components/case-study/zaps-hero";
@@ -261,32 +262,8 @@ export function ZapsEditorCaseStudy() {
       {/* -------------------------------------------------------- Learned */}
       <Section label={learned.label} heading={learned.heading} body={learned.body} />
 
-      {/* ---------------------------------------------------------- Outro */}
-      <footer className="relative overflow-hidden py-24">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-[320px] mix-blend-multiply [mask-image:linear-gradient(to_bottom,transparent,black_45%)]"
-        >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/images/hero-bg.png"
-            alt=""
-            className="h-full w-full -scale-y-100 object-cover object-bottom"
-          />
-        </div>
-
-        <Measure>
-          <Reveal>
-            <Link
-              href="/work/fitastra"
-              className="group inline-flex items-center gap-3 text-2xl font-semibold tracking-tight text-[var(--cs-accent)]"
-            >
-              {outro.cta}
-            </Link>
-            <p className="mt-6 text-sm text-muted">{outro.credit}</p>
-          </Reveal>
-        </Measure>
-      </footer>
+      {/* -------------------------------------------------- Next project */}
+      <CaseStudyOutro currentHref="/work/zaps-editor" credit={outro.credit} />
     </main>
   );
 }
