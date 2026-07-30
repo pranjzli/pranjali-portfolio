@@ -6,16 +6,18 @@ import { viewportOnce, ease } from "@/lib/motion";
 import { AccentText } from "@/components/ui/accent-text";
 import { SectionLabel, Container } from "@/components/ui/section-label";
 import { Reveal } from "@/components/ui/reveal";
-import { ZapsHeroStage } from "@/components/case-study/zaps-hero";
+import { ZapsHeroStage, CARD_STAGE_RATIO } from "@/components/case-study/zaps-hero";
 
 function CardSurface({
   className = "",
+  style,
   arrow = true,
   href = "#",
   clean = false,
   children,
 }: {
   className?: string;
+  style?: React.CSSProperties;
   arrow?: boolean;
   href?: string;
   /** Drops the green placeholder background — for a card with real content
@@ -27,6 +29,7 @@ function CardSurface({
   return (
     <motion.a
       href={href}
+      style={style}
       whileHover="hover"
       className={`group relative block overflow-hidden rounded-2xl ${clean ? "border border-line bg-background" : "bg-card"} ${className}`}
     >
@@ -61,25 +64,27 @@ export function SelectedWorks() {
           <SectionLabel>Selected Works</SectionLabel>
         </Reveal>
 
-        {/* Featured: a wide banner (matching the hero visual's own ~5.4:1
-            proportions, so the hand + marquee composition inside it isn't
-            cropped or squeezed to fit) with the heading below it. */}
+        {/* Featured: heading first, then the hero visual underneath in its
+            own frame. Just copy + visual for this one — no small placeholder
+            cards. The frame uses CARD_STAGE_RATIO (taller than the hero's own
+            stage) so there's more headroom before the frame's edges crop the
+            hand. */}
         <Reveal group className="mt-6">
           <Reveal.Item>
-            <CardSurface href={featured.href ?? "#"} clean className="aspect-[7378/1361] w-full">
-              <ZapsHeroStage contained />
-            </CardSurface>
-          </Reveal.Item>
-          <Reveal.Item className="mt-6">
             <h3 className="text-2xl leading-snug tracking-tight sm:text-[26px]">
               <AccentText>{featured.title}</AccentText>
             </h3>
             <p className="mt-3 text-sm text-muted">{featured.meta}</p>
-            <div className="mt-6 grid grid-cols-3 gap-4">
-              {[0, 1, 2].map((i) => (
-                <CardSurface key={i} arrow={false} className="aspect-[236/273] w-full" />
-              ))}
-            </div>
+          </Reveal.Item>
+          <Reveal.Item className="mt-6">
+            <CardSurface
+              href={featured.href ?? "#"}
+              clean
+              className="w-full"
+              style={{ aspectRatio: CARD_STAGE_RATIO }}
+            >
+              <ZapsHeroStage contained ratio={CARD_STAGE_RATIO} />
+            </CardSurface>
           </Reveal.Item>
         </Reveal>
 

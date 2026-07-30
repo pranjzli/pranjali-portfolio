@@ -44,9 +44,17 @@ export function ZapsEditorCaseStudy() {
     // one system rather than two separately-branded pages.
     <main style={{ "--cs-accent": "#60A167" } as React.CSSProperties}>
       {/* ---------------------------------------------------------- Hero */}
-      {/* pb-[140px]: pb-16 (64px) + the 76px the scaled hand overflows the
-          section by, so the section ends exactly where the hand does. */}
-      <section className="relative overflow-hidden pt-36 pb-[140px]">
+      {/* padding-bottom via calc(), not a fixed px/Tailwind class — % and px
+          bottom-padding would track the section's own (full-bleed) width,
+          not the capped stage inside it, so the clearance would drift out of
+          proportion with the hand's overflow at other viewport widths. This
+          matches the stage's own min(1320px,98vw) sizing exactly; 0.10606 =
+          140px (pb-16 + the hand's scaled-up overflow) at the reference
+          1320px-wide stage. */}
+      <section
+        className="relative overflow-hidden pt-36"
+        style={{ paddingBottom: "calc(min(1320px, 98vw) * 0.10606)" }}
+      >
         <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 mix-blend-multiply">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
