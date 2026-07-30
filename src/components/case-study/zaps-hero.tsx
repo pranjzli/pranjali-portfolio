@@ -25,11 +25,6 @@ import { ease } from "@/lib/motion";
 
 const SCREENS = Array.from({ length: 15 }, (_, i) => `/images/case-studies/zaps/hero/screens/${i + 1}.png`);
 const STAGE_RATIO = "7378 / 1361";
-// The landing-page card's own stage: 2.34x taller than the hero's (1.3x,
-// then another 1.8x on top), so the composition renders that much larger
-// throughout (everything here scales off stage height) with more headroom
-// before the card's frame crops it.
-const CARD_STAGE_RATIO = "7378 / 3184.74";
 
 const HAND_SCALE = 2.17;
 const HAND_UNSCALED_HEIGHT_PCT = 96; // of stage height, before the scale transform
@@ -374,8 +369,6 @@ export function ZapsHeroStage({
     </>
   );
 }
-
-export { CARD_STAGE_RATIO };
 
 export function ZapsHero() {
   return (

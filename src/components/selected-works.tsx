@@ -6,7 +6,13 @@ import { viewportOnce, ease } from "@/lib/motion";
 import { AccentText } from "@/components/ui/accent-text";
 import { SectionLabel, Container } from "@/components/ui/section-label";
 import { Reveal } from "@/components/ui/reveal";
-import { ZapsHeroStage, CARD_STAGE_RATIO } from "@/components/case-study/zaps-hero";
+import { ZapsHeroStage } from "@/components/case-study/zaps-hero";
+
+// The hero visual's own aspect ratio, tuned to 0.52x its previous height via
+// the (now-removed) temp tuner — applied to both the frame (CardSurface) and
+// the stage inside it, so the two stay in sync rather than the stage
+// rendering shorter than the frame it's supposed to fill exactly.
+const FEATURED_CARD_RATIO = "7378 / 1656.0648";
 
 function CardSurface({
   className = "",
@@ -66,9 +72,7 @@ export function SelectedWorks() {
 
         {/* Featured: heading first, then the hero visual underneath in its
             own frame. Just copy + visual for this one — no small placeholder
-            cards. The frame uses CARD_STAGE_RATIO (taller than the hero's own
-            stage) so there's more headroom before the frame's edges crop the
-            hand. */}
+            cards. */}
         <Reveal group className="mt-6">
           <Reveal.Item>
             <h3 className="text-2xl leading-snug tracking-tight sm:text-[26px]">
@@ -81,14 +85,13 @@ export function SelectedWorks() {
               href={featured.href ?? "#"}
               clean
               className="w-full"
-              style={{ aspectRatio: CARD_STAGE_RATIO }}
+              style={{ aspectRatio: FEATURED_CARD_RATIO }}
             >
               <ZapsHeroStage
                 contained
-                ratio={CARD_STAGE_RATIO}
+                ratio={FEATURED_CARD_RATIO}
                 screenTopGapPct={30}
-                debug
-                debugLabel="Landing card"
+                handTune={{ scale: 0.95, x: -17, y: 94 }}
               />
             </CardSurface>
           </Reveal.Item>
