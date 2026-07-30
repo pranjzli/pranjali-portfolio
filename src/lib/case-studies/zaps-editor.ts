@@ -110,7 +110,7 @@ export const problem = {
     {
       src: "/images/case-studies/zaps/v3-creator.png",
       alt: "V3: Zaps as a template-based creator tool — wallpapers, birthdays, love collages, and viral story ideas",
-      caption: "V3 — a template-based creator tool",
+      caption: "V3 — a template-based creator tool (current)",
       ratio: "1400/949",
     },
   ],

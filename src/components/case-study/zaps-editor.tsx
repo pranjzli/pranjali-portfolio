@@ -168,7 +168,7 @@ export function ZapsEditorCaseStudy() {
                   loading="lazy"
                   decoding="async"
                   style={{ aspectRatio: m.ratio }}
-                  className="h-[220px] w-full rounded-2xl object-contain sm:h-[260px]"
+                  className="h-[286px] w-full rounded-2xl object-contain object-left sm:h-[338px]"
                 />
                 <p className="mt-4 text-sm leading-relaxed text-muted">{m.caption}</p>
               </Reveal.Item>
@@ -183,9 +183,9 @@ export function ZapsEditorCaseStudy() {
                 loading="lazy"
                 decoding="async"
                 style={{ aspectRatio: problem.media[2].ratio }}
-                className="h-[220px] w-full rounded-2xl object-contain sm:h-[260px]"
+                className="h-[286px] w-full rounded-2xl object-contain object-left sm:h-[338px]"
               />
-              <p className="mt-4 text-center text-sm leading-relaxed text-muted">
+              <p className="mt-4 text-sm leading-relaxed text-muted">
                 {problem.media[2].caption}
               </p>
             </div>

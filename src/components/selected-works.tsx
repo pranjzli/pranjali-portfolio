@@ -6,22 +6,31 @@ import { viewportOnce, ease } from "@/lib/motion";
 import { AccentText } from "@/components/ui/accent-text";
 import { SectionLabel, Container } from "@/components/ui/section-label";
 import { Reveal } from "@/components/ui/reveal";
+import { ZapsHeroStage } from "@/components/case-study/zaps-hero";
 
 function CardSurface({
   className = "",
   arrow = true,
   href = "#",
+  clean = false,
+  children,
 }: {
   className?: string;
   arrow?: boolean;
   href?: string;
+  /** Drops the green placeholder background — for a card with real content
+   * (the arrow's border colour switches from card-foreground to foreground
+   * to match, since there's no green surface behind it to sit on). */
+  clean?: boolean;
+  children?: React.ReactNode;
 }) {
   return (
     <motion.a
       href={href}
       whileHover="hover"
-      className={`group relative block overflow-hidden rounded-2xl bg-card ${className}`}
+      className={`group relative block overflow-hidden rounded-2xl ${clean ? "border border-line bg-background" : "bg-card"} ${className}`}
     >
+      {children}
       {/* subtle sheen on hover */}
       <motion.div
         variants={{ hover: { opacity: 1 } }}
@@ -33,7 +42,7 @@ function CardSurface({
         <motion.span
           variants={{ hover: { scale: [1, 0.82, 1] } }}
           transition={{ duration: 0.4, ease, times: [0, 0.4, 1] }}
-          className="absolute bottom-4 right-4 grid size-9 place-items-center rounded-full border border-card-foreground/25 text-card-foreground"
+          className={`absolute bottom-4 right-4 grid size-9 place-items-center rounded-full border ${clean ? "border-foreground/25 text-foreground" : "border-card-foreground/25 text-card-foreground"}`}
         >
           ↗
         </motion.span>
@@ -52,18 +61,21 @@ export function SelectedWorks() {
           <SectionLabel>Selected Works</SectionLabel>
         </Reveal>
 
-        {/* Featured row: tall card on the left, heading + a row of three
-            shorter cards on the right, all bottom-aligned (per Figma) */}
-        <Reveal group className="mt-6 grid gap-8 md:grid-cols-[428fr_732fr] md:items-stretch">
+        {/* Featured: a wide banner (matching the hero visual's own ~5.4:1
+            proportions, so the hand + marquee composition inside it isn't
+            cropped or squeezed to fit) with the heading below it. */}
+        <Reveal group className="mt-6">
           <Reveal.Item>
-            <CardSurface href={featured.href ?? "#"} className="aspect-[428/437] w-full" />
+            <CardSurface href={featured.href ?? "#"} clean className="aspect-[7378/1361] w-full">
+              <ZapsHeroStage contained />
+            </CardSurface>
           </Reveal.Item>
-          <Reveal.Item className="flex flex-col">
+          <Reveal.Item className="mt-6">
             <h3 className="text-2xl leading-snug tracking-tight sm:text-[26px]">
               <AccentText>{featured.title}</AccentText>
             </h3>
             <p className="mt-3 text-sm text-muted">{featured.meta}</p>
-            <div className="mt-auto grid grid-cols-3 gap-4 pt-6">
+            <div className="mt-6 grid grid-cols-3 gap-4">
               {[0, 1, 2].map((i) => (
                 <CardSurface key={i} arrow={false} className="aspect-[236/273] w-full" />
               ))}
