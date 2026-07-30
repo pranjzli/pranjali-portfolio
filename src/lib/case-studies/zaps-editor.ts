@@ -66,6 +66,9 @@ export const research = {
     },
   ],
   caption: "Research board, the users we designed for and how they create",
+  src: "/images/case-studies/zaps/research.png",
+  alt: "Research board covering filter and template-creation flows, competitor apps studied, module navigation depth, and the reusable UX patterns drawn from them",
+  ratio: "2600/1383",
 };
 
 export const problem = {
@@ -90,6 +93,27 @@ export const problem = {
     },
   ],
   caption: "The old app, four formats that each looked and worked differently",
+  // The three pivots, in order — v1 social, v2 AI editor, v3 creator tool.
+  media: [
+    {
+      src: "/images/case-studies/zaps/v1-social.png",
+      alt: "V1: Zaps as a photo-first social app — real-time camera replies with text and stickers",
+      caption: "V1 — a social app for real-time photo replies",
+      ratio: "1400/949",
+    },
+    {
+      src: "/images/case-studies/zaps/v2-ai.png",
+      alt: "V2: Zaps as an AI editor — outfit try-ons, AI hairstyles, and an enhance before/after",
+      caption: "V2 — an AI editor for outfits, hairstyles, filters",
+      ratio: "1400/949",
+    },
+    {
+      src: "/images/case-studies/zaps/v3-creator.png",
+      alt: "V3: Zaps as a template-based creator tool — wallpapers, birthdays, love collages, and viral story ideas",
+      caption: "V3 — a template-based creator tool (current)",
+      ratio: "1400/949",
+    },
+  ],
   quote:
     "As Zaps grew from a social app into a creator tool, its editing experience became fragmented. The challenge was to bring every format and every tool into one experience that feels like a single app. The goal was to make creating content fast and familiar, so more users finish what they start and keep coming back.",
 };
@@ -134,7 +158,6 @@ export const testing = {
       body: "Once they had started, users told us that switching to a different template meant going all the way back to the gallery and starting over.",
     },
   ],
-  caption: "The template-switch feature, and the rebuilt sticker library",
 };
 
 export const built = {
@@ -152,7 +175,20 @@ export const built = {
       body: "A user can swap to a new template from inside the editor, keeping the photos and text they already added.",
     },
   ],
-  caption: "The rebuilt sticker library and the in-editor template switch",
+  media: [
+    {
+      src: "/images/case-studies/zaps/built/sticker.png",
+      alt: "Sticker search and category browsing, a recently-used row, and a sticker placed on a photo",
+      ratio: "2000/774",
+      caption: "The rebuilt sticker library — packs, search, and recently used, all up front.",
+    },
+    {
+      src: "/images/case-studies/zaps/built/template.png",
+      alt: "Switching templates from inside the editor — browsing another template and applying it without losing existing edits",
+      ratio: "2000/785",
+      caption: "Switching templates from inside the editor — the photos already added carry over.",
+    },
+  ],
 };
 
 export const templates = {
@@ -177,7 +213,13 @@ export const templates = {
     },
   ],
   chips: ["Led a team of 10", "5,000+ templates", "6x faster to make"],
-  caption: "The template library and the shared kit behind it",
+};
+
+export const appStore = {
+  src: "/images/case-studies/zaps/app-store.webp",
+  alt: "The Zaps App Store listing — icon, title and five screenshots covering carousels, reels, templates, frames and stickers",
+  ratio: "2000/1339",
+  caption: "App Store screens I worked on.",
 };
 
 /**
