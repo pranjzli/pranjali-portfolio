@@ -41,7 +41,18 @@ export function Body({ children }: { children: string }) {
   );
 }
 
-export type Media = { ratio: string; src?: string; alt?: string; caption?: string };
+export type Media = {
+  ratio: string;
+  src?: string;
+  alt?: string;
+  caption?: string;
+  /** Fixed height instead of full-width-by-aspect-ratio — same box the
+   * "What we built from that" image row uses, so a wide/tall source doesn't
+   * balloon the block (and the gap above/below it) way past its neighbours. */
+  compact?: boolean;
+};
+
+const COMPACT_HEIGHT = "h-[220px] sm:h-[260px]";
 
 /**
  * An image slot. Artwork sits on the page itself — no card behind it, just a
@@ -52,18 +63,18 @@ export type Media = { ratio: string; src?: string; alt?: string; caption?: strin
  * renders at exactly the width it did on the card; the screens inside these
  * flow diagrams must not change size.
  */
-export function Placeholder({ ratio = "16/9", src, alt = "", caption }: Media) {
+export function Placeholder({ ratio = "16/9", src, alt = "", caption, compact = false }: Media) {
   return (
     <motion.figure
       initial={{ opacity: 0, y: 24, filter: "blur(6px)" }}
       whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
       viewport={viewportOnce}
       transition={{ duration: 0.7, ease }}
-      style={src ? undefined : { aspectRatio: ratio }}
+      style={src || compact ? undefined : { aspectRatio: ratio }}
       className={
         src
           ? "w-full p-3 sm:p-4"
-          : "w-full overflow-hidden rounded-2xl bg-card"
+          : `w-full overflow-hidden rounded-2xl bg-card ${compact ? COMPACT_HEIGHT : ""}`
       }
     >
       {src && (
@@ -74,8 +85,8 @@ export function Placeholder({ ratio = "16/9", src, alt = "", caption }: Media) {
             alt={alt}
             loading="lazy"
             decoding="async"
-            style={{ aspectRatio: ratio }}
-            className="w-full rounded-lg object-contain drop-shadow-[0_10px_24px_rgba(25,25,23,0.07)]"
+            style={compact ? undefined : { aspectRatio: ratio }}
+            className={`w-full rounded-lg object-contain drop-shadow-[0_10px_24px_rgba(25,25,23,0.07)] ${compact ? COMPACT_HEIGHT : ""}`}
           />
           {caption && (
             <figcaption className="mt-4 text-sm leading-relaxed text-muted">
@@ -246,7 +257,7 @@ export function Chips({ items, className = "mt-8" }: { items: string[]; classNam
       {items.map((c) => (
         <Reveal.Item
           key={c}
-          className="rounded-full border border-line bg-white px-4 py-2 text-sm font-medium text-foreground/80"
+          className="rounded-full border border-line bg-card px-4 py-2 text-sm font-medium text-card-foreground"
         >
           {c}
         </Reveal.Item>
@@ -299,15 +310,17 @@ export function SectionVisual({
   src,
   alt = "",
   ratio = "16/9",
+  compact = false,
 }: {
   caption?: string;
   src?: string;
   alt?: string;
   ratio?: string;
+  compact?: boolean;
 }) {
   return (
     <div className="relative left-1/2 mt-10 w-[min(1180px,92vw)] -translate-x-1/2">
-      <Placeholder ratio={ratio} src={src} alt={alt} />
+      <Placeholder ratio={ratio} src={src} alt={alt} compact={compact} />
       {caption && (
         <p className="mt-4 text-sm leading-relaxed text-muted">{caption}</p>
       )}

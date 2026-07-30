@@ -11,6 +11,7 @@ import {
   testing,
   built,
   templates,
+  appStore,
   canvas,
   role,
   learned,
@@ -131,16 +132,65 @@ export function ZapsEditorCaseStudy() {
         </Measure>
       </section>
 
+      {/* ----------------------------------------------------------- Role */}
+      <Section id="role" label={role.label} heading={role.heading}>
+        {/* Chips first, then the framing line beneath them */}
+        <Chips items={role.chips} className="mt-6" />
+        <Reveal className="mt-6 max-w-[840px]">
+          <Body>{role.body}</Body>
+        </Reveal>
+      </Section>
+
       {/* ------------------------------------------------------- Research */}
       <Section label={research.label} heading={research.heading} body={research.body}>
         <CardGrid cards={research.cards} columns={4} />
-        <SectionVisual caption={research.caption} />
+        <SectionVisual
+          src={research.src}
+          alt={research.alt}
+          ratio={research.ratio}
+          caption={research.caption}
+        />
       </Section>
 
       {/* -------------------------------------------------------- Problem */}
       <Section label={problem.label} heading={problem.heading} body={problem.body}>
         <CardGrid cards={problem.cards} columns={3} />
-        <SectionVisual caption={problem.caption} />
+        {/* The three pivots — v1/v2 side by side, v3 centered below. All three
+            share one fixed height, same pattern as the "What we built" row. */}
+        <div className="relative left-1/2 mt-10 w-[min(1180px,92vw)] -translate-x-1/2">
+          <Reveal group className="grid gap-6 sm:grid-cols-2">
+            {problem.media.slice(0, 2).map((m) => (
+              <Reveal.Item key={m.src}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={m.src}
+                  alt={m.alt}
+                  loading="lazy"
+                  decoding="async"
+                  style={{ aspectRatio: m.ratio }}
+                  className="h-[220px] w-full rounded-2xl object-contain sm:h-[260px]"
+                />
+                <p className="mt-4 text-sm leading-relaxed text-muted">{m.caption}</p>
+              </Reveal.Item>
+            ))}
+          </Reveal>
+          <Reveal className="mt-6 flex justify-center">
+            <div className="w-full sm:w-1/2 sm:px-3">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={problem.media[2].src}
+                alt={problem.media[2].alt}
+                loading="lazy"
+                decoding="async"
+                style={{ aspectRatio: problem.media[2].ratio }}
+                className="h-[220px] w-full rounded-2xl object-contain sm:h-[260px]"
+              />
+              <p className="mt-4 text-center text-sm leading-relaxed text-muted">
+                {problem.media[2].caption}
+              </p>
+            </div>
+          </Reveal>
+        </div>
         <PullQuote>{problem.quote}</PullQuote>
       </Section>
 
@@ -159,13 +209,32 @@ export function ZapsEditorCaseStudy() {
       {/* -------------------------------------------------------- Testing */}
       <Section label={testing.label} heading={testing.heading} body={testing.body}>
         <CardGrid cards={testing.cards} columns={2} />
-        <SectionVisual caption={testing.caption} />
       </Section>
 
       {/* ---------------------------------------------------------- Built */}
       <Section label={built.label} heading={built.heading}>
         <CardGrid cards={built.cards} columns={2} />
-        <SectionVisual caption={built.caption} />
+        {/* Both flows share one row height so they read side by side, like a
+            contact sheet — widths differ with each image's own ratio. */}
+        <Reveal
+          group
+          className="relative left-1/2 mt-10 flex w-[min(1180px,92vw)] -translate-x-1/2 flex-col gap-8 sm:flex-row sm:items-start"
+        >
+          {built.media.map((m) => (
+            <Reveal.Item key={m.src} className="min-w-0 flex-1">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={m.src}
+                alt={m.alt}
+                loading="lazy"
+                decoding="async"
+                style={{ aspectRatio: m.ratio }}
+                className="h-[220px] w-full rounded-2xl object-contain sm:h-[260px]"
+              />
+              <p className="mt-4 text-sm leading-relaxed text-muted">{m.caption}</p>
+            </Reveal.Item>
+          ))}
+        </Reveal>
       </Section>
 
       {/* ------------------------------------------------------ Templates */}
@@ -173,16 +242,12 @@ export function ZapsEditorCaseStudy() {
         {/* Quick facts sit above the how-it-was-done cards */}
         <Chips items={templates.chips} className="mt-8" />
         <CardGrid cards={templates.cards} columns={3} />
-        <SectionVisual caption={templates.caption} />
-      </Section>
-
-      {/* ----------------------------------------------------------- Role */}
-      <Section id="role" label={role.label} heading={role.heading}>
-        {/* Chips first, then the framing line beneath them */}
-        <Chips items={role.chips} className="mt-6" />
-        <Reveal className="mt-6 max-w-[840px]">
-          <Body>{role.body}</Body>
-        </Reveal>
+        <SectionVisual
+          src={appStore.src}
+          alt={appStore.alt}
+          ratio={appStore.ratio}
+          caption={appStore.caption}
+        />
       </Section>
 
       {/* -------------------------------------------------------- Learned */}
