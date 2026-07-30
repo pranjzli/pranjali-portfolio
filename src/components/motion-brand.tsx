@@ -55,27 +55,46 @@ export function MotionBrand() {
             </div>
           </Reveal>
 
-          {/* Folder graphic */}
-          <motion.div
+          {/* Folder — opens on hover, links to Behance */}
+          <motion.a
+            href="https://www.behance.net/pranjalisaini"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="See my work on Behance"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={viewportOnce}
             transition={{ duration: 0.6, ease }}
             whileHover="open"
-            className="relative h-32 w-44 shrink-0"
+            variants={{ open: { y: -8 } }}
+            className="relative h-32 w-44 shrink-0 [perspective:700px]"
           >
             {/* Back panel + tab */}
             <div className="absolute bottom-0 h-28 w-full rounded-xl bg-[linear-gradient(160deg,#a9dc8f,#8cc76d)]" />
             <div className="absolute left-0 top-0 h-7 w-24 rounded-t-lg bg-[linear-gradient(160deg,#a9dc8f,#8cc76d)]" />
-            {/* Page sits between the panels so it reads as filed inside */}
-            <motion.div
-              variants={{ open: { y: -10, rotate: -2 } }}
+
+            {/* The filed paper — a peek of the Behance profile. On hover it grows
+                taller from its bottom edge (more of it shows) and lifts a touch. */}
+            <motion.img
+              src="/images/behance-folder.png"
+              alt=""
+              variants={{ open: { y: -6, scaleY: 1.14, scaleX: 1.03 } }}
               transition={{ type: "spring", stiffness: 220, damping: 20 }}
-              className="absolute left-4 top-3 h-16 w-36 rounded-md bg-white shadow-[0_4px_10px_-4px_rgba(0,0,0,0.3)]"
+              style={{ transformOrigin: "bottom center" }}
+              className="absolute left-4 top-5 h-16 w-36 rounded-md object-cover object-top shadow-[0_4px_10px_-4px_rgba(0,0,0,0.3)]"
             />
-            {/* Front panel, drawn last so it overlaps the page */}
-            <div className="absolute bottom-0 h-20 w-full rounded-xl bg-[linear-gradient(160deg,#c6ecab,#9ed17f)] shadow-[0_-2px_8px_-4px_rgba(0,0,0,0.15)]" />
-          </motion.div>
+
+            {/* Front panel — scales down and tilts forward from its bottom edge so
+                the top widens (open-flap feel); bottom stays put, never dropping
+                below its resting position. */}
+            <motion.div
+              aria-hidden
+              variants={{ open: { rotateX: -34, scaleX: 1.06, scaleY: 0.92 } }}
+              transition={{ type: "spring", stiffness: 220, damping: 20 }}
+              style={{ transformOrigin: "bottom center" }}
+              className="absolute bottom-0 h-20 w-full rounded-xl bg-[linear-gradient(160deg,#c6ecab,#9ed17f)] shadow-[0_-2px_8px_-4px_rgba(0,0,0,0.15)]"
+            />
+          </motion.a>
         </div>
       </Container>
     </section>

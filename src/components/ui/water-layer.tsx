@@ -112,15 +112,34 @@ export function WaterLayer({ src, className = "" }: { src: string; className?: s
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+    // Seed transparent. A fresh WebGL texture samples as opaque BLACK, which
+    // mix-blend-multiply would paint as a black wash if we ever draw before
+    // (or without) the image upload. Transparent means the plain <img> beneath
+    // shows through instead — the correct graceful fallback.
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([0, 0, 0, 0]));
 
     let ready = false;
+    let texW = 1;
+    let texH = 1;
+    // Same-origin image — no crossOrigin. Setting it made this request's cache
+    // mode differ from the plain <img> loads elsewhere (e.g. the case-study
+    // footer wash), so on client-side navigation the cached copy failed to
+    // upload cleanly.
     const img = new Image();
-    img.crossOrigin = "anonymous";
     img.onload = () => {
       gl.bindTexture(gl.TEXTURE_2D, tex);
+      while (gl.getError() !== gl.NO_ERROR) {
+        /* drain any stale error so the check below is about this upload */
+      }
       gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img);
-      gl.uniform2f(u.texRes, img.naturalWidth, img.naturalHeight);
-      ready = true;
+      // Only go live if the upload actually succeeded; otherwise the texture
+      // keeps its transparent seed and the plain <img> shows through — never
+      // the default opaque-black that mix-blend-multiply turns into a wash.
+      if (gl.getError() === gl.NO_ERROR) {
+        texW = img.naturalWidth;
+        texH = img.naturalHeight;
+        ready = true;
+      }
     };
     img.src = src;
 
@@ -132,8 +151,6 @@ export function WaterLayer({ src, className = "" }: { src: string; className?: s
       if (canvas.width === w && canvas.height === h) return;
       canvas.width = w;
       canvas.height = h;
-      gl.viewport(0, 0, w, h);
-      gl.uniform2f(u.res, w, h);
     }
     const ro = new ResizeObserver(resize);
     ro.observe(canvas);
@@ -165,13 +182,27 @@ export function WaterLayer({ src, className = "" }: { src: string; className?: s
     let raf = 0;
     function frame(now: number) {
       raf = requestAnimationFrame(frame);
-      if (!ready || !visible || !gl) return;
+      if (!ready || !visible || !gl || !canvas) return;
 
       eased.x += (target.x - eased.x) * 0.09;
       eased.y += (target.y - eased.y) * 0.09;
       influence += (wanted - influence) * 0.05;
 
+      // Re-assert all state every frame. In dev, React StrictMode mounts this
+      // effect twice against the SAME WebGL context, so program/texture/uniform
+      // bindings can be clobbered between frames. Binding everything here keeps
+      // each draw self-consistent (and it's cheap for a single fullscreen quad).
+      gl.useProgram(prog);
+      gl.viewport(0, 0, canvas.width, canvas.height);
+      gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+      gl.enableVertexAttribArray(loc);
+      gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+      gl.activeTexture(gl.TEXTURE0);
+      gl.bindTexture(gl.TEXTURE_2D, tex);
+
       gl.uniform1i(u.tex, 0);
+      gl.uniform2f(u.res, canvas.width, canvas.height);
+      gl.uniform2f(u.texRes, texW, texH);
       gl.uniform2f(u.mouse, eased.x, eased.y);
       gl.uniform1f(u.time, (now - start) / 1000);
       gl.uniform1f(u.influence, influence);

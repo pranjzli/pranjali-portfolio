@@ -60,10 +60,18 @@ export const about = {
 };
 
 // Polaroid frames + handwritten captions are baked into the images.
-export const polaroids = [
+// A `video` entry makes the polaroid open a pop-up player on click.
+export type Polaroid = { src: string; alt: string; video?: string; poster?: string };
+
+export const polaroids: Polaroid[] = [
   { src: "/images/polaroids/books.png", alt: "Reading Hooked at my desk" },
   { src: "/images/polaroids/workspace.png", alt: "My workspace at night" },
-  { src: "/images/polaroids/music.png", alt: "Playing guitar" },
+  {
+    src: "/images/polaroids/music.png",
+    alt: "Playing guitar",
+    video: "/videos/pranjali-guitar.mp4",
+    poster: "/videos/pranjali-guitar-poster.jpg",
+  },
   { src: "/images/polaroids/kiki.png", alt: "Mirror selfie with my cat Kiki" },
   { src: "/images/polaroids/art.png", alt: "Face illustrations on iPad" },
   { src: "/images/polaroids/beach.png", alt: "At the beach" },

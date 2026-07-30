@@ -1,9 +1,11 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "motion/react";
 import { viewportOnce, ease } from "@/lib/motion";
 import { AccentText } from "@/components/ui/accent-text";
 import { Reveal } from "@/components/ui/reveal";
+import { nextCaseStudy } from "@/lib/case-studies/order";
 
 /** Case-study measure — slightly wider than the home page's 720px. */
 export function Measure({
@@ -15,6 +17,42 @@ export function Measure({
 }) {
   return (
     <div className={`mx-auto w-full max-w-[840px] px-6 ${className}`}>{children}</div>
+  );
+}
+
+/**
+ * End-of-study band: points to the next case study (cycling through
+ * `caseStudyOrder`) and prints the study credit. No background wash — the
+ * shared site FooterCta sits below it and owns the page-bottom wash.
+ */
+export function CaseStudyOutro({
+  currentHref,
+  credit,
+}: {
+  currentHref: string;
+  credit: string;
+}) {
+  const next = nextCaseStudy(currentHref);
+  return (
+    <section className="pt-16 pb-8">
+      <Measure>
+        <Reveal>
+          <span className="text-xs font-semibold uppercase tracking-[0.18em] text-muted">
+            Next project
+          </span>
+          <Link
+            href={next.href}
+            className="group mt-3 flex items-baseline gap-3 text-3xl font-semibold tracking-tight text-[var(--cs-accent)] sm:text-4xl"
+          >
+            {next.name}
+            <span aria-hidden className="transition-transform duration-300 group-hover:translate-x-1.5">
+              →
+            </span>
+          </Link>
+          <p className="mt-8 text-sm text-muted">{credit}</p>
+        </Reveal>
+      </Measure>
+    </section>
   );
 }
 

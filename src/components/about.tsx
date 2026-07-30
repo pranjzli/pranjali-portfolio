@@ -23,7 +23,7 @@ export function About() {
               <button
                 key={t}
                 onClick={() => setTab(t)}
-                className="relative rounded-full px-3 py-1 transition-colors"
+                className="relative cursor-pointer rounded-full px-3 py-1 transition-colors"
               >
                 {tab === t && (
                   <motion.span

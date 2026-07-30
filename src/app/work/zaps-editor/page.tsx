@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Navbar } from "@/components/navbar";
 import { ZapsEditorCaseStudy } from "@/components/case-study/zaps-editor";
+import { FooterCta } from "@/components/footer-cta";
 
 export const metadata: Metadata = {
   title: "Zaps — The Editor · Pranjali",
@@ -13,6 +14,7 @@ export default function ZapsEditorPage() {
     <>
       <Navbar />
       <ZapsEditorCaseStudy />
+      <FooterCta />
     </>
   );
 }
