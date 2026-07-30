@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "motion/react";
 import { ease } from "@/lib/motion";
 
@@ -23,10 +24,11 @@ import { ease } from "@/lib/motion";
 
 const SCREENS = Array.from({ length: 15 }, (_, i) => `/images/case-studies/zaps/hero/screens/${i + 1}.png`);
 const STAGE_RATIO = "7378 / 1361";
-// The landing-page card's own stage: 1.3x taller than the hero's, so the
-// composition renders 1.3x larger throughout (everything here scales off
-// stage height) with more headroom before the card's frame crops it.
-const CARD_STAGE_RATIO = "7378 / 1769.3";
+// The landing-page card's own stage: 2.34x taller than the hero's (1.3x,
+// then another 1.8x on top), so the composition renders that much larger
+// throughout (everything here scales off stage height) with more headroom
+// before the card's frame crops it.
+const CARD_STAGE_RATIO = "7378 / 3184.74";
 
 const HAND_SCALE = 2.17;
 const HAND_UNSCALED_HEIGHT_PCT = 96; // of stage height, before the scale transform
@@ -67,14 +69,25 @@ function Piece({
   );
 }
 
-function Strip({ ariaHidden = false }: { ariaHidden?: boolean }) {
+function Strip({
+  ariaHidden = false,
+  extra,
+}: {
+  ariaHidden?: boolean;
+  /** TEMP debug nudge, composed on top of the strip's own layout. */
+  extra?: string;
+}) {
   return (
     // All screens share one horizontal baseline — no stagger. Eager-loaded:
     // this is always-visible looping content, not real below-the-fold
     // content, and the CSS loop only stays seamless once both copies of the
     // strip have their real width — a lazy-loaded image is 0px wide until it
     // decodes, which was throwing the loop out of alignment.
-    <div className="flex h-full shrink-0 items-end gap-[19px] px-4" aria-hidden={ariaHidden || undefined}>
+    <div
+      style={extra ? { transform: extra } : undefined}
+      className="flex h-full shrink-0 items-end gap-[19px] px-4"
+      aria-hidden={ariaHidden || undefined}
+    >
       {SCREENS.map((src) => (
         // eslint-disable-next-line @next/next/no-img-element
         <img
@@ -86,6 +99,85 @@ function Strip({ ariaHidden = false }: { ariaHidden?: boolean }) {
           className="w-auto shrink-0 opacity-50 drop-shadow-[0_18px_40px_rgba(25,25,23,0.12)]"
         />
       ))}
+    </div>
+  );
+}
+
+type Tune = { scale: number; x: number; y: number };
+const TUNE_DEFAULT: Tune = { scale: 1, x: 0, y: 0 };
+const tuneTransform = (t: Tune) => `translate(${t.x}px, ${t.y}px) scale(${t.scale})`;
+
+/**
+ * TEMP — full tuning panel: scale/X/Y for each of the four pieces (screens,
+ * hand, gradient, container). Dev-only: Next.js dead-code eliminates this
+ * whole branch from the production bundle. Read values off, tell Claude,
+ * then delete this component and the tune state in ZapsHeroStage.
+ */
+function VisualTuner({
+  label,
+  groups,
+}: {
+  label: string;
+  groups: { key: string; title: string; value: Tune; onChange: (v: Tune) => void }[];
+}) {
+  const [copied, setCopied] = useState(false);
+
+  function copyAll() {
+    const obj: Record<string, Tune> = {};
+    groups.forEach((g) => (obj[g.key] = g.value));
+    navigator.clipboard.writeText(JSON.stringify(obj, null, 2));
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1200);
+  }
+
+  return (
+    <div className="fixed bottom-4 right-4 z-50 max-h-[92vh] w-80 overflow-y-auto rounded-xl border border-white/15 bg-black/85 p-4 font-mono text-white shadow-2xl backdrop-blur">
+      <div className="mb-3 flex items-center justify-between">
+        <span className="text-[11px] font-bold uppercase tracking-wider text-amber-400">
+          Temp · {label}
+        </span>
+        <button
+          type="button"
+          onClick={() => groups.forEach((g) => g.onChange(TUNE_DEFAULT))}
+          className="text-[11px] text-white/60 underline hover:text-white"
+        >
+          Reset all
+        </button>
+      </div>
+
+      {groups.map((g) => (
+        <div key={g.key} className="mt-3 border-t border-white/10 pt-3 first:mt-0 first:border-0 first:pt-0">
+          <div className="mb-1.5 text-[11px] font-semibold text-white/80">{g.title}</div>
+          {(["scale", "x", "y"] as const).map((axis) => {
+            const range = axis === "scale" ? { min: 0.2, max: 3, step: 0.01 } : { min: -300, max: 300, step: 1 };
+            return (
+              <div key={axis} className="mt-1.5 flex items-center gap-2 text-xs">
+                <span className="w-9 shrink-0 uppercase text-white/60">{axis}</span>
+                <input
+                  type="range"
+                  min={range.min}
+                  max={range.max}
+                  step={range.step}
+                  value={g.value[axis]}
+                  onChange={(e) => g.onChange({ ...g.value, [axis]: Number(e.target.value) })}
+                  className="flex-1"
+                />
+                <span className="w-12 shrink-0 text-right tabular-nums">
+                  {axis === "scale" ? g.value[axis].toFixed(2) : `${g.value[axis]}px`}
+                </span>
+              </div>
+            );
+          })}
+        </div>
+      ))}
+
+      <button
+        type="button"
+        onClick={copyAll}
+        className="mt-4 w-full rounded-lg border border-white/15 bg-white/10 py-1.5 text-[11px] font-semibold uppercase tracking-wide text-white hover:bg-white/20"
+      >
+        {copied ? "Copied!" : "Copy all values"}
+      </button>
     </div>
   );
 }
@@ -102,14 +194,37 @@ function Strip({ ariaHidden = false }: { ariaHidden?: boolean }) {
  * spanning the page. `ratio` lets a bounded card ask for a taller stage than
  * the hero's own (see CARD_STAGE_RATIO) — every measurement here is relative,
  * so the whole composition just scales up with it.
+ *
+ * `screenTopGapPct`, when set, pins the screens' top edge to that many % of
+ * stage height below the stage's own top — i.e. "leave this much clear space
+ * above the marquee" — instead of the default (whatever HAND_OVERFLOW_PCT
+ * happens to produce, ~10% at the standard SCREENS_HEIGHT_PCT). Solved
+ * directly for the target gap rather than as a delta from the default, so
+ * there's no sign to get backwards: screenTopGapPct=30 always means "30%
+ * gap", never "shift by 30% in whichever direction it turns out to be".
+ *
+ * `debug` mounts a TEMP on-page tuner (scale/X/Y for screens, hand, gradient,
+ * container) — dev-only, dead-code eliminated from production.
  */
 export function ZapsHeroStage({
   contained = false,
   ratio = STAGE_RATIO,
+  screenTopGapPct,
+  debug = false,
+  debugLabel = "Visual tuner",
 }: {
   contained?: boolean;
   ratio?: string;
+  screenTopGapPct?: number;
+  debug?: boolean;
+  debugLabel?: string;
 }) {
+  const [screensT, setScreensT] = useState<Tune>(TUNE_DEFAULT);
+  const [handT, setHandT] = useState<Tune>(TUNE_DEFAULT);
+  const [gradientT, setGradientT] = useState<Tune>(TUNE_DEFAULT);
+  const [containerT, setContainerT] = useState<Tune>(TUNE_DEFAULT);
+  const isDev = process.env.NODE_ENV !== "production";
+
   const edgeWidth = contained ? "w-[30%]" : "w-[30vw]";
   const leftPos = contained
     ? "left-0"
@@ -118,50 +233,93 @@ export function ZapsHeroStage({
       // viewport-centered (it is, on the hero section).
       "left-1/2 -ml-[50vw]";
   const rightPos = contained ? "right-0" : "right-1/2 -mr-[50vw]";
+  // Screens are SCREENS_HEIGHT_PCT tall, bottom-anchored inside a Piece whose
+  // own un-shifted box is the stage — so before any shift, their top sits at
+  // (100 - SCREENS_HEIGHT_PCT)% above the stage top. Solving
+  // shiftPct + (100 - SCREENS_HEIGHT_PCT) = screenTopGapPct for shiftPct
+  // gives the exact translate needed to land the top exactly there.
+  const marqueeShiftPct =
+    screenTopGapPct === undefined
+      ? HAND_OVERFLOW_PCT
+      : screenTopGapPct - (100 - SCREENS_HEIGHT_PCT);
 
   return (
-    <div className="relative w-full" style={{ aspectRatio: ratio }}>
-      {/* Behind: the editor screens drifting past — shifted down to meet the
-          hand's actual (scaled) bottom. */}
-      <Piece shiftPct={HAND_OVERFLOW_PCT} className="overflow-visible">
-        <div className="marquee-track flex h-full w-max items-end">
-          <Strip />
-          <Strip ariaHidden />
-        </div>
-      </Piece>
+    <>
+      <div
+        className="relative w-full"
+        style={{
+          aspectRatio: ratio,
+          transform: debug ? tuneTransform(containerT) : undefined,
+          transformOrigin: "center",
+        }}
+      >
+        {/* Behind: the editor screens drifting past — shifted down to meet the
+            hand's actual (scaled) bottom. */}
+        <Piece shiftPct={marqueeShiftPct} className="overflow-visible">
+          <div className="marquee-track flex h-full w-max items-end">
+            <Strip extra={debug ? tuneTransform(screensT) : undefined} />
+            <Strip ariaHidden extra={debug ? tuneTransform(screensT) : undefined} />
+          </div>
+        </Piece>
 
-      {/* Edge fades — identical shift to the marquee above, so they land in
-          exactly the same place the screens do; only their own height and
-          horizontal anchor differ. (The children are absolutely positioned,
-          so Piece's own flex alignment doesn't affect them — only its
-          translateY matters here.) */}
-      <Piece shiftPct={HAND_OVERFLOW_PCT} className="z-[6]">
-        <div
-          aria-hidden
-          style={{ height: `${SCREENS_HEIGHT_PCT}%` }}
-          className={`pointer-events-none absolute bottom-0 ${leftPos} ${edgeWidth} bg-[linear-gradient(to_right,var(--background),transparent)]`}
-        />
-      </Piece>
-      <Piece shiftPct={HAND_OVERFLOW_PCT}>
-        <div
-          aria-hidden
-          style={{ height: `${SCREENS_HEIGHT_PCT}%` }}
-          className={`pointer-events-none absolute bottom-0 ${rightPos} ${edgeWidth} bg-[linear-gradient(to_left,var(--background),transparent)]`}
-        />
-      </Piece>
+        {/* Edge fades — identical shift to the marquee above, so they land in
+            exactly the same place the screens do; only their own height and
+            horizontal anchor differ. (The children are absolutely positioned,
+            so Piece's own flex alignment doesn't affect them — only its
+            translateY matters here.) */}
+        <Piece shiftPct={marqueeShiftPct} className="z-[6]">
+          <div
+            aria-hidden
+            style={{
+              height: `${SCREENS_HEIGHT_PCT}%`,
+              transform: debug ? tuneTransform(gradientT) : undefined,
+              transformOrigin: "bottom left",
+            }}
+            className={`pointer-events-none absolute bottom-0 ${leftPos} ${edgeWidth} bg-[linear-gradient(to_right,var(--background),transparent)]`}
+          />
+        </Piece>
+        <Piece shiftPct={marqueeShiftPct}>
+          <div
+            aria-hidden
+            style={{
+              height: `${SCREENS_HEIGHT_PCT}%`,
+              transform: debug ? tuneTransform(gradientT) : undefined,
+              transformOrigin: "bottom right",
+            }}
+            className={`pointer-events-none absolute bottom-0 ${rightPos} ${edgeWidth} bg-[linear-gradient(to_left,var(--background),transparent)]`}
+          />
+        </Piece>
 
-      {/* Front: the hand, still, bottom-anchored to the same baseline —
-          left fully unclipped, nothing should ever cut off the wrist. */}
-      <Piece shiftPct={0} className="z-10 justify-center pointer-events-none">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/images/case-studies/zaps/hero/hand.png"
-          alt="A hand holding a phone running the Zaps app"
-          style={{ height: `${HAND_UNSCALED_HEIGHT_PCT}%`, transform: `scale(${HAND_SCALE})` }}
-          className="w-auto max-w-none drop-shadow-[0_28px_50px_rgba(25,25,23,0.20)]"
+        {/* Front: the hand, still, bottom-anchored to the same baseline —
+            left fully unclipped, nothing should ever cut off the wrist. */}
+        <Piece shiftPct={0} className="z-10 justify-center pointer-events-none">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/images/case-studies/zaps/hero/hand.png"
+            alt="A hand holding a phone running the Zaps app"
+            style={{
+              height: `${HAND_UNSCALED_HEIGHT_PCT}%`,
+              transform: debug
+                ? `translate(${handT.x}px, ${handT.y}px) scale(${HAND_SCALE * handT.scale})`
+                : `scale(${HAND_SCALE})`,
+            }}
+            className="w-auto max-w-none drop-shadow-[0_28px_50px_rgba(25,25,23,0.20)]"
+          />
+        </Piece>
+      </div>
+
+      {isDev && debug && (
+        <VisualTuner
+          label={debugLabel}
+          groups={[
+            { key: "screens", title: "Screens", value: screensT, onChange: setScreensT },
+            { key: "hand", title: "Hand", value: handT, onChange: setHandT },
+            { key: "gradient", title: "Gradient", value: gradientT, onChange: setGradientT },
+            { key: "container", title: "Container", value: containerT, onChange: setContainerT },
+          ]}
         />
-      </Piece>
-    </div>
+      )}
+    </>
   );
 }
 
@@ -183,7 +341,7 @@ export function ZapsHero() {
       className="relative left-1/2 w-[min(1320px,98vw)] -translate-x-1/2"
       style={{ marginTop: "calc(min(1320px, 98vw) * 0.13106)" }}
     >
-      <ZapsHeroStage />
+      <ZapsHeroStage debug debugLabel="Hero page" />
     </motion.div>
   );
 }

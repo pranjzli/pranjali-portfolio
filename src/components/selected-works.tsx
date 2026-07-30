@@ -83,7 +83,13 @@ export function SelectedWorks() {
               className="w-full"
               style={{ aspectRatio: CARD_STAGE_RATIO }}
             >
-              <ZapsHeroStage contained ratio={CARD_STAGE_RATIO} />
+              <ZapsHeroStage
+                contained
+                ratio={CARD_STAGE_RATIO}
+                screenTopGapPct={30}
+                debug
+                debugLabel="Landing card"
+              />
             </CardSurface>
           </Reveal.Item>
         </Reveal>
