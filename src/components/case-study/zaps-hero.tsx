@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 import { createPortal } from "react-dom";
 import { motion } from "motion/react";
 import { ease } from "@/lib/motion";
@@ -141,8 +141,13 @@ function VisualTuner({
   // nothing until after the client mounts, which also sidesteps any
   // server/client markup mismatch since a portal target doesn't exist on
   // the server at all.
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
+  // Isomorphic mounted flag — false during SSR, true once hydrated — without a
+  // setState-in-effect. Portals need a real `document`, absent on the server.
+  const mounted = useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false,
+  );
   if (!mounted) return null;
 
   function copyAll() {
