@@ -12,13 +12,16 @@ import { BubbleTail } from "@/components/ui/bubble-tail";
 /* Shared geometry so the bubble's notch always lands on the selected tile. */
 const TILE = 96; // size-24
 const GAP = 20; // gap-5
-const ROW_INDENT = 96; // row's left offset inside the container
+const ROW_INDENT = 96; // row's left offset inside the container (md:ml-24)
 const AUTO_ROTATE_MS = 5000;
 // Fixed footprint reserved for the bubble = the tallest bubble (longest quote
 // at the card's own max-w-lg width). The bubble itself sizes to its content
 // and is anchored to the BOTTOM of this reserve, so its height/top-edge change
 // per person while everything below it (the tiles) never shifts.
 const BUBBLE_RESERVE = 220;
+const BUBBLE_WIDTH = 512; // max-w-lg
+
+const tileCenter = (i: number) => ROW_INDENT + i * (TILE + GAP) + TILE / 2;
 
 export function Testimonials() {
   const [selected, setSelected] = useState(0);
@@ -33,7 +36,19 @@ export function Testimonials() {
   }, [hasInteracted]);
 
   const active = testimonial.people[selected];
-  const tailLeft = ROW_INDENT + selected * (TILE + GAP) + TILE / 2 - 5;
+
+  // The bubble glides horizontally to sit over the active tile, keeping its
+  // tail attached instead of letting the tail slide off the (fixed-width)
+  // bubble toward the far-right people. Ideal shift centres the tail on the
+  // bubble; clamped so the bubble's right edge never passes the tile row's
+  // right end (no clipping) and it never slides left of the row's start.
+  const n = testimonial.people.length;
+  const rowRight = tileCenter(n - 1) + TILE / 2;
+  const maxShift = Math.max(0, rowRight - BUBBLE_WIDTH);
+  const bubbleShift = Math.min(Math.max(tileCenter(selected) - BUBBLE_WIDTH / 2, 0), maxShift);
+  // Tail position *within* the bubble = where it must sit so that, after the
+  // bubble is shifted, it lands dead-centre on the selected tile.
+  const tailLeft = tileCenter(selected) - bubbleShift - 5;
 
   function select(i: number) {
     setSelected(i);
@@ -54,22 +69,31 @@ export function Testimonials() {
           {/* Fixed-height reserve, bubble pinned to its bottom. The bubble's
               own height tracks its content, so its top edge rises/falls per
               person while this reserve keeps the tiles below from ever moving. */}
-          <div className="flex max-w-lg items-end" style={{ minHeight: BUBBLE_RESERVE }}>
-            <motion.figure
-              layout
+          <div className="flex w-full items-end" style={{ minHeight: BUBBLE_RESERVE }}>
+            {/* Shifter carries the horizontal glide; the figure inside only
+                animates its own height. Keeping the two on separate elements
+                stops the layout (height) animation and the x-glide from both
+                fighting over the same transform. */}
+            <motion.div
+              animate={{ x: bubbleShift }}
               transition={{ duration: 0.4, ease }}
-              className="relative w-full rounded-[28px] bg-[#ececec] p-6 text-[#ececec]"
+              className="w-full max-w-lg"
             >
-              {/* Notch hooks down onto the selected person's tile. Anchored to
-                  the bubble's bottom edge (which never moves), so only its
-                  horizontal position changes with the selection. */}
-              <motion.span
-                animate={{ left: tailLeft }}
+              <motion.figure
+                layout="size"
                 transition={{ duration: 0.4, ease }}
-                className="absolute top-full -mt-px hidden md:block"
+                className="relative w-full rounded-[28px] bg-[#ececec] p-6 text-[#ececec]"
               >
-                <BubbleTail side="left" />
-              </motion.span>
+                {/* Notch hooks down onto the selected person's tile. Anchored to
+                    the bubble's bottom edge (which never moves), so it only moves
+                    within the bubble; the bubble's own glide does the rest. */}
+                <motion.span
+                  animate={{ left: tailLeft }}
+                  transition={{ duration: 0.4, ease }}
+                  className="absolute top-full -mt-px hidden md:block"
+                >
+                  <BubbleTail side="left" />
+                </motion.span>
 
               <AnimatePresence mode="popLayout" initial={false}>
                 <motion.div
@@ -93,7 +117,8 @@ export function Testimonials() {
                   </figcaption>
                 </motion.div>
               </AnimatePresence>
-            </motion.figure>
+              </motion.figure>
+            </motion.div>
           </div>
         </Reveal>
 
