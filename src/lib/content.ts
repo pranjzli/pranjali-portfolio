@@ -32,10 +32,12 @@ export const about = {
   // the non-essential runs in place instead of swapping text (no layout shift).
   story: [
     [
-      { t: "It all started during the lockdown when I grew a meme page on Instagram to a reach of " },
-      { t: "250K+", key: true },
-      { t: ". I kept asking myself one question — what made people stop, tap, and engage? Chasing it led to a social-media internship in my final year of college, where managing content turned into creating it, and I picked up my " },
-      { t: "first design tools", key: true },
+      { t: "It all started during the lockdown 🦠 when I grew a meme page on Instagram to a " },
+      { t: "reach of 250K+ 📈", key: true },
+      { t: ". I kept asking myself one question: what made people stop, tap, and engage? Chasing it led to a social-media " },
+      { t: "internship in my final year of college", key: true },
+      { t: ", where managing content turned into creating it, and I picked up " },
+      { t: "my first design tools", key: true },
       { t: "." },
     ],
     [
@@ -43,18 +45,18 @@ export const about = {
       { t: "{{whatfix}} [[Whatfix's]] core brand team", key: true },
       { t: ", just to learn from senior designers. I absorbed everything about " },
       { t: "motion, interaction, and brand", key: true },
-      { t: " — how things move, respond, and feel." },
+      { t: ", how things move, respond, and feel." },
     ],
     [
-      { t: "At " },
-      { t: "{{turnip}} Turnip, I'm building {{zaps}} [[Zaps]] — an all-in-one creator suite", key: true },
+      { t: "At {{turnip}} Turnip, I'm building " },
+      { t: "{{zaps}} [[Zaps]], an all-in-one creator suite", key: true },
       { t: ". I've worn every hat: crafting visuals, scaling a " },
-      { t: "5000+ template library", key: true },
-      { t: ", and " },
-      { t: "shipping features end to end", key: true },
-      { t: ". In no time, I've " },
-      { t: "committed to product design", key: true },
-      { t: " — and now I solve real user problems every day." },
+      { t: "5000+ template library with a team I led", key: true },
+      { t: ", then designing the features that put those templates in users' hands. I collaborated with tech, learned to vibecode 👩‍💻, and " },
+      { t: "shipped features end to end", key: true },
+      { t: ". In no time, I've committed to product design, and now " },
+      { t: "I solve real user problems every day", key: true },
+      { t: "." },
     ],
   ] as StorySegment[][],
 };
@@ -111,15 +113,47 @@ export const projects: Project[] = [
 export const testimonial = {
   label: "Testimonial",
   heading: "Straight from the *people* I worked with..",
-  quote:
-    "Pranjali brought great energy, curiosity, and fresh perspectives that helped us think differently about the user experience. Her ideas sparked valuable conversations, and I'd be thrilled to work with her again.",
-  author: { name: "iOS Developer, Turnip", logo: "/images/logos/turnip.png" },
   people: [
-    { name: "Vishal" },
-    { name: "Kush" },
-    { name: "Beth" },
-    { name: "Vivek" },
-    { name: "Gaurav" },
+    {
+      name: "Vishal",
+      role: "iOS Developer",
+      logo: "/images/logos/turnip.png",
+      photo: "/images/testimonials/vishal.jpeg",
+      quote:
+        "Pranjali has a sharp sense for clean, intuitive UX, and her handoffs made my job easy. Everything was clearly spec'd and thought through, so I rarely had a question left unanswered. Detail-oriented, collaborative, and a designer I'd happily work with again.",
+    },
+    {
+      name: "Kush",
+      role: "Android Developer",
+      logo: "/images/logos/turnip.png",
+      photo: "/images/testimonials/kush.png",
+      quote:
+        "Pranjali is approachable, dependable, and genuinely easy to build with. Her fresh design perspective lifted every project and gave the final product a distinctive energy.",
+    },
+    {
+      name: "Beth",
+      role: "Creative Director",
+      logo: "/images/logos/whatfix.png",
+      photo: "/images/testimonials/beth.png",
+      quote:
+        "The ownership she brought was rare for someone that early in their career. She picked things up incredibly fast, delivered motion work that genuinely impressed, and collaborated smoothly with every stakeholder.",
+    },
+    {
+      name: "Vivek",
+      role: "Design Team Lead",
+      logo: "/images/logos/whatfix.png",
+      photo: "/images/testimonials/vivek.jpeg",
+      quote:
+        "Pranjali stood out for her ownership and hunger to learn. She picked up an entirely new tool with no prior experience and was using it confidently within a couple of months. Proactive, dependable, and always improving, any team would be lucky to have her.",
+    },
+    {
+      name: "Gourav",
+      role: "Founder",
+      logo: "/images/logos/fitastra.png",
+      photo: "/images/testimonials/gourav.png",
+      quote:
+        "She has real instinct for product decisions, listens closely to user feedback, and turns it into better design quickly. Fully invested, easy to work with, and someone who genuinely cares about getting it right.",
+    },
   ],
 };
 
