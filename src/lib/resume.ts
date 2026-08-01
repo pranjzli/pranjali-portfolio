@@ -1,8 +1,8 @@
 /**
- * Resume page content. Experience is flattened to one row per role/title —
- * Turnip shows as two separate rows (Visual Designer, then Product Designer)
- * rather than one nested entry, matching how every other row on this page
- * reads. Freelance rows carry no dates, per instruction.
+ * Resume page content. Most entries are a single role ("Title @ Company").
+ * Turnip is a grouped entry: a company header plus a connected timeline of
+ * two roles (LinkedIn-style), sharing one description. Freelance rows carry
+ * no dates, per instruction.
  */
 
 export const resumeHeader = {
@@ -12,37 +12,36 @@ export const resumeHeader = {
   linkedin: "https://linkedin.com",
 };
 
-export type ResumeRow = {
+export type Role = { title: string; dates: string; location?: string };
+
+export type ResumeEntry = {
   id: string;
   logo: string;
-  title: string;
   company: string;
-  /** Omitted for freelance rows. */
+  description: string;
+  /** Single-role entry. */
+  title?: string;
   dates?: string;
   location?: string;
-  description: string;
+  /** Grouped entry (company header + role timeline) — used for Turnip. */
+  companyMeta?: string;
+  companyLocation?: string;
+  roles?: Role[];
 };
 
-export const experience: ResumeRow[] = [
+export const experience: ResumeEntry[] = [
   {
-    id: "turnip-pd",
+    id: "turnip",
     logo: "/images/logos/turnip.png",
-    title: "Product Designer",
     company: "Turnip",
-    dates: "Jan 2026 – Present",
-    location: "Remote",
+    companyMeta: "Full-time · 2 yrs 2 mos",
+    companyLocation: "Bengaluru, Karnataka, India",
+    roles: [
+      { title: "Product Designer", dates: "Jan 2026 – Present · 8 mos", location: "Remote" },
+      { title: "Visual Designer", dates: "Jul 2024 – Feb 2026 · 1 yr 8 mos" },
+    ],
     description:
-      "Own product design for Zaps end to end, from the editor to the template library. Partner directly with engineering to ship fast without losing craft.",
-  },
-  {
-    id: "turnip-vd",
-    logo: "/images/logos/turnip.png",
-    title: "Visual Designer",
-    company: "Turnip",
-    dates: "Jul 2024 – Feb 2026",
-    location: "Bengaluru, Karnataka, India",
-    description:
-      "Started on visual and motion work across the app, then grew into owning full product flows. Built the foundation for how Zaps looks, moves, and feels.",
+      "Grew from visual and motion work into owning Zaps' product design end to end, from the editor to the 5,000+ template library. I partner closely with engineering to ship fast without losing craft.",
   },
   {
     id: "whatfix",
@@ -76,11 +75,11 @@ export const experience: ResumeRow[] = [
   },
 ];
 
-export const freelance: ResumeRow[] = [
+export const freelance: ResumeEntry[] = [
   {
     id: "fitastra",
     logo: "/images/logos/fitastra.png",
-    title: "Product Design",
+    title: "UX Designer",
     company: "FitAstra",
     description:
       "Designed FitAstra's first revenue stream, session-based coach booking, across both the user and coach apps. Owned the experience end to end, from flows to final UI.",
@@ -88,7 +87,7 @@ export const freelance: ResumeRow[] = [
   {
     id: "quraxia",
     logo: "/images/logos/quraxia.png",
-    title: "Brand Identity",
+    title: "Brand Designer",
     company: "Quraxia Pharmaceuticals",
     description:
       "Designed a foundational brand identity for Quraxia Pharmaceuticals, a new player entering the industry. Built the visual system from the ground up to establish credibility and market presence.",
@@ -96,7 +95,7 @@ export const freelance: ResumeRow[] = [
   {
     id: "street27",
     logo: "/images/logos/street27.png",
-    title: "Product Photography",
+    title: "Product Photographer",
     company: "Street 27",
     description:
       "Shot product photography for Street 27, an Amazon top-ranked e-seller, for their bestselling pieces.",
