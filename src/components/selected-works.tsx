@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
 import { motion } from "motion/react";
 import { projects } from "@/lib/content";
@@ -9,9 +8,11 @@ import { AccentText } from "@/components/ui/accent-text";
 import { SectionLabel, Container } from "@/components/ui/section-label";
 import { Reveal } from "@/components/ui/reveal";
 import { ZapsHeroStage } from "@/components/case-study/zaps-hero";
-import { TempTuner, tuneTransform, type Tune } from "@/components/case-study/temp-tuner";
 
-const isDev = process.env.NODE_ENV !== "production";
+// Final tuned transforms — baked in from the (now-removed) temp sliders.
+const DS_TRANSFORM = "translate(0px, 0px) scale(0.73)";
+const HERO1_TRANSFORM = "translate(9px, 107px) scale(1.08)";
+const HERO2_TRANSFORM = "translate(-7px, -114px) scale(1.08)";
 
 // Two DIFFERENT ratios on purpose — they must NOT be synced.
 //   FRAME  = the visible card (<a>). Taller, so the hand — which the stage
@@ -70,10 +71,6 @@ export function SelectedWorks() {
   // fitastra — each now has bespoke visual content, not a generic placeholder.
   const [featured, designSystem, fitastra] = projects;
 
-  const [dsTune, setDsTune] = useState<Tune>({ scale: 0.73, x: 0, y: 0 });
-  const [hero1Tune, setHero1Tune] = useState<Tune>({ scale: 0.84, x: 9, y: 107 });
-  const [hero2Tune, setHero2Tune] = useState<Tune>({ scale: 0.84, x: -7, y: -114 });
-
   return (
     <section id="work" className="py-20">
       <Container className="max-w-[920px]">
@@ -117,7 +114,7 @@ export function SelectedWorks() {
                   src="/images/case-studies/zaps-design-system/designsystem.png"
                   alt=""
                   className="size-full object-contain"
-                  style={{ transform: tuneTransform(dsTune) }}
+                  style={{ transform: DS_TRANSFORM }}
                 />
               </CardSurface>
               <h3 className="mt-4 text-xl leading-snug tracking-tight">
@@ -134,29 +131,26 @@ export function SelectedWorks() {
             transition={{ duration: 0.6, ease, delay: 0.08 }}
           >
             <Link href={fitastra.href ?? "#"} className="group block">
-              {/* overflow: visible overrides CardSurface's own clip — the tuned
-                  translate/scale values must stay untouched, so instead of
-                  cropping whatever they push past the card edge, the images
-                  are allowed to spill past the (still rounded, bordered) frame. */}
-              <CardSurface clean arrow className="aspect-[5/4] w-full" style={{ overflow: "visible" }}>
-                {/* Two screens side by side, sharing the one card slot */}
+              <CardSurface clean arrow className="aspect-[5/4] w-full">
+                {/* Two screens side by side, sharing the one card slot — clipped
+                    to stay fully inside the box (no overflow past the frame). */}
                 <div className="flex size-full">
-                  <div className="w-1/2">
+                  <div className="w-1/2 overflow-hidden">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src="/images/case-studies/fitastra/hero1.png"
                       alt=""
                       className="size-full object-contain"
-                      style={{ transform: tuneTransform(hero1Tune) }}
+                      style={{ transform: HERO1_TRANSFORM }}
                     />
                   </div>
-                  <div className="w-1/2">
+                  <div className="w-1/2 overflow-hidden">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src="/images/case-studies/fitastra/hero2.png"
                       alt=""
                       className="size-full object-contain"
-                      style={{ transform: tuneTransform(hero2Tune) }}
+                      style={{ transform: HERO2_TRANSFORM }}
                     />
                   </div>
                 </div>
@@ -169,17 +163,6 @@ export function SelectedWorks() {
           </motion.div>
         </div>
       </Container>
-
-      {isDev && (
-        <TempTuner
-          label="Landing cards"
-          groups={[
-            { key: "designSystem", title: "Design System", value: dsTune, onChange: setDsTune },
-            { key: "hero1", title: "FitAstra — hero1", value: hero1Tune, onChange: setHero1Tune },
-            { key: "hero2", title: "FitAstra — hero2", value: hero2Tune, onChange: setHero2Tune },
-          ]}
-        />
-      )}
     </section>
   );
 }

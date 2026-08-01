@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
 import { motion } from "motion/react";
 import {
@@ -24,6 +23,7 @@ import { Reveal } from "@/components/ui/reveal";
 import {
   Measure,
   Section,
+  Placeholder,
   PlaceholderRow,
   PhotoRow,
   Stat,
@@ -33,9 +33,6 @@ import {
 } from "@/components/case-study/primitives";
 import { FidelitySlider } from "@/components/case-study/fidelity-slider";
 import { AppleIcon, GooglePlayIcon } from "@/components/ui/store-icons";
-import { TempTuner, tuneTransform, type Tune } from "@/components/case-study/temp-tuner";
-
-const isDev = process.env.NODE_ENV !== "production";
 
 const item = {
   hidden: { opacity: 0, y: 18, filter: "blur(6px)" },
@@ -43,9 +40,6 @@ const item = {
 };
 
 export function FitAstraCaseStudy() {
-  const [hero1Tune, setHero1Tune] = useState<Tune>({ scale: 1, x: 0, y: 262 });
-  const [hero2Tune, setHero2Tune] = useState<Tune>({ scale: 1, x: 0, y: -287 });
-
   return (
     // `--cs-accent` scopes the case-study green to this page only —
     // the home page keeps its blue --accent.
@@ -104,33 +98,7 @@ export function FitAstraCaseStudy() {
         </motion.div>
 
         <Measure className="mt-12">
-          {/* Both screens inside one container, matching the Zaps hero's stroke + bg.
-              overflow: visible on the frame + halves — the tuned translate values
-              must stay untouched, so whatever they push past the box edge is
-              allowed to show rather than being cropped by an overflow clip. */}
-          <div
-            className="flex w-full gap-3 rounded-2xl border border-line bg-background p-3"
-            style={{ overflow: "visible" }}
-          >
-            <div className="w-1/2" style={{ overflow: "visible" }}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/images/case-studies/fitastra/hero1.png"
-                alt="FitAstra coach booking, screen 1"
-                className="w-full rounded-lg"
-                style={{ transform: tuneTransform(hero1Tune) }}
-              />
-            </div>
-            <div className="w-1/2" style={{ overflow: "visible" }}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/images/case-studies/fitastra/hero2.png"
-                alt="FitAstra coach booking, screen 2"
-                className="w-full rounded-lg"
-                style={{ transform: tuneTransform(hero2Tune) }}
-              />
-            </div>
-          </div>
+          <Placeholder ratio="16/9" />
         </Measure>
       </section>
 
@@ -275,16 +243,6 @@ export function FitAstraCaseStudy() {
 
       {/* -------------------------------------------------- Next project */}
       <CaseStudyOutro currentHref="/work/fitastra" credit={outro.credit} />
-
-      {isDev && (
-        <TempTuner
-          label="FitAstra hero"
-          groups={[
-            { key: "hero1", title: "hero1", value: hero1Tune, onChange: setHero1Tune },
-            { key: "hero2", title: "hero2", value: hero2Tune, onChange: setHero2Tune },
-          ]}
-        />
-      )}
     </main>
   );
 }

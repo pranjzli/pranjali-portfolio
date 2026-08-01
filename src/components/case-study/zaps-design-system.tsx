@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
 import { motion } from "motion/react";
 import { meta, tldr } from "@/lib/case-studies/zaps-design-system";
@@ -8,9 +7,9 @@ import { ease } from "@/lib/motion";
 import { AccentText } from "@/components/ui/accent-text";
 import { Reveal } from "@/components/ui/reveal";
 import { Measure, Stat } from "@/components/case-study/primitives";
-import { TempTuner, tuneTransform, type Tune } from "@/components/case-study/temp-tuner";
 
-const isDev = process.env.NODE_ENV !== "production";
+// Final tuned transform — baked in from the (now-removed) temp slider.
+const DS_TRANSFORM = "translate(0px, 0px) scale(0.8)";
 
 const item = {
   hidden: { opacity: 0, y: 18, filter: "blur(6px)" },
@@ -18,8 +17,6 @@ const item = {
 };
 
 export function ZapsDesignSystemCaseStudy() {
-  const [dsTune, setDsTune] = useState<Tune>({ scale: 0.8, x: 0, y: 0 });
-
   return (
     // Same scoped green as the other case studies, so they read as one system.
     <main style={{ "--cs-accent": "#60A167" } as React.CSSProperties}>
@@ -83,7 +80,7 @@ export function ZapsDesignSystemCaseStudy() {
               src="/images/case-studies/zaps-design-system/designsystem.png"
               alt="The Zaps design system — tokens, components, and the SwiftUI build validating them"
               className="w-full"
-              style={{ transform: tuneTransform(dsTune) }}
+              style={{ transform: DS_TRANSFORM }}
             />
           </div>
         </Measure>
@@ -125,13 +122,6 @@ export function ZapsDesignSystemCaseStudy() {
       <section className="py-24 text-center">
         <p className="text-lg text-muted">Full case study coming soon.</p>
       </section>
-
-      {isDev && (
-        <TempTuner
-          label="Design System hero"
-          groups={[{ key: "designSystem", title: "Design System", value: dsTune, onChange: setDsTune }]}
-        />
-      )}
     </main>
   );
 }
