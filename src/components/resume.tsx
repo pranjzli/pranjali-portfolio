@@ -188,7 +188,9 @@ export function Resume() {
           <EntryGroup label="Freelance" entries={freelance} />
         </div>
 
-        <div className="mt-20 grid grid-cols-[92px_1fr] gap-x-8 sm:grid-cols-[130px_1fr] sm:gap-x-12">
+        {/* Hidden for now until the ATS/Print PDFs are ready — remove this
+            comment + the `hidden` class to bring it back. */}
+        <div className="mt-20 hidden grid-cols-[92px_1fr] gap-x-8 sm:grid-cols-[130px_1fr] sm:gap-x-12">
           <div className="pt-1 text-sm text-muted">Download Resume</div>
           <Reveal group className="flex flex-wrap gap-8">
             {downloads.map((d) => (
