@@ -8,7 +8,7 @@ export const nav = {
   links: [
     { label: "About", href: "#about" },
     { label: "Work", href: "#work" },
-    { label: "Resume", href: "#resume" },
+    { label: "Resume", href: "/resume" },
   ],
   cta: { label: "Get in touch", href: "#contact" },
 };

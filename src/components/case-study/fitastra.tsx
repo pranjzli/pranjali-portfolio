@@ -180,10 +180,13 @@ export function FitAstraCaseStudy() {
         />
       </Section>
 
-      {/* ------------------------------------------------------ Coach app */}
-      <Section label={coachApp.label} heading={coachApp.heading} body={coachApp.body}>
-        <PlaceholderRow media={coachApp.media} />
-      </Section>
+      {/* Coach app — hidden for now. Not deleted, just display:none; remove
+          the wrapper to bring it back. */}
+      <div className="hidden">
+        <Section label={coachApp.label} heading={coachApp.heading} body={coachApp.body}>
+          <PlaceholderRow media={coachApp.media} />
+        </Section>
+      </div>
 
       {/* ---------------------------------------------------------- Role */}
       <Section id="role" label={role.label} heading={role.heading} body={role.body} />

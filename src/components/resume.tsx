@@ -1,0 +1,206 @@
+"use client";
+
+import { useState } from "react";
+import { motion, AnimatePresence } from "motion/react";
+import { resumeHeader, experience, freelance, downloads, type ResumeEntry, type ResumeImage } from "@/lib/resume";
+import { ease } from "@/lib/motion";
+import { Reveal } from "@/components/ui/reveal";
+import { Folder } from "@/components/ui/folder";
+
+/** Company logo tile — fills its rounded square edge to edge, no padding. */
+function Logo({ src }: { src: string }) {
+  return (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src={src}
+      alt=""
+      aria-hidden
+      className="size-14 shrink-0 rounded-2xl border border-line bg-white object-cover"
+    />
+  );
+}
+
+/** Grouped roles under one company, connected by a vertical timeline line. */
+function RoleTimeline({ roles }: { roles: NonNullable<ResumeEntry["roles"]> }) {
+  return (
+    <div className="mt-4">
+      {roles.map((r, i) => (
+        <div key={r.title} className="flex gap-3">
+          {/* dot + connector */}
+          <div className="flex flex-col items-center">
+            <span className="mt-1.5 size-2 shrink-0 rounded-full bg-foreground/35" />
+            {i < roles.length - 1 && <span className="w-px flex-1 bg-line" />}
+          </div>
+          <div className={i < roles.length - 1 ? "pb-4" : ""}>
+            <div className="text-[15px] font-semibold leading-snug">{r.title}</div>
+            <div className="mt-0.5 text-sm text-muted">
+              {r.dates}
+              {r.location ? `  |  ${r.location}` : ""}
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+/** A single photo box — fills its frame and zooms slightly on hover. */
+function Photo({ image }: { image: ResumeImage }) {
+  return (
+    <div className="group/photo aspect-[4/3] w-40 overflow-hidden rounded-xl border border-line">
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={image.src}
+        alt=""
+        loading="lazy"
+        decoding="async"
+        style={{ objectPosition: `center ${image.y ?? 50}%` }}
+        className="size-full object-cover transition-transform duration-500 ease-out group-hover/photo:scale-110"
+      />
+    </div>
+  );
+}
+
+function Entry({ entry }: { entry: ResumeEntry }) {
+  const [open, setOpen] = useState(false);
+  const grouped = !!entry.roles;
+
+  return (
+    <div className="flex items-start gap-4">
+      <Logo src={entry.logo} />
+
+      <div className="min-w-0 flex-1">
+        {/* Header — the click target that toggles the description */}
+        <button
+          type="button"
+          onClick={() => setOpen((o) => !o)}
+          className="group flex w-full items-start justify-between gap-4 text-left"
+        >
+          <div className="min-w-0">
+            {grouped ? (
+              <>
+                <div className="text-[17px] font-semibold leading-snug">{entry.company}</div>
+                {entry.companyLocation && (
+                  <div className="mt-1 text-sm text-muted">{entry.companyLocation}</div>
+                )}
+              </>
+            ) : (
+              <>
+                <div className="flex flex-wrap items-baseline gap-x-1.5">
+                  <span className="text-[17px] font-semibold leading-snug">{entry.title}</span>
+                  <span className="text-[17px] text-muted">@</span>
+                  <span className="text-[17px] font-semibold leading-snug">{entry.company}</span>
+                </div>
+                {(entry.dates || entry.location) && (
+                  <div className="mt-1 text-sm text-muted">
+                    {entry.dates}
+                    {entry.dates && entry.location ? "  |  " : ""}
+                    {entry.location}
+                  </div>
+                )}
+              </>
+            )}
+          </div>
+
+          <span className="mt-1 shrink-0 text-xl leading-none text-muted/60 transition-colors group-hover:text-foreground">
+            {open ? "×" : "+"}
+          </span>
+        </button>
+
+        {grouped && <RoleTimeline roles={entry.roles!} />}
+
+        {/* Description slides in between the header/timeline and the
+            always-visible photos; everything below reflows as it grows
+            (normal flow, so the shift is smooth). */}
+        <AnimatePresence initial={false}>
+          {open && (
+            <motion.div
+              key="desc"
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.32, ease }}
+              className="overflow-hidden"
+            >
+              <p className="pt-4 text-sm leading-relaxed text-foreground/80">
+                {entry.description}
+              </p>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Photos — shown by default. Entries without images render nothing here. */}
+        {entry.images && entry.images.length > 0 && (
+          <div className="mt-4 flex flex-wrap gap-3">
+            {entry.images.map((img) => (
+              <Photo key={img.src} image={img} />
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function EntryGroup({ label, entries }: { label: string; entries: ResumeEntry[] }) {
+  return (
+    <div className="grid grid-cols-[92px_1fr] gap-x-8 sm:grid-cols-[130px_1fr] sm:gap-x-12">
+      <div className="pt-1 text-sm text-muted">{label}</div>
+      <Reveal group className="space-y-10">
+        {entries.map((entry) => (
+          <Reveal.Item key={entry.id}>
+            <Entry entry={entry} />
+          </Reveal.Item>
+        ))}
+      </Reveal>
+    </div>
+  );
+}
+
+export function Resume() {
+  return (
+    <main className="py-32">
+      <div className="mx-auto w-full max-w-[720px] px-6">
+        <Reveal className="flex items-center gap-4">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={resumeHeader.avatar}
+            alt={resumeHeader.name}
+            className="size-16 rounded-full border border-line object-cover"
+          />
+          <div>
+            <div className="text-lg font-semibold leading-snug">{resumeHeader.name}</div>
+            <div className="text-sm text-muted">{resumeHeader.role}</div>
+            <a
+              href={resumeHeader.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 text-sm text-muted underline decoration-line underline-offset-2 transition-colors hover:text-foreground"
+            >
+              LinkedIn
+              <span aria-hidden>↗</span>
+            </a>
+          </div>
+        </Reveal>
+
+        <div className="mt-20 space-y-16">
+          <EntryGroup label="Experience" entries={experience} />
+          <EntryGroup label="Freelance" entries={freelance} />
+        </div>
+
+        {/* Hidden for now until the ATS/Print PDFs are ready — remove this
+            comment + the `hidden` class to bring it back. */}
+        <div className="mt-20 hidden grid-cols-[92px_1fr] gap-x-8 sm:grid-cols-[130px_1fr] sm:gap-x-12">
+          <div className="pt-1 text-sm text-muted">Download Resume</div>
+          <Reveal group className="flex flex-wrap gap-8">
+            {downloads.map((d) => (
+              <Reveal.Item key={d.id}>
+                <Folder href={d.href} ariaLabel={`Download ${d.label} resume`} tooltip={`${d.label} →`} />
+              </Reveal.Item>
+            ))}
+          </Reveal>
+        </div>
+      </div>
+    </main>
+  );
+}

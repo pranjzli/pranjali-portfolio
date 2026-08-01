@@ -9,6 +9,11 @@ import { SectionLabel, Container } from "@/components/ui/section-label";
 import { Reveal } from "@/components/ui/reveal";
 import { ZapsHeroStage } from "@/components/case-study/zaps-hero";
 
+// Final tuned transforms — baked in from the (now-removed) temp sliders.
+const DS_TRANSFORM = "translate(0px, 0px) scale(0.876)";
+const HERO1_TRANSFORM = "translate(9px, 107px) scale(1.08)";
+const HERO2_TRANSFORM = "translate(-7px, -114px) scale(1.08)";
+
 // Two DIFFERENT ratios on purpose — they must NOT be synced.
 //   FRAME  = the visible card (<a>). Taller, so the hand — which the stage
 //            intentionally overflows downward — is shown in full instead of
@@ -62,7 +67,9 @@ function CardSurface({
 }
 
 export function SelectedWorks() {
-  const [featured, ...rest] = projects;
+  // Fixed order (see lib/content.ts): zaps-editor (featured), zaps-design-system,
+  // fitastra — each now has bespoke visual content, not a generic placeholder.
+  const [featured, designSystem, fitastra] = projects;
 
   return (
     <section id="work" className="py-20">
@@ -94,23 +101,66 @@ export function SelectedWorks() {
 
         {/* Half cards — each whole block links to its case study */}
         <div className="mt-6 grid gap-6 md:grid-cols-2">
-          {rest.map((p, i) => (
-            <motion.div
-              key={p.title}
-              initial={{ opacity: 0, y: 24, filter: "blur(6px)" }}
-              whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-              viewport={viewportOnce}
-              transition={{ duration: 0.6, ease, delay: i * 0.08 }}
-            >
-              <Link href={p.href ?? "#"} className="group block">
-                <CardSurface className="aspect-[5/4] w-full" />
-                <h3 className="mt-4 text-xl leading-snug tracking-tight">
-                  <AccentText>{p.title}</AccentText>
-                </h3>
-                <p className="mt-2 text-sm text-muted">{p.meta}</p>
-              </Link>
-            </motion.div>
-          ))}
+          <motion.div
+            initial={{ opacity: 0, y: 24, filter: "blur(6px)" }}
+            whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            viewport={viewportOnce}
+            transition={{ duration: 0.6, ease }}
+          >
+            <Link href={designSystem.href ?? "#"} className="group block">
+              <CardSurface clean arrow className="aspect-[5/4] w-full">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/images/case-studies/zaps-design-system/designsystem.png"
+                  alt=""
+                  className="size-full object-contain"
+                  style={{ transform: DS_TRANSFORM }}
+                />
+              </CardSurface>
+              <h3 className="mt-4 text-xl leading-snug tracking-tight">
+                <AccentText>{designSystem.title}</AccentText>
+              </h3>
+              <p className="mt-2 text-sm text-muted">{designSystem.meta}</p>
+            </Link>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 24, filter: "blur(6px)" }}
+            whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            viewport={viewportOnce}
+            transition={{ duration: 0.6, ease, delay: 0.08 }}
+          >
+            <Link href={fitastra.href ?? "#"} className="group block">
+              <CardSurface clean arrow className="aspect-[5/4] w-full">
+                {/* Two screens side by side, sharing the one card slot — clipped
+                    to stay fully inside the box (no overflow past the frame). */}
+                <div className="flex size-full">
+                  <div className="w-1/2 overflow-hidden">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src="/images/case-studies/fitastra/hero1.png"
+                      alt=""
+                      className="size-full object-contain"
+                      style={{ transform: HERO1_TRANSFORM }}
+                    />
+                  </div>
+                  <div className="w-1/2 overflow-hidden">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src="/images/case-studies/fitastra/hero2.png"
+                      alt=""
+                      className="size-full object-contain"
+                      style={{ transform: HERO2_TRANSFORM }}
+                    />
+                  </div>
+                </div>
+              </CardSurface>
+              <h3 className="mt-4 text-xl leading-snug tracking-tight">
+                <AccentText>{fitastra.title}</AccentText>
+              </h3>
+              <p className="mt-2 text-sm text-muted">{fitastra.meta}</p>
+            </Link>
+          </motion.div>
         </div>
       </Container>
     </section>
