@@ -113,6 +113,14 @@ export const testimonial = {
   heading: "Straight from the *people* I worked with..",
   people: [
     {
+      name: "Vishal",
+      role: "iOS Developer",
+      logo: "/images/logos/turnip.png",
+      photo: "/images/testimonials/vishal.jpeg",
+      quote:
+        "Pranjali has a sharp sense for clean, intuitive UX, and her handoffs made my job easy. Everything was clearly spec'd and thought through, so I rarely had a question left unanswered. Detail-oriented, collaborative, and a designer I'd happily work with again.",
+    },
+    {
       name: "Kush",
       role: "Android Developer",
       logo: "/images/logos/turnip.png",
@@ -121,12 +129,12 @@ export const testimonial = {
         "Pranjali is approachable, dependable, and genuinely easy to build with. Her fresh design perspective lifted every project and gave the final product a distinctive energy.",
     },
     {
-      name: "Vishal",
-      role: "iOS Developer",
-      logo: "/images/logos/turnip.png",
-      photo: "/images/testimonials/vishal.jpeg",
+      name: "Beth",
+      role: "Creative Director",
+      logo: "/images/logos/whatfix.png",
+      photo: "/images/testimonials/beth.png",
       quote:
-        "Pranjali has a sharp sense for clean, intuitive UX, and her handoffs made my job easy. Everything was clearly spec'd and thought through, so I rarely had a question left unanswered. Detail-oriented, collaborative, and a designer I'd happily work with again.",
+        "The ownership she brought was rare for someone that early in their career. She picked things up incredibly fast, delivered motion work that genuinely impressed, and collaborated smoothly with every stakeholder.",
     },
     {
       name: "Vivek",
@@ -137,20 +145,12 @@ export const testimonial = {
         "Pranjali stood out for her ownership and hunger to learn. She picked up an entirely new tool with no prior experience and was using it confidently within a couple of months. Proactive, dependable, and always improving, any team would be lucky to have her.",
     },
     {
-      name: "Beth",
-      role: "Creative Director",
-      logo: "/images/logos/whatfix.png",
-      photo: "/images/testimonials/beth.png",
-      quote:
-        "Pranjali interned with me on the Software Clicks with Whatfix campaign, and the ownership she brought was rare for someone that early in their career. She picked things up incredibly fast, delivered motion work that genuinely impressed, and collaborated smoothly with every stakeholder.",
-    },
-    {
       name: "Gourav",
       role: "Founder",
-      logo: "/images/logos/fitastra-icon.png",
+      logo: "/images/logos/fitastra.png",
       photo: "/images/testimonials/gourav.png",
       quote:
-        "Pranjali was deeply involved in FitAstra from day one. She has real instinct for product decisions, listens closely to user feedback, and turns it into better design quickly. Fully invested, easy to work with, and someone who genuinely cares about getting it right.",
+        "She has real instinct for product decisions, listens closely to user feedback, and turns it into better design quickly. Fully invested, easy to work with, and someone who genuinely cares about getting it right.",
     },
   ],
 };

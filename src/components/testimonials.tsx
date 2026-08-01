@@ -10,23 +10,33 @@ import { Reveal } from "@/components/ui/reveal";
 import { BubbleTail } from "@/components/ui/bubble-tail";
 
 /* Shared geometry so the bubble's notch always lands on the selected tile. */
-const TILE = 64; // size-16
+const TILE = 96; // size-24
 const GAP = 20; // gap-5
 const ROW_INDENT = 96; // row's left offset inside the container
 const AUTO_ROTATE_MS = 5000;
+// Fixed so the quote card never resizes as shorter/longer quotes cycle in —
+// tall enough for the longest quote at the card's own max-w-lg width.
+const QUOTE_MIN_HEIGHT = 172;
 
 export function Testimonials() {
   const [selected, setSelected] = useState(0);
+  const [hasInteracted, setHasInteracted] = useState(false);
 
   useEffect(() => {
+    if (hasInteracted) return;
     const id = setInterval(() => {
       setSelected((i) => (i + 1) % testimonial.people.length);
     }, AUTO_ROTATE_MS);
     return () => clearInterval(id);
-  }, []);
+  }, [hasInteracted]);
 
   const active = testimonial.people[selected];
   const tailLeft = ROW_INDENT + selected * (TILE + GAP) + TILE / 2 - 5;
+
+  function select(i: number) {
+    setSelected(i);
+    setHasInteracted(true);
+  }
 
   return (
     <section className="py-20">
@@ -49,28 +59,34 @@ export function Testimonials() {
               <BubbleTail side="left" />
             </motion.span>
 
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={active.name}
-                initial={{ opacity: 0, y: 6 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -6 }}
-                transition={{ duration: 0.35, ease }}
-              >
-                <blockquote className="text-[15px] leading-relaxed text-foreground/80">
-                  {active.quote}
-                </blockquote>
-                <figcaption className="mt-4 flex items-center gap-2 text-sm text-muted">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={active.logo}
-                    alt={active.name}
-                    className="size-6 rounded-md object-contain"
-                  />
-                  {active.role}
-                </figcaption>
-              </motion.div>
-            </AnimatePresence>
+            {/* grid + col/row-start-1 stacks the outgoing and incoming quote
+                in the same cell during the crossfade, and the fixed min-height
+                keeps the card from growing/shrinking as quote length varies. */}
+            <div className="grid" style={{ minHeight: QUOTE_MIN_HEIGHT }}>
+              <AnimatePresence mode="popLayout" initial={false}>
+                <motion.div
+                  key={active.name}
+                  initial={{ opacity: 0, y: 6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -6 }}
+                  transition={{ duration: 0.35, ease }}
+                  className="col-start-1 row-start-1"
+                >
+                  <blockquote className="text-[15px] leading-relaxed text-foreground/80">
+                    {active.quote}
+                  </blockquote>
+                  <figcaption className="mt-4 flex items-center gap-2 text-sm text-muted">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={active.logo}
+                      alt={active.name}
+                      className="size-6 rounded-md object-contain"
+                    />
+                    {active.role}
+                  </figcaption>
+                </motion.div>
+              </AnimatePresence>
+            </div>
           </figure>
         </Reveal>
 
@@ -83,7 +99,7 @@ export function Testimonials() {
             <motion.button
               key={person.name}
               type="button"
-              onClick={() => setSelected(i)}
+              onClick={() => select(i)}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={viewportOnce}
@@ -95,13 +111,19 @@ export function Testimonials() {
               <img
                 src={person.photo}
                 alt={person.name}
-                className={`size-16 rounded-2xl object-cover transition-opacity ${
+                className={`size-24 rounded-2xl object-cover transition-opacity ${
                   i === selected
                     ? "opacity-100 ring-2 ring-foreground/50 ring-offset-2 ring-offset-background"
                     : "opacity-80 hover:opacity-100"
                 }`}
               />
-              <span className="serif text-sm text-foreground/70">{person.name}</span>
+              <span
+                className={`font-inter text-sm font-semibold transition-opacity ${
+                  i === selected ? "text-foreground opacity-100" : "text-foreground/70 opacity-60"
+                }`}
+              >
+                {person.name}
+              </span>
             </motion.button>
           ))}
         </div>
