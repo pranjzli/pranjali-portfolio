@@ -145,7 +145,7 @@ export function Testimonials() {
                 alt={person.name}
                 className={`size-24 rounded-2xl object-cover transition-opacity ${
                   i === selected
-                    ? "opacity-100 ring-2 ring-foreground/50 ring-offset-2 ring-offset-background"
+                    ? "opacity-100 ring-4 ring-card"
                     : "opacity-80 hover:opacity-100"
                 }`}
               />
