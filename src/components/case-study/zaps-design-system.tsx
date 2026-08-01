@@ -1,35 +1,16 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { motion } from "motion/react";
-import {
-  meta,
-  tldr,
-  problem,
-  system,
-  pipeline,
-  validation,
-  honest,
-  impact,
-  website,
-  role,
-  learned,
-  outro,
-} from "@/lib/case-studies/zaps-design-system";
+import { meta, tldr } from "@/lib/case-studies/zaps-design-system";
 import { ease } from "@/lib/motion";
 import { AccentText } from "@/components/ui/accent-text";
 import { Reveal } from "@/components/ui/reveal";
-import {
-  Measure,
-  Section,
-  CardGrid,
-  Chips,
-  PullQuote,
-  SectionVisual,
-  Stat,
-  Body,
-  CaseStudyOutro,
-} from "@/components/case-study/primitives";
+import { Measure, Stat } from "@/components/case-study/primitives";
+import { TempTuner, tuneTransform, type Tune } from "@/components/case-study/temp-tuner";
+
+const isDev = process.env.NODE_ENV !== "production";
 
 const item = {
   hidden: { opacity: 0, y: 18, filter: "blur(6px)" },
@@ -37,6 +18,8 @@ const item = {
 };
 
 export function ZapsDesignSystemCaseStudy() {
+  const [dsTune, setDsTune] = useState<Tune>({ scale: 0.8, x: 0, y: 0 });
+
   return (
     // Same scoped green as the other case studies, so they read as one system.
     <main style={{ "--cs-accent": "#60A167" } as React.CSSProperties}>
@@ -93,7 +76,17 @@ export function ZapsDesignSystemCaseStudy() {
           </Measure>
         </motion.div>
 
-        <SectionVisual ratio="16/9" />
+        <Measure className="mt-12">
+          <div className="w-full overflow-hidden rounded-2xl border border-line bg-background">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/images/case-studies/zaps-design-system/designsystem.png"
+              alt="The Zaps design system — tokens, components, and the SwiftUI build validating them"
+              className="w-full"
+              style={{ transform: tuneTransform(dsTune) }}
+            />
+          </div>
+        </Measure>
       </section>
 
       {/* ---------------------------------------------------------- TL;DR */}
@@ -127,67 +120,18 @@ export function ZapsDesignSystemCaseStudy() {
         </Measure>
       </section>
 
-      {/* -------------------------------------------------------- Problem */}
-      <Section label={problem.label} heading={problem.heading} body={problem.body}>
-        <CardGrid cards={problem.cards} columns={3} />
-        <SectionVisual caption={problem.caption} />
-      </Section>
+      {/* Rest of the case study isn't written up yet — everything past TL;DR
+          is hidden until it is. */}
+      <section className="py-24 text-center">
+        <p className="text-lg text-muted">Full case study coming soon.</p>
+      </section>
 
-      {/* --------------------------------------------------------- System */}
-      <Section label={system.label} heading={system.heading} body={system.body}>
-        <CardGrid cards={system.cards} columns={3} />
-        <SectionVisual caption={system.caption} />
-      </Section>
-
-      {/* ------------------------------------------------------- Pipeline */}
-      <Section label={pipeline.label} heading={pipeline.heading} body={pipeline.body}>
-        <CardGrid cards={pipeline.cards} columns={3} />
-        <PullQuote label="Governance">{pipeline.governance}</PullQuote>
-        <SectionVisual caption={pipeline.caption} />
-      </Section>
-
-      {/* ----------------------------------------------------- Validation */}
-      <Section label={validation.label} heading={validation.heading} body={validation.body}>
-        <CardGrid cards={validation.cards} columns={3} />
-        <PullQuote label="The bar">{validation.quote}</PullQuote>
-        <SectionVisual caption={validation.caption} />
-      </Section>
-
-      {/* ------------------------------------------------- Keeping it honest */}
-      <Section label={honest.label} heading={honest.heading}>
-        <CardGrid cards={honest.cards} columns={3} />
-        <SectionVisual caption={honest.caption} />
-      </Section>
-
-      {/* --------------------------------------------------------- Impact */}
-      <Section id="impact" label={impact.label} heading={impact.heading}>
-        <Reveal group className="mt-10 grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-4 sm:gap-x-8">
-          {impact.stats.map((s) => (
-            <Stat key={s.label} value={s.value} label={s.label} size="sm" />
-          ))}
-        </Reveal>
-        <CardGrid cards={impact.cards} columns={2} />
-      </Section>
-
-      {/* -------------------------------------------------------- Website */}
-      <Section label={website.label} heading={website.heading} body={website.body}>
-        <Chips items={website.chips} className="mt-8" />
-        <SectionVisual caption={website.caption} />
-      </Section>
-
-      {/* ----------------------------------------------------------- Role */}
-      <Section id="role" label={role.label} heading={role.heading}>
-        <Chips items={role.chips} className="mt-6" />
-        <Reveal className="mt-6 max-w-[840px]">
-          <Body>{role.body}</Body>
-        </Reveal>
-      </Section>
-
-      {/* -------------------------------------------------------- Learned */}
-      <Section label={learned.label} heading={learned.heading} body={learned.body} />
-
-      {/* -------------------------------------------------- Next project */}
-      <CaseStudyOutro currentHref="/work/zaps-design-system" credit={outro.credit} />
+      {isDev && (
+        <TempTuner
+          label="Design System hero"
+          groups={[{ key: "designSystem", title: "Design System", value: dsTune, onChange: setDsTune }]}
+        />
+      )}
     </main>
   );
 }

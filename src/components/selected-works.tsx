@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { motion } from "motion/react";
 import { projects } from "@/lib/content";
@@ -8,6 +9,9 @@ import { AccentText } from "@/components/ui/accent-text";
 import { SectionLabel, Container } from "@/components/ui/section-label";
 import { Reveal } from "@/components/ui/reveal";
 import { ZapsHeroStage } from "@/components/case-study/zaps-hero";
+import { TempTuner, tuneTransform, type Tune } from "@/components/case-study/temp-tuner";
+
+const isDev = process.env.NODE_ENV !== "production";
 
 // Two DIFFERENT ratios on purpose — they must NOT be synced.
 //   FRAME  = the visible card (<a>). Taller, so the hand — which the stage
@@ -62,7 +66,13 @@ function CardSurface({
 }
 
 export function SelectedWorks() {
-  const [featured, ...rest] = projects;
+  // Fixed order (see lib/content.ts): zaps-editor (featured), zaps-design-system,
+  // fitastra — each now has bespoke visual content, not a generic placeholder.
+  const [featured, designSystem, fitastra] = projects;
+
+  const [dsTune, setDsTune] = useState<Tune>({ scale: 0.73, x: 0, y: 0 });
+  const [hero1Tune, setHero1Tune] = useState<Tune>({ scale: 0.84, x: 9, y: 107 });
+  const [hero2Tune, setHero2Tune] = useState<Tune>({ scale: 0.84, x: -7, y: -114 });
 
   return (
     <section id="work" className="py-20">
@@ -94,25 +104,82 @@ export function SelectedWorks() {
 
         {/* Half cards — each whole block links to its case study */}
         <div className="mt-6 grid gap-6 md:grid-cols-2">
-          {rest.map((p, i) => (
-            <motion.div
-              key={p.title}
-              initial={{ opacity: 0, y: 24, filter: "blur(6px)" }}
-              whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-              viewport={viewportOnce}
-              transition={{ duration: 0.6, ease, delay: i * 0.08 }}
-            >
-              <Link href={p.href ?? "#"} className="group block">
-                <CardSurface className="aspect-[5/4] w-full" />
-                <h3 className="mt-4 text-xl leading-snug tracking-tight">
-                  <AccentText>{p.title}</AccentText>
-                </h3>
-                <p className="mt-2 text-sm text-muted">{p.meta}</p>
-              </Link>
-            </motion.div>
-          ))}
+          <motion.div
+            initial={{ opacity: 0, y: 24, filter: "blur(6px)" }}
+            whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            viewport={viewportOnce}
+            transition={{ duration: 0.6, ease }}
+          >
+            <Link href={designSystem.href ?? "#"} className="group block">
+              <CardSurface clean arrow className="aspect-[5/4] w-full">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/images/case-studies/zaps-design-system/designsystem.png"
+                  alt=""
+                  className="size-full object-contain"
+                  style={{ transform: tuneTransform(dsTune) }}
+                />
+              </CardSurface>
+              <h3 className="mt-4 text-xl leading-snug tracking-tight">
+                <AccentText>{designSystem.title}</AccentText>
+              </h3>
+              <p className="mt-2 text-sm text-muted">{designSystem.meta}</p>
+            </Link>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 24, filter: "blur(6px)" }}
+            whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            viewport={viewportOnce}
+            transition={{ duration: 0.6, ease, delay: 0.08 }}
+          >
+            <Link href={fitastra.href ?? "#"} className="group block">
+              {/* overflow: visible overrides CardSurface's own clip — the tuned
+                  translate/scale values must stay untouched, so instead of
+                  cropping whatever they push past the card edge, the images
+                  are allowed to spill past the (still rounded, bordered) frame. */}
+              <CardSurface clean arrow className="aspect-[5/4] w-full" style={{ overflow: "visible" }}>
+                {/* Two screens side by side, sharing the one card slot */}
+                <div className="flex size-full">
+                  <div className="w-1/2">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src="/images/case-studies/fitastra/hero1.png"
+                      alt=""
+                      className="size-full object-contain"
+                      style={{ transform: tuneTransform(hero1Tune) }}
+                    />
+                  </div>
+                  <div className="w-1/2">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src="/images/case-studies/fitastra/hero2.png"
+                      alt=""
+                      className="size-full object-contain"
+                      style={{ transform: tuneTransform(hero2Tune) }}
+                    />
+                  </div>
+                </div>
+              </CardSurface>
+              <h3 className="mt-4 text-xl leading-snug tracking-tight">
+                <AccentText>{fitastra.title}</AccentText>
+              </h3>
+              <p className="mt-2 text-sm text-muted">{fitastra.meta}</p>
+            </Link>
+          </motion.div>
         </div>
       </Container>
+
+      {isDev && (
+        <TempTuner
+          label="Landing cards"
+          groups={[
+            { key: "designSystem", title: "Design System", value: dsTune, onChange: setDsTune },
+            { key: "hero1", title: "FitAstra — hero1", value: hero1Tune, onChange: setHero1Tune },
+            { key: "hero2", title: "FitAstra — hero2", value: hero2Tune, onChange: setHero2Tune },
+          ]}
+        />
+      )}
     </section>
   );
 }
