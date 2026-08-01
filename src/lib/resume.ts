@@ -12,6 +12,15 @@ export const resumeHeader = {
   linkedin: "https://linkedin.com",
 };
 
+/**
+ * Download folders. Files aren't ready yet — these paths are where they'll
+ * live once added; each folder shows a blank page peek until then.
+ */
+export const downloads = [
+  { id: "ats", label: "ATS Friendly", href: "/resume-ats.pdf" },
+  { id: "print", label: "Print Friendly", href: "/resume-print.pdf" },
+];
+
 export type Role = { title: string; dates: string; location?: string };
 
 export type ResumeImage = { src: string; /** object-position Y, 0–100. Defaults to 50 (center). */ y?: number };

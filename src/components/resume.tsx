@@ -2,9 +2,10 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { resumeHeader, experience, freelance, type ResumeEntry, type ResumeImage } from "@/lib/resume";
+import { resumeHeader, experience, freelance, downloads, type ResumeEntry, type ResumeImage } from "@/lib/resume";
 import { ease } from "@/lib/motion";
 import { Reveal } from "@/components/ui/reveal";
+import { Folder } from "@/components/ui/folder";
 
 /** Company logo tile — fills its rounded square edge to edge, no padding. */
 function Logo({ src }: { src: string }) {
@@ -174,9 +175,10 @@ export function Resume() {
               href={resumeHeader.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm text-muted underline decoration-line underline-offset-2 transition-colors hover:text-foreground"
+              className="inline-flex items-center gap-1 text-sm text-muted underline decoration-line underline-offset-2 transition-colors hover:text-foreground"
             >
               LinkedIn
+              <span aria-hidden>↗</span>
             </a>
           </div>
         </Reveal>
@@ -184,6 +186,17 @@ export function Resume() {
         <div className="mt-20 space-y-16">
           <EntryGroup label="Experience" entries={experience} />
           <EntryGroup label="Freelance" entries={freelance} />
+        </div>
+
+        <div className="mt-20 grid grid-cols-[92px_1fr] gap-x-8 sm:grid-cols-[130px_1fr] sm:gap-x-12">
+          <div className="pt-1 text-sm text-muted">Download Resume</div>
+          <Reveal group className="flex flex-wrap gap-8">
+            {downloads.map((d) => (
+              <Reveal.Item key={d.id}>
+                <Folder href={d.href} ariaLabel={`Download ${d.label} resume`} tooltip={`${d.label} →`} />
+              </Reveal.Item>
+            ))}
+          </Reveal>
         </div>
       </div>
     </main>
