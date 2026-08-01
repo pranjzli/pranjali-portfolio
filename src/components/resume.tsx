@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { resumeHeader, experience, freelance, type ResumeEntry } from "@/lib/resume";
+import { resumeHeader, experience, freelance, type ResumeEntry, type ResumeImage } from "@/lib/resume";
 import { ease } from "@/lib/motion";
 import { Reveal } from "@/components/ui/reveal";
 
@@ -39,6 +39,23 @@ function RoleTimeline({ roles }: { roles: NonNullable<ResumeEntry["roles"]> }) {
           </div>
         </div>
       ))}
+    </div>
+  );
+}
+
+/** A single photo box — fills its frame and zooms slightly on hover. */
+function Photo({ image }: { image: ResumeImage }) {
+  return (
+    <div className="group/photo aspect-[4/3] w-40 overflow-hidden rounded-xl border border-line">
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={image.src}
+        alt=""
+        loading="lazy"
+        decoding="async"
+        style={{ objectPosition: `center ${image.y ?? 50}%` }}
+        className="size-full object-cover transition-transform duration-500 ease-out group-hover/photo:scale-110"
+      />
     </div>
   );
 }
@@ -92,8 +109,8 @@ function Entry({ entry }: { entry: ResumeEntry }) {
         {grouped && <RoleTimeline roles={entry.roles!} />}
 
         {/* Description slides in between the header/timeline and the
-            always-visible placeholder; the placeholder reflows down as it
-            grows (normal flow, so the shift is smooth). */}
+            always-visible photos; everything below reflows as it grows
+            (normal flow, so the shift is smooth). */}
         <AnimatePresence initial={false}>
           {open && (
             <motion.div
@@ -111,24 +128,11 @@ function Entry({ entry }: { entry: ResumeEntry }) {
           )}
         </AnimatePresence>
 
-        {/* Photos — shown by default. Each fills its box and zooms on hover.
-            Entries without images render nothing here. */}
+        {/* Photos — shown by default. Entries without images render nothing here. */}
         {entry.images && entry.images.length > 0 && (
           <div className="mt-4 flex flex-wrap gap-3">
-            {entry.images.map((src) => (
-              <div
-                key={src}
-                className="group/photo aspect-[4/3] w-40 overflow-hidden rounded-xl border border-line"
-              >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={src}
-                  alt=""
-                  loading="lazy"
-                  decoding="async"
-                  className="size-full object-cover transition-transform duration-500 ease-out group-hover/photo:scale-110"
-                />
-              </div>
+            {entry.images.map((img) => (
+              <Photo key={img.src} image={img} />
             ))}
           </div>
         )}

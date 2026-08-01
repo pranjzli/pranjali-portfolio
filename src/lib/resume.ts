@@ -14,13 +14,15 @@ export const resumeHeader = {
 
 export type Role = { title: string; dates: string; location?: string };
 
+export type ResumeImage = { src: string; /** object-position Y, 0–100. Defaults to 50 (center). */ y?: number };
+
 export type ResumeEntry = {
   id: string;
   logo: string;
   company: string;
   description: string;
   /** Photos shown by default under the entry; omit for no image. */
-  images?: string[];
+  images?: ResumeImage[];
   /** Single-role entry. */
   title?: string;
   dates?: string;
@@ -40,7 +42,10 @@ export const experience: ResumeEntry[] = [
       { title: "Product Designer", dates: "Jan 2026 – Present", location: "Remote" },
       { title: "Visual Designer", dates: "Jul 2024 – Dec 2025", location: "Bengaluru, Karnataka, India" },
     ],
-    images: ["/images/resume/turnip-1.jpeg", "/images/resume/turnip-2.jpg"],
+    images: [
+      { src: "/images/resume/turnip-1.jpeg", y: 59 },
+      { src: "/images/resume/turnip-2.jpg", y: 81 },
+    ],
     description:
       "Grew from visual and motion work into owning Zaps' product design end to end, from the editor to the 5,000+ template library. I partner closely with engineering to ship fast without losing craft.",
   },
@@ -51,7 +56,10 @@ export const experience: ResumeEntry[] = [
     company: "Whatfix",
     dates: "Nov 2023 – Jul 2024",
     location: "Bengaluru, Karnataka, India",
-    images: ["/images/resume/whatfix-1.jpeg", "/images/resume/whatfix-2.jpg"],
+    images: [
+      { src: "/images/resume/whatfix-1.jpeg", y: 84 },
+      { src: "/images/resume/whatfix-2.jpg" },
+    ],
     description:
       "Designed motion graphics, event booth visuals, and slide decks for Whatfix's core brand team. Built out social and brandbook assets, working closely with senior designers.",
   },
@@ -83,7 +91,7 @@ export const freelance: ResumeEntry[] = [
     logo: "/images/logos/fitastra.png",
     title: "UX Designer",
     company: "FitAstra",
-    images: ["/images/resume/fitastra.jpeg"],
+    images: [{ src: "/images/resume/fitastra.jpeg" }],
     description:
       "Designed FitAstra's first revenue stream, session-based coach booking, across both the user and coach apps. Owned the experience end to end, from flows to final UI.",
   },
@@ -92,7 +100,7 @@ export const freelance: ResumeEntry[] = [
     logo: "/images/logos/quraxia.png",
     title: "Brand Designer",
     company: "Quraxia Pharmaceuticals",
-    images: ["/images/resume/quraxia.jpeg"],
+    images: [{ src: "/images/resume/quraxia.jpeg", y: 17 }],
     description:
       "Designed a foundational brand identity for Quraxia Pharmaceuticals, a new player entering the industry. Built the visual system from the ground up to establish credibility and market presence.",
   },
