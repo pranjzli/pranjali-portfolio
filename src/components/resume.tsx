@@ -5,7 +5,6 @@ import { motion, AnimatePresence } from "motion/react";
 import { resumeHeader, experience, freelance, type ResumeEntry } from "@/lib/resume";
 import { ease } from "@/lib/motion";
 import { Reveal } from "@/components/ui/reveal";
-import { Placeholder } from "@/components/case-study/primitives";
 
 /** Company logo tile — fills its rounded square edge to edge, no padding. */
 function Logo({ src }: { src: string }) {
@@ -35,7 +34,7 @@ function RoleTimeline({ roles }: { roles: NonNullable<ResumeEntry["roles"]> }) {
             <div className="text-[15px] font-semibold leading-snug">{r.title}</div>
             <div className="mt-0.5 text-sm text-muted">
               {r.dates}
-              {r.location ? ` · ${r.location}` : ""}
+              {r.location ? `  |  ${r.location}` : ""}
             </div>
           </div>
         </div>
@@ -63,11 +62,8 @@ function Entry({ entry }: { entry: ResumeEntry }) {
             {grouped ? (
               <>
                 <div className="text-[17px] font-semibold leading-snug">{entry.company}</div>
-                {entry.companyMeta && (
-                  <div className="mt-1 text-sm text-muted">{entry.companyMeta}</div>
-                )}
                 {entry.companyLocation && (
-                  <div className="text-sm text-muted">{entry.companyLocation}</div>
+                  <div className="mt-1 text-sm text-muted">{entry.companyLocation}</div>
                 )}
               </>
             ) : (
@@ -115,10 +111,27 @@ function Entry({ entry }: { entry: ResumeEntry }) {
           )}
         </AnimatePresence>
 
-        {/* Placeholder — always visible in the default view */}
-        <div className="mt-4 w-44">
-          <Placeholder ratio="4/3" />
-        </div>
+        {/* Photos — shown by default. Each fills its box and zooms on hover.
+            Entries without images render nothing here. */}
+        {entry.images && entry.images.length > 0 && (
+          <div className="mt-4 flex flex-wrap gap-3">
+            {entry.images.map((src) => (
+              <div
+                key={src}
+                className="group/photo aspect-[4/3] w-40 overflow-hidden rounded-xl border border-line"
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={src}
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                  className="size-full object-cover transition-transform duration-500 ease-out group-hover/photo:scale-110"
+                />
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
