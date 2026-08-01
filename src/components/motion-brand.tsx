@@ -67,7 +67,7 @@ export function MotionBrand() {
             transition={{ duration: 0.6, ease }}
             whileHover="open"
             variants={{ open: { y: -8 } }}
-            className="relative h-[154px] w-44 shrink-0 [perspective:700px]"
+            className="relative h-[154px] w-44 shrink-0 [perspective:700px] md:self-end"
           >
             {/* Back panel + tab */}
             <div className="absolute bottom-0 h-[134px] w-full rounded-xl bg-[linear-gradient(160deg,#a9dc8f,#8cc76d)]" />
