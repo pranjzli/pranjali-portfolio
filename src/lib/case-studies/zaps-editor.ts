@@ -227,7 +227,7 @@ export const appStore = {
  * exported so the reader can pan and zoom through the real file.
  */
 export const canvas = {
-  url: "gnweT8KWtnkVgOPAm1SBqC/Untitled?node-id=2001-144",
+  url: "H5KvZRS6VQsdggIdukwIFJ/Work?node-id=0-1",
   title: "Zaps — the full design canvas",
 };
 
