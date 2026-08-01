@@ -10,7 +10,7 @@ import { Reveal } from "@/components/ui/reveal";
 import { ZapsHeroStage } from "@/components/case-study/zaps-hero";
 
 // Final tuned transforms — baked in from the (now-removed) temp sliders.
-const DS_TRANSFORM = "translate(0px, 0px) scale(0.73)";
+const DS_TRANSFORM = "translate(0px, 0px) scale(0.876)";
 const HERO1_TRANSFORM = "translate(9px, 107px) scale(1.08)";
 const HERO2_TRANSFORM = "translate(-7px, -114px) scale(1.08)";
 
