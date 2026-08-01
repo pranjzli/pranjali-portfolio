@@ -4,9 +4,11 @@ import { motion } from "motion/react";
 import { viewportOnce, ease } from "@/lib/motion";
 
 /**
- * The Behance "folder" visual (motion-brand.tsx), generalized for reuse.
- * Opens on hover: the paper peek grows taller and lifts, the front panel
- * tilts forward like a flap, and a tooltip fades in below.
+ * Folder visual: a smaller back panel peeking top-left, a paper sandwiched
+ * in the middle (visible only above the front panel's top edge), and a
+ * wide front panel/flap covering the bottom. Opens on hover: the paper
+ * grows taller and lifts, the front panel tilts forward like a flap, and a
+ * tooltip fades in below.
  *
  * `peekSrc` omitted renders a blank white page instead of a photo — for a
  * folder whose file isn't ready yet.
@@ -34,14 +36,14 @@ export function Folder({
       transition={{ duration: 0.6, ease }}
       whileHover="open"
       variants={{ open: { y: -8 } }}
-      className="relative h-[154px] w-44 shrink-0 [perspective:700px]"
+      className="relative block h-[154px] w-44 shrink-0 [perspective:700px]"
     >
-      {/* Back panel + tab */}
-      <div className="absolute bottom-0 h-[134px] w-full rounded-xl bg-[linear-gradient(160deg,#a9dc8f,#8cc76d)]" />
-      <div className="absolute left-0 top-0 h-[34px] w-24 rounded-t-lg bg-[linear-gradient(160deg,#a9dc8f,#8cc76d)]" />
+      {/* Back panel — a smaller square peeking from the top-left, behind everything */}
+      <div className="absolute left-3 top-2 h-[110px] w-[118px] rounded-2xl bg-[linear-gradient(160deg,#bfe2ae,#a4d18c)]" />
 
-      {/* The filed paper — a peek of the file. On hover it grows taller from
-          its bottom edge (more of it shows) and lifts a touch. */}
+      {/* The filed paper — a peek of the file, wider than the back panel, tucked
+          under the front panel so only its top half shows. On hover it grows
+          taller from its bottom edge (more of it shows) and lifts a touch. */}
       {peekSrc ? (
         <motion.img
           src={peekSrc}
@@ -49,7 +51,7 @@ export function Folder({
           variants={{ open: { y: -6, scaleY: 1.14, scaleX: 1.03 } }}
           transition={{ type: "spring", stiffness: 220, damping: 20 }}
           style={{ transformOrigin: "bottom center" }}
-          className="absolute left-4 top-6 h-[77px] w-36 rounded-md object-cover object-top shadow-[0_4px_10px_-4px_rgba(0,0,0,0.3)]"
+          className="absolute left-7 top-9 h-[50px] w-36 rounded-md object-cover object-top shadow-[0_4px_10px_-4px_rgba(0,0,0,0.3)]"
         />
       ) : (
         <motion.div
@@ -57,19 +59,20 @@ export function Folder({
           variants={{ open: { y: -6, scaleY: 1.14, scaleX: 1.03 } }}
           transition={{ type: "spring", stiffness: 220, damping: 20 }}
           style={{ transformOrigin: "bottom center" }}
-          className="absolute left-4 top-6 h-[77px] w-36 rounded-md bg-white shadow-[0_4px_10px_-4px_rgba(0,0,0,0.3)]"
+          className="absolute left-7 top-9 h-[50px] w-36 rounded-md bg-white shadow-[0_4px_10px_-4px_rgba(0,0,0,0.3)]"
         />
       )}
 
-      {/* Front panel — scales down and tilts forward from its bottom edge so
-          the top widens (open-flap feel); bottom stays put, never dropping
-          below its resting position. */}
+      {/* Front panel — the widest, tallest element, anchored to the bottom.
+          Scales down and tilts forward from its bottom edge so the top
+          widens (open-flap feel); bottom stays put, never dropping below
+          its resting position. */}
       <motion.div
         aria-hidden
-        variants={{ open: { rotateX: -34, scaleX: 1.06, scaleY: 0.92 } }}
+        variants={{ open: { rotateX: -34, scaleX: 1.05, scaleY: 0.94 } }}
         transition={{ type: "spring", stiffness: 220, damping: 20 }}
         style={{ transformOrigin: "bottom center" }}
-        className="absolute bottom-0 h-24 w-full rounded-xl bg-[linear-gradient(160deg,#c6ecab,#9ed17f)] shadow-[0_-2px_8px_-4px_rgba(0,0,0,0.15)]"
+        className="absolute inset-x-0 bottom-0 h-[98px] rounded-2xl bg-[linear-gradient(160deg,#c6ecab,#8fc26b)] shadow-[0_-2px_8px_-4px_rgba(0,0,0,0.15)]"
       />
 
       {/* Hover tooltip — fades in below the folder. Outer div holds the
