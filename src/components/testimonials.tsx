@@ -14,9 +14,11 @@ const TILE = 96; // size-24
 const GAP = 20; // gap-5
 const ROW_INDENT = 96; // row's left offset inside the container
 const AUTO_ROTATE_MS = 5000;
-// Fixed so the quote card never resizes as shorter/longer quotes cycle in —
-// tall enough for the longest quote at the card's own max-w-lg width.
-const QUOTE_MIN_HEIGHT = 172;
+// Fixed footprint reserved for the bubble = the tallest bubble (longest quote
+// at the card's own max-w-lg width). The bubble itself sizes to its content
+// and is anchored to the BOTTOM of this reserve, so its height/top-edge change
+// per person while everything below it (the tiles) never shifts.
+const BUBBLE_RESERVE = 220;
 
 export function Testimonials() {
   const [selected, setSelected] = useState(0);
@@ -49,20 +51,26 @@ export function Testimonials() {
         </Reveal>
 
         <Reveal className="mt-8">
-          <figure className="relative max-w-lg rounded-[28px] bg-[#ececec] p-6 text-[#ececec]">
-            {/* Notch hooks down onto the selected person's tile */}
-            <motion.span
-              animate={{ left: tailLeft }}
+          {/* Fixed-height reserve, bubble pinned to its bottom. The bubble's
+              own height tracks its content, so its top edge rises/falls per
+              person while this reserve keeps the tiles below from ever moving. */}
+          <div className="flex max-w-lg items-end" style={{ minHeight: BUBBLE_RESERVE }}>
+            <motion.figure
+              layout
               transition={{ duration: 0.4, ease }}
-              className="absolute top-full -mt-px hidden md:block"
+              className="relative w-full rounded-[28px] bg-[#ececec] p-6 text-[#ececec]"
             >
-              <BubbleTail side="left" />
-            </motion.span>
+              {/* Notch hooks down onto the selected person's tile. Anchored to
+                  the bubble's bottom edge (which never moves), so only its
+                  horizontal position changes with the selection. */}
+              <motion.span
+                animate={{ left: tailLeft }}
+                transition={{ duration: 0.4, ease }}
+                className="absolute top-full -mt-px hidden md:block"
+              >
+                <BubbleTail side="left" />
+              </motion.span>
 
-            {/* grid + col/row-start-1 stacks the outgoing and incoming quote
-                in the same cell during the crossfade, and the fixed min-height
-                keeps the card from growing/shrinking as quote length varies. */}
-            <div className="grid" style={{ minHeight: QUOTE_MIN_HEIGHT }}>
               <AnimatePresence mode="popLayout" initial={false}>
                 <motion.div
                   key={active.name}
@@ -70,7 +78,6 @@ export function Testimonials() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -6 }}
                   transition={{ duration: 0.35, ease }}
-                  className="col-start-1 row-start-1"
                 >
                   <blockquote className="text-[15px] leading-relaxed text-foreground/80">
                     {active.quote}
@@ -86,8 +93,8 @@ export function Testimonials() {
                   </figcaption>
                 </motion.div>
               </AnimatePresence>
-            </div>
-          </figure>
+            </motion.figure>
+          </div>
         </Reveal>
 
         {/* Tiles sit on one shared baseline, in a horizontal row */}
@@ -118,7 +125,7 @@ export function Testimonials() {
                 }`}
               />
               <span
-                className={`font-inter text-sm font-semibold transition-opacity ${
+                className={`font-inter text-sm italic transition-opacity ${
                   i === selected ? "text-foreground opacity-100" : "text-foreground/70 opacity-60"
                 }`}
               >
