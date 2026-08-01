@@ -3,7 +3,7 @@ import { Fragment, type ReactNode } from "react";
 /**
  * Renders copy with three inline markers:
  *   *word*     -> serif italic accent
- *   [[word]]   -> highlighter chip (alternating yellow / green)
+ *   [[word]]   -> highlighter chip (alternating yellow / green, starts yellow)
  *   {{name}}   -> inline company logo from /images/logos/<name>.png
  */
 export function AccentText({ children }: { children: string }) {
@@ -19,7 +19,7 @@ export function AccentText({ children }: { children: string }) {
       );
     }
     if (tok.startsWith("[[") && tok.endsWith("]]")) {
-      const cls = highlightIndex++ % 2 === 0 ? "mark-green" : "mark-yellow";
+      const cls = highlightIndex++ % 2 === 0 ? "mark-yellow" : "mark-green";
       return (
         <span key={i} className={cls}>
           {tok.slice(2, -2)}
