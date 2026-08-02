@@ -9,7 +9,7 @@ export const resumeHeader = {
   avatar: "/images/pranjali.png",
   name: "Pranjali",
   role: "Product Designer",
-  linkedin: "https://linkedin.com",
+  linkedin: "https://www.linkedin.com/in/pranjali-saini-614a22230/",
 };
 
 /**

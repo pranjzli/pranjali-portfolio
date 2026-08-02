@@ -53,10 +53,15 @@ export function FooterCta() {
         </div>
 
         <div className="flex flex-col items-start gap-4">
-          {footer.links.map((l) => (
+          {footer.links.map((l) => {
+            // Anything off-site opens in a new tab; mail: and /resume don't.
+            const external = l.href.startsWith("http");
+            return (
             <a
               key={l.label}
               href={l.href}
+              target={external ? "_blank" : undefined}
+              rel={external ? "noopener noreferrer" : undefined}
               className="group inline-flex items-center gap-4 rounded-full border border-foreground/80 px-6 py-3 text-lg text-foreground transition-[transform,background-color,color] duration-300 hover:-translate-y-0.5 hover:bg-foreground hover:text-background"
             >
               <span className="transition-transform duration-300 group-hover:translate-x-0.5">
@@ -69,7 +74,8 @@ export function FooterCta() {
                 ↗
               </span>
             </a>
-          ))}
+            );
+          })}
         </div>
       </Reveal>
     </footer>

@@ -8,11 +8,10 @@ import { AccentText } from "@/components/ui/accent-text";
 import { SectionLabel, Container } from "@/components/ui/section-label";
 import { Reveal } from "@/components/ui/reveal";
 import { ZapsHeroStage } from "@/components/case-study/zaps-hero";
+import { FitAstraDuo } from "@/components/case-study/fitastra-duo";
 
-// Final tuned transforms — baked in from the (now-removed) temp sliders.
+// Final tuned transform — baked in from the (now-removed) temp slider.
 const DS_TRANSFORM = "translate(0px, 0px) scale(0.876)";
-const HERO1_TRANSFORM = "translate(9px, 107px) scale(1.08)";
-const HERO2_TRANSFORM = "translate(-7px, -114px) scale(1.08)";
 
 // Two DIFFERENT ratios on purpose — they must NOT be synced.
 //   FRAME  = the visible card (<a>). Taller, so the hand — which the stage
@@ -132,28 +131,9 @@ export function SelectedWorks() {
           >
             <Link href={fitastra.href ?? "#"} className="group block">
               <CardSurface clean arrow className="aspect-[5/4] w-full">
-                {/* Two screens side by side, sharing the one card slot — clipped
-                    to stay fully inside the box (no overflow past the frame). */}
-                <div className="flex size-full">
-                  <div className="w-1/2 overflow-hidden">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src="/images/case-studies/fitastra/hero1.png"
-                      alt=""
-                      className="size-full object-contain"
-                      style={{ transform: HERO1_TRANSFORM }}
-                    />
-                  </div>
-                  <div className="w-1/2 overflow-hidden">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src="/images/case-studies/fitastra/hero2.png"
-                      alt=""
-                      className="size-full object-contain"
-                      style={{ transform: HERO2_TRANSFORM }}
-                    />
-                  </div>
-                </div>
+                {/* Two screens side by side, sharing the one card slot — the
+                    same composition the case study opens with. */}
+                <FitAstraDuo />
               </CardSurface>
               <h3 className="mt-4 text-xl leading-snug tracking-tight">
                 <AccentText>{fitastra.title}</AccentText>

@@ -23,7 +23,6 @@ import { Reveal } from "@/components/ui/reveal";
 import {
   Measure,
   Section,
-  Placeholder,
   PlaceholderRow,
   PhotoRow,
   Stat,
@@ -31,6 +30,7 @@ import {
   Body,
   CaseStudyOutro,
 } from "@/components/case-study/primitives";
+import { FitAstraDuo } from "@/components/case-study/fitastra-duo";
 import { FidelitySlider } from "@/components/case-study/fidelity-slider";
 import { AppleIcon, GooglePlayIcon } from "@/components/ui/store-icons";
 
@@ -98,7 +98,11 @@ export function FitAstraCaseStudy() {
         </motion.div>
 
         <Measure className="mt-12">
-          <Placeholder ratio="16/9" />
+          <Reveal>
+            <div className="aspect-[5/4] w-full overflow-hidden rounded-2xl border border-line bg-background">
+              <FitAstraDuo />
+            </div>
+          </Reveal>
         </Measure>
       </section>
 

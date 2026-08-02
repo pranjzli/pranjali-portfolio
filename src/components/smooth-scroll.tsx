@@ -16,10 +16,23 @@ function ScrollToTop() {
   const pathname = usePathname();
 
   useEffect(() => {
-    // Skip when the URL targets an anchor (e.g. the "/#work" back link) — that
-    // navigation should land on its section, not get yanked to the top.
-    if (window.location.hash) return;
-    lenis?.scrollTo(0, { immediate: true });
+    if (!lenis) return;
+
+    const hash = window.location.hash;
+    if (!hash) {
+      lenis.scrollTo(0, { immediate: true });
+      return;
+    }
+
+    // The URL targets an anchor (the "/#work" back link, or a nav item clicked
+    // from a case study). Lenis owns the scroll position, so nothing takes us
+    // there unless we do it — one frame later, once the new page has painted
+    // and the section actually exists.
+    const raf = requestAnimationFrame(() => {
+      const target = document.querySelector(hash);
+      if (target) lenis.scrollTo(target as HTMLElement, { offset: -90, immediate: true });
+    });
+    return () => cancelAnimationFrame(raf);
   }, [pathname, lenis]);
 
   return null;
