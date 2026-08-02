@@ -42,3 +42,4 @@ next-env.d.ts
 
 # Raw video sources — optimized versions ship from public/videos
 /assets/pranjali-guitar.MOV
+.originkit/

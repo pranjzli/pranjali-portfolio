@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Instrument_Serif, Inter } from "next/font/google";
 import "./globals.css";
 import { SmoothScroll } from "@/components/smooth-scroll";
+import { PointerEffects } from "@/components/pointer-effects";
 import { Agentation } from "agentation";
 
 const geistSans = Geist({
@@ -44,6 +45,7 @@ export default function RootLayout({
     >
       <body className="min-h-full">
         <SmoothScroll>{children}</SmoothScroll>
+        <PointerEffects />
         {process.env.NODE_ENV === "development" && <Agentation />}
       </body>
     </html>
