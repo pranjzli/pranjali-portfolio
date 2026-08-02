@@ -17,9 +17,9 @@ export const tldr = {
   label: "TL;DR",
   segments: [
     { t: "I designed Zaps' " },
-    { t: "token-first design system", key: true },
+    { t: "multilayered token-first design system", key: true },
     { t: " in Figma, turned it into a " },
-    { t: "machine-readable contract", key: true },
+    { t: "compiled run-time artefact", key: true },
     { t: ", and validated the whole pipeline by " },
     { t: "building the app's UI in SwiftUI myself", key: true },
     { t: " — with AI — " },

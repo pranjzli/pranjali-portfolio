@@ -8,9 +8,6 @@ import { AccentText } from "@/components/ui/accent-text";
 import { Reveal } from "@/components/ui/reveal";
 import { Measure, Stat } from "@/components/case-study/primitives";
 
-// Final tuned transform — baked in from the (now-removed) temp slider.
-const DS_TRANSFORM = "translate(0px, 0px) scale(0.8)";
-
 const item = {
   hidden: { opacity: 0, y: 18, filter: "blur(6px)" },
   visible: { opacity: 1, y: 0, filter: "blur(0px)" },
@@ -74,13 +71,12 @@ export function ZapsDesignSystemCaseStudy() {
         </motion.div>
 
         <Measure className="mt-12">
-          <div className="w-full overflow-hidden rounded-2xl border border-line bg-background">
+          <div className="w-full overflow-hidden">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/images/case-studies/zaps-design-system/designsystem.png"
               alt="The Zaps design system — tokens, components, and the SwiftUI build validating them"
               className="w-full"
-              style={{ transform: DS_TRANSFORM }}
             />
           </div>
         </Measure>

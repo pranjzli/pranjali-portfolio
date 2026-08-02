@@ -5,12 +5,14 @@
 
 export const nav = {
   logo: "P",
+  // Root-relative hashes, so these work from a case-study page too: off the
+  // home page they navigate home first, then land on the section.
   links: [
-    { label: "About", href: "#about" },
-    { label: "Work", href: "#work" },
+    { label: "About", href: "/#about" },
+    { label: "Work", href: "/#work" },
     { label: "Resume", href: "/resume" },
   ],
-  cta: { label: "Get in touch", href: "#contact" },
+  cta: { label: "Get in touch", href: "/#contact" },
 };
 
 export const hero = {
@@ -185,7 +187,7 @@ export const footer = {
   avatar: "/images/pranjali.png",
   links: [
     { label: "Mail", href: "mailto:sainipranjali.2205@gmail.com" },
-    { label: "LinkedIn", href: "https://linkedin.com" },
-    { label: "Resume", href: "/resume.pdf" },
+    { label: "LinkedIn", href: "https://www.linkedin.com/in/pranjali-saini-614a22230/" },
+    { label: "Resume", href: "/resume" },
   ],
 };
