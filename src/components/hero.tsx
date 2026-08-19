@@ -6,6 +6,7 @@ import { ease } from "@/lib/motion";
 import { AccentText } from "@/components/ui/accent-text";
 import { Avatar } from "@/components/ui/avatar";
 import { WaterLayer } from "@/components/ui/water-layer";
+import Typewriter from "@/components/originkit/ui/typewriter";
 
 const item = {
   hidden: { opacity: 0, y: 18, filter: "blur(6px)" },
@@ -69,6 +70,26 @@ export function Hero() {
         >
           <AccentText>{hero.headline}</AccentText>
         </motion.h1>
+
+        {/* Looping roles — OriginKit Typewriter. `style.justifyContent` centres
+            it under the headline (the component left-aligns by default); `font`
+            is passed as a plain size/weight so it inherits the page sans. */}
+        <motion.div variants={item} transition={{ duration: 0.7, ease }} className="mt-4">
+          <Typewriter
+            texts={hero.roles}
+            prefix=""
+            typedColor="var(--foreground)"
+            color="var(--foreground)"
+            cursorColor="var(--accent)"
+            cursorChar="_"
+            ease={{ duration: 0.06, delay: 1.3 }}
+            deleteSpeed={0.04}
+            showCursor
+            hideCursorOnType={false}
+            font={{ fontSize: "1.5rem", fontWeight: 500, lineHeight: "1.4em", letterSpacing: "-0.01em" }}
+            style={{ justifyContent: "center" }}
+          />
+        </motion.div>
 
         <motion.p
           variants={item}
