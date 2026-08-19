@@ -71,22 +71,27 @@ export function Hero() {
           <AccentText>{hero.headline}</AccentText>
         </motion.h1>
 
-        {/* Looping roles — OriginKit Typewriter. `style.justifyContent` centres
-            it under the headline (the component left-aligns by default); `font`
-            is passed as a plain size/weight so it inherits the page sans. */}
-        <motion.div variants={item} transition={{ duration: 0.7, ease }} className="mt-4">
+        {/* Looping roles — OriginKit Typewriter. The wrapper carries the SAME
+            type scale as the headline (text-5xl/6xl, leading, tracking) and an
+            empty `font` prop lets the component inherit it, so the two lines
+            match in size and typeface. `style.justifyContent` centres it. */}
+        <motion.div
+          variants={item}
+          transition={{ duration: 0.7, ease }}
+          className="mt-3 text-5xl leading-[1.05] tracking-tight sm:text-6xl"
+        >
           <Typewriter
             texts={hero.roles}
             prefix=""
             typedColor="var(--foreground)"
             color="var(--foreground)"
-            cursorColor="var(--accent)"
+            cursorColor="#60A167"
             cursorChar="_"
             ease={{ duration: 0.06, delay: 1.3 }}
             deleteSpeed={0.04}
             showCursor
             hideCursorOnType={false}
-            font={{ fontSize: "1.5rem", fontWeight: 500, lineHeight: "1.4em", letterSpacing: "-0.01em" }}
+            font={{}}
             style={{ justifyContent: "center" }}
           />
         </motion.div>
