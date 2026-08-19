@@ -19,7 +19,9 @@ export const hero = {
   badge: "Available for product design roles",
   avatar: "/images/pranjali.png",
   // Words wrapped in *asterisks* render as serif-italic accents.
-  headline: "I make complex tools feel *effortless*",
+  headline: "Hey, I'm *Pranjali*",
+  // Typewriter roles that loop under the headline.
+  roles: ["Product designer", "Problem Solver", "Coffee Addict"],
   intro:
     "Currently building creator tools at {{turnip}} Turnip, previously at {{whatfix}} Whatfix. I think in motion, design inside real engineering constraints, and own features end to end.",
 };
